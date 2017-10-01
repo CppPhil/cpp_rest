@@ -17,4 +17,5 @@ script:
   - sh ./scripts/ci/travis/setup_doctest.sh
   - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake . # generate build scripts
   - cmake --build . -- -j2                       # build using 2 threads
-  - ctest .                                      # run the tests
+  - ctest --verbose .                            # run the tests
+
