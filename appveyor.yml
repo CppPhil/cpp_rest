@@ -9,12 +9,8 @@ build_script:
     
     scripts/ci/appveyor/setup_nlohmann_json.bat
     
-    scripts/ci/appveyor/setup_restbed.bat
-    
-    mkdir build    
-    
-    cd build    
-    
+    scripts/ci/appveyor/setup_restbed.bat 
+        
     cmake C:\cpp_rest -G "Visual Studio 14" . # Generate build scripts
     
     cmake --build . --config "Debug"          # Build application
