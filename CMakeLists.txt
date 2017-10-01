@@ -19,17 +19,26 @@ add_executable(${PROJECT_NAME} "src/main.cpp")
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
 
-target_link_libraries(${PROJECT_NAME} $ENV{HOME}/restbed/build/librestbed.a)
-include_directories($ENV{HOME}/restbed/source)
-
-include_directories($ENV{HOME}/json/src)
-
-include_directories($ENV{HOME}/GSL/include)
-
-include_directories($ENV{HOME}/doctest/doctest)
-
 if(MSVC)
-    include_directories(C:/Libraries/boost_1_63_0)
+    include_directories(C:/Libraries/boost_1_63_0)   
+    
+    target_link_libraries(${PROJECT_NAME} $ENV{HOMEPATH}/restbed/build/librestbed.a)
+    include_directories($ENV{HOMEPATH}/restbed/source)
+
+    include_directories($ENV{HOMEPATH}/json/src)
+
+    include_directories($ENV{HOMEPATH}/GSL/include)
+
+    include_directories($ENV{HOMEPATH}/doctest/doctest) 
+else()
+    target_link_libraries(${PROJECT_NAME} $ENV{HOME}/restbed/build/librestbed.a)
+    include_directories($ENV{HOME}/restbed/source)
+
+    include_directories($ENV{HOME}/json/src)
+
+    include_directories($ENV{HOME}/GSL/include)
+
+    include_directories($ENV{HOME}/doctest/doctest)
 endif()
 
 enable_testing()
