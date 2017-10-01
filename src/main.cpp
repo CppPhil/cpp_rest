@@ -5,6 +5,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/prettywriter.h>
 #include <boost/lexical_cast.hpp>
+#include <gsl/gsl_util>
 
 using namespace std;
 using namespace restbed;
@@ -21,10 +22,12 @@ void post_method_handler( const shared_ptr< Session > session )
 
         rapidjson::StringBuffer sb{ };
         rapidjson::PrettyWriter<rapidjson::StringBuffer> writer{ sb };
-        writer.StartObject();
+        {
+            writer.StartObject();
+            const auto finalAct = gsl::finally([&writer] { writer.EndObject(); });
             writer.String("test");
             writer.String("String");
-        writer.EndObject();
+        }
         const std::string s{ sb.GetString() };
         const restbed::Bytes bytes(std::begin(s), std::end(s));
 
