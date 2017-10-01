@@ -2,6 +2,13 @@ dist: trusty  # use Ubuntu trusty distro
 sudo: true    # use sudo
 language: cpp # use C++ 
 
+notifications:
+  email:
+    recipients:
+      - 0f9234u9f0jw3@gmx.de
+    on_success: always
+    on_failure: always
+
 addons:
   apt:
     sources:
