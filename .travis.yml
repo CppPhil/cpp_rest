@@ -1,5 +1,5 @@
 dist: trusty  # use Ubuntu trusty distro
-sudo: false   # don't use sudo
+sudo: true    # use sudo
 language: cpp # use C++ 
 
 addons:
@@ -10,6 +10,11 @@ addons:
       - g++-5 
 
 script:
+  - sh ./scripts/ci/travis/setup_restbed.sh
+  - sh ./scripts/ci/travis/setup_nlohmann_json.sh
+  - sudo sh ./scripts/ci/travis/setup_boost.sh
+  - sh ./scripts/ci/travis/setup_gsl.sh
+  - sh ./scripts/ci/travis/setup_doctest.sh
   - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake . # generate build scripts
   - cmake --build . -- -j2                       # build using 2 threads
-
+  - ctest .                                      # run the tests
