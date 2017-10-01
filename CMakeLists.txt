@@ -22,11 +22,16 @@ target_link_libraries(${PROJECT_NAME} Threads::Threads)
 if(MSVC)
     include_directories(C:/Libraries/boost_1_64_0)   
     
-    target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/restbed.lib)
+    if(CMAKE_BUILD_TYPE == "Debug")
+        target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Debug/restbed.lib)
+    else()
+        target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Release/restbed.lib)
+    endif()
+    
     include_directories($ENV{USERPROFILE}/restbed/source)
 
-    include_directories($ENV{USERPROFILE}/rapidjson/include)
-
+    include_directories($ENV{USERPROFILE}/rapidjson/include) # C:\Users\appveyor\restbed\build\Debug\restbed.lib
+    
     include_directories($ENV{USERPROFILE}/GSL/include)
 
     include_directories($ENV{USERPROFILE}/doctest/doctest) 

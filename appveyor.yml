@@ -17,7 +17,7 @@ build_script:
                 
     mkdir C:\cpp_rest\build
             
-    cmake C:\cpp_rest\build -G "Visual Studio 15" C:\cpp_rest
+    cmake C:\cpp_rest\build -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 15" C:\cpp_rest
     
     cmake --build C:\cpp_rest --config "Debug"
         

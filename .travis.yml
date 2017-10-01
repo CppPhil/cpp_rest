@@ -15,8 +15,8 @@ script:
   - sudo sh ./scripts/ci/travis/setup_boost.sh
   - sh ./scripts/ci/travis/setup_gsl.sh
   - sh ./scripts/ci/travis/setup_doctest.sh
-  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake . # generate build scripts
-  - cmake --build . -- -j2                       # build using 2 threads
+  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake -DCMAKE_BUILD_TYPE=Debug . # generate build scripts
+  - cmake --build . -- -j2                                                # build using 2 threads
 # TODO: The application may need to be started in a child process before running the tests, assuming that there are tests testing the REST API/s.
-  - ctest --verbose .                            # run the tests
+  - ctest --verbose .                                                     # run the tests
 
