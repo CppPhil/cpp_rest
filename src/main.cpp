@@ -1,7 +1,9 @@
 #include <memory>
 #include <cstdlib>
 #include <restbed>
-#include <json.hpp>
+#include <rapidjson/document.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
 #include <boost/lexical_cast.hpp>
 
 using namespace std;
@@ -17,9 +19,13 @@ void post_method_handler( const shared_ptr< Session > session )
     {
         fprintf( stdout, "%.*s\n", ( int ) body.size( ), body.data( ) );
 
-        nlohmann::json jsonObject{ };
-        jsonObject["test"] = "String";
-        const auto s = jsonObject.dump();
+        rapidjson::StringBuffer sb{ };
+        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer{ sb };
+        writer.StartObject();
+            writer.String("test");
+            writer.String("String");
+        writer.EndObject();
+        const std::string s{ sb.GetString() };
         const restbed::Bytes bytes(std::begin(s), std::end(s));
 
         const std::multimap<std::string, std::string> headers{

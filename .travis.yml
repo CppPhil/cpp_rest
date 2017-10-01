@@ -11,7 +11,7 @@ addons:
 
 script:
   - sh ./scripts/ci/travis/setup_restbed.sh
-  - sh ./scripts/ci/travis/setup_nlohmann_json.sh
+  - sh ./scripts/ci/travis/setup_rapidjson.sh
   - sudo sh ./scripts/ci/travis/setup_boost.sh
   - sh ./scripts/ci/travis/setup_gsl.sh
   - sh ./scripts/ci/travis/setup_doctest.sh

@@ -25,7 +25,7 @@ if(MSVC)
     target_link_libraries(${PROJECT_NAME} $ENV{HOMEPATH}/restbed/build/librestbed.a)
     include_directories($ENV{HOMEPATH}/restbed/source)
 
-    include_directories($ENV{HOMEPATH}/json/src)
+    include_directories($ENV{HOMEPATH}/rapidjson/include)
 
     include_directories($ENV{HOMEPATH}/GSL/include)
 
@@ -34,7 +34,7 @@ else()
     target_link_libraries(${PROJECT_NAME} $ENV{HOME}/restbed/build/librestbed.a)
     include_directories($ENV{HOME}/restbed/source)
 
-    include_directories($ENV{HOME}/json/src)
+    include_directories($ENV{HOME}/rapidjson/include)
 
     include_directories($ENV{HOME}/GSL/include)
 
