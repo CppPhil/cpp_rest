@@ -14,7 +14,7 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 project(cpp_rest)
-add_executable(${PROJECT_NAME} "src/main.cpp")
+add_executable(${PROJECT_NAME} "src/main.cpp" "src/rest_service.cpp" "include/rest_service.hpp" "include/namespace_aliases.hpp" "include/http_verb.hpp" "src/http_verb.cpp" "include/rest_api.hpp" "include/example_rest_api.hpp" "src/example_rest_api.cpp")
 
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
@@ -22,22 +22,22 @@ target_link_libraries(${PROJECT_NAME} Threads::Threads)
 if(MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-    
-    include_directories(C:/Libraries/boost_1_64_0)   
-    
+
+    include_directories(C:/Libraries/boost_1_64_0)
+
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Debug/restbed.lib)
     else()
         target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Release/restbed.lib)
     endif()
-    
+
     include_directories($ENV{USERPROFILE}/restbed/source)
 
     include_directories($ENV{USERPROFILE}/rapidjson/include) # C:\Users\appveyor\restbed\build\Debug\restbed.lib
-    
+
     include_directories($ENV{USERPROFILE}/GSL/include)
 
-    include_directories($ENV{USERPROFILE}/doctest/doctest) 
+    include_directories($ENV{USERPROFILE}/doctest/doctest)
 else()
     target_link_libraries(${PROJECT_NAME} $ENV{HOME}/restbed/build/librestbed.a)
     include_directories($ENV{HOME}/restbed/source)

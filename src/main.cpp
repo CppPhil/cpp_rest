@@ -1,3 +1,4 @@
+#include <functional>
 #include <memory>
 #include <cstdlib>
 #include <restbed>
@@ -6,6 +7,7 @@
 #include <rapidjson/prettywriter.h>
 #include <boost/lexical_cast.hpp>
 #include <gsl/gsl_util>
+#include "../include/example_rest_api.hpp"
 
 using namespace std;
 using namespace restbed;
@@ -40,8 +42,8 @@ void post_method_handler( const shared_ptr< Session > session )
     } );
 }
 
-int main( const int, const char** )
-{
+int main() {
+    /*
     auto resource = make_shared< Resource >( );
     resource->set_path( "/resource" );
     resource->set_method_handler( "POST", post_method_handler );
@@ -53,6 +55,9 @@ int main( const int, const char** )
     Service service;
     service.publish( resource );
     service.start( settings );
+    */
 
-    return EXIT_SUCCESS;
+    cr::ExampleRestApi exampleRestApi{ };
+    static constexpr std::uint16_t port = 1984U;
+    exampleRestApi.start(port);
 }
