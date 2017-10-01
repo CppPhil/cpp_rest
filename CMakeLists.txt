@@ -20,7 +20,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
 
 if(MSVC)
-    include_directories(C:\Libraries\boost_1_64_0)   
+    include_directories(C:/Libraries/boost_1_64_0)   
     
     target_link_libraries(${PROJECT_NAME} $ENV{HOMEPATH}/restbed/build/librestbed.a)
     include_directories($ENV{HOMEPATH}/restbed/source)
