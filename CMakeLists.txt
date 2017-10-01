@@ -22,7 +22,7 @@ target_link_libraries(${PROJECT_NAME} Threads::Threads)
 if(MSVC)
     include_directories(C:/Libraries/boost_1_64_0)   
     
-    if(CMAKE_BUILD_TYPE == "Debug")
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Debug/restbed.lib)
     else()
         target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Release/restbed.lib)
