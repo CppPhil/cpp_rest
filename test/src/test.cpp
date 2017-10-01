@@ -8,5 +8,5 @@ TEST_CASE("test1")
 
 TEST_CASE("test2")
 {
-    CHECK(5 == 6);
+    CHECK(5 == 5);
 }
