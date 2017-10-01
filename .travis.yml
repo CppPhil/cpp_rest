@@ -7,7 +7,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-5 
+      - g++-6
 
 script:
   - sh ./scripts/ci/travis/setup_restbed.sh
@@ -15,6 +15,6 @@ script:
   - sudo sh ./scripts/ci/travis/setup_boost.sh
   - sh ./scripts/ci/travis/setup_gsl.sh
   - sh ./scripts/ci/travis/setup_doctest.sh
-  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake . # generate build scripts
+  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake . # generate build scripts
   - cmake --build . -- -j2                       # build using 2 threads
   - ctest .                                      # run the tests
