@@ -22,14 +22,14 @@ target_link_libraries(${PROJECT_NAME} Threads::Threads)
 if(MSVC)
     include_directories(C:/Libraries/boost_1_64_0)   
     
-    target_link_libraries(${PROJECT_NAME} $ENV{HOMEPATH}/restbed/build/restbed.lib)
-    include_directories($ENV{HOMEPATH}/restbed/source)
+    target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/restbed.lib)
+    include_directories($ENV{USERPROFILE}/restbed/source)
 
-    include_directories($ENV{HOMEPATH}/rapidjson/include)
+    include_directories($ENV{USERPROFILE}/rapidjson/include)
 
-    include_directories($ENV{HOMEPATH}/GSL/include)
+    include_directories($ENV{USERPROFILE}/GSL/include)
 
-    include_directories($ENV{HOMEPATH}/doctest/doctest) 
+    include_directories($ENV{USERPROFILE}/doctest/doctest) 
 else()
     target_link_libraries(${PROJECT_NAME} $ENV{HOME}/restbed/build/librestbed.a)
     include_directories($ENV{HOME}/restbed/source)

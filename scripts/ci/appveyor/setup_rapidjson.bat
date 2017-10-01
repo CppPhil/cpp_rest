@@ -1,4 +1,4 @@
 @echo off
 
-git clone https://github.com/Tencent/rapidjson.git "%HOMEPATH%\rapidjson"
+git clone https://github.com/Tencent/rapidjson.git "%USERPROFILE%\rapidjson"
 
