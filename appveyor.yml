@@ -18,8 +18,6 @@ build_script:
     cmake C:\cpp_rest -G "Visual Studio 14" . # Generate build scripts
     
     cmake --build . --config "Debug"          # Build application
-    
-# TODO: might need to start application
-    
+        
     ctest --verbose .                         # Run the tests.
       
