@@ -20,7 +20,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
 
 if(MSVC)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} "/MTd")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MTd")
     
     include_directories(C:/Libraries/boost_1_64_0)   
     
