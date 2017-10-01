@@ -1,6 +1,6 @@
-dist: trusty  # use Ubuntu trusty distro
-sudo: true    # use sudo
-language: cpp # use C++ 
+dist: trusty
+sudo: required
+language: cpp 
 
 notifications:
   email:

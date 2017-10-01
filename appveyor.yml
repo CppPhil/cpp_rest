@@ -18,6 +18,8 @@ build_script:
     cmake C:\cpp_rest\build -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 15" C:\cpp_rest
     
     cmake --build C:\cpp_rest --config "Debug"
-        
-    ctest --verbose C:\cpp_rest
+              
+test: on
+test_script:
+  - cmd: ctest --verbose C:\cpp_rest
       
