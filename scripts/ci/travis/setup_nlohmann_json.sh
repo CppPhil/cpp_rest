@@ -1,4 +1,4 @@
 #!/bin/bash
 
-git clone https://github.com/nlohmann/json.git ~/
+git clone https://github.com/nlohmann/json.git ~/json
 
