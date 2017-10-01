@@ -1,0 +1,13 @@
+image:
+  - Visual Studio 2015
+clone_folder: C:\cpp_rest
+build_script:
+- cmd: >-
+    mkdir build
+    
+    cd build
+    
+    cmake C:\cpp_rest -G "Visual Studio 14"
+    
+    cmake --build . --config "Debug"
+      
