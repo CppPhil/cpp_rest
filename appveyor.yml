@@ -3,13 +3,19 @@ image:
 clone_folder: C:\cpp_rest
 build_script:
 - cmd: >-
-    scripts/ci/appveyor/setup_doctest.bat
+    cd C:\cpp_rest
     
-    scripts/ci/appveyor/setup_gsl.bat
+    C:\cpp_rest\scripts\ci\appveyor\setup_doctest.bat
     
-    scripts/ci/appveyor/setup_nlohmann_json.bat
+    C:\cpp_rest\scripts\ci\appveyor\setup_gsl.bat
     
-    scripts/ci/appveyor/setup_restbed.bat 
+    C:\cpp_rest\scripts\ci\appveyor\setup_nlohmann_json.bat
+    
+    C:\cpp_rest\scripts\ci\appveyor\setup_restbed.bat 
+        
+    mkdir build
+    
+    cd build
         
     cmake C:\cpp_rest -G "Visual Studio 14" . # Generate build scripts
     
