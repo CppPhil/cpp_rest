@@ -15,9 +15,9 @@ build_script:
         
     mkdir C:\cpp_rest\build
             
-    cmake C:\cpp_rest -G "Visual Studio 14" C:\cpp_rest\build # Generate build scripts
+    cmake C:\cpp_rest -G "Visual Studio 14" C:\cpp_rest\build
     
-    cmake --build C:\cpp_rest\build --config "Debug"          # Build application
+    cmake --build C:\cpp_rest\build --config "Debug"
         
-    ctest --verbose C:\cpp_rest\build                         # Run the tests.
+    ctest --verbose C:\cpp_rest\build
       
