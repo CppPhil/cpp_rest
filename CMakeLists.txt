@@ -28,6 +28,10 @@ include_directories($ENV{HOME}/GSL/include)
 
 include_directories($ENV{HOME}/doctest/doctest)
 
+if(MSVC)
+    include_directories(C:/Libraries/boost_1_63_0)
+endif()
+
 enable_testing()
 
 add_executable(tester "test/src/test.cpp")
