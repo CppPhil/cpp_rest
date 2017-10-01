@@ -17,7 +17,7 @@ build_script:
             
     cmake C:\cpp_rest\build -G "Visual Studio 14" C:\cpp_rest
     
-    cmake --build C:\cpp_rest\build --config "Debug"
+    cmake --build C:\cpp_rest --config "Debug"
         
-    ctest --verbose C:\cpp_rest\build
+    ctest --verbose C:\cpp_rest
       
