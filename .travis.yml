@@ -1,0 +1,15 @@
+dist: trusty  # use Ubuntu trusty distro
+sudo: false   # don't use sudo
+language: cpp # use C++ 
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-5 
+
+script:
+  - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake . # generate build scripts
+  - cmake --build . -- -j2                       # build using 2 threads
+
