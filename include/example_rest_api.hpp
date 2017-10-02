@@ -20,6 +20,8 @@ public:
 
 private:
     void handlePostResource(rest::Session &session);
+
+    void handlePostResource2(rest::Session &session);
 };
 } // namespace cr
 #endif // INCG_CR_EXAMPLE_REST_API_HPP

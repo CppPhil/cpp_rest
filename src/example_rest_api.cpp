@@ -1,7 +1,9 @@
 #include "../include/example_rest_api.hpp"
 #include "../include/example_type.hpp" // cr::ExampleType
 #include "../include/json.hpp" // cr::asJson
+#include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
+#include <iostream> // std::cout
 
 namespace cr
 {
@@ -11,6 +13,10 @@ ExampleRestApi::ExampleRestApi()
     registerResource("/resource",
                      HttpVerb::POST,
                      &ExampleRestApi::handlePostResource);
+
+    registerResource("/resource2",
+                     HttpVerb::POST,
+                     &ExampleRestApi::handlePostResource2);
 }
 
 ExampleRestApi::~ExampleRestApi() = default;
@@ -45,6 +51,33 @@ void ExampleRestApi::handlePostResource(rest::Session &session)
         };
 
         session->close(rest::OK, bytes, headers);
+    });
+}
+
+void ExampleRestApi::handlePostResource2(rest::Session &session)
+{
+    const auto request = session.get_request();
+    const std::size_t contentLength{ request->get_header("Content-Length", 0U) };
+
+    session.fetch(contentLength,
+                  [](const std::shared_ptr<rest::Session> session,
+                     const rest::Bytes body) {
+        const std::string s(std::begin(body), std::end(body));
+        const ExampleType o{ fromJson<ExampleType>(parseJson(s)) };
+
+        std::cout << "Just got ExampleType object in "
+                  << BOOST_CURRENT_FUNCTION
+                  << ":\n" << o << std::endl;
+
+        const std::string replyStr{ "{\"string\": \"Thanks.\"}" };
+        const rest::Bytes reply(std::begin(replyStr), std::end(replyStr));
+
+        const std::multimap<std::string, std::string> headers{
+            { "Content-Length", boost::lexical_cast<std::string>(reply.size()) },
+            { "Content-Type", "application/json" }
+        };
+
+        session->close(rest::OK, reply, headers);
     });
 }
 } // namespace cr

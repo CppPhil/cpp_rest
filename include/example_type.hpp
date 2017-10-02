@@ -5,6 +5,7 @@
 #include <rapidjson/document.h> // rapidjson::Document
 #include <rapidjson/stringbuffer.h> // rapidjson::StringBuffer
 #include <rapidjson/prettywriter.h> // rapidjson::PrettyWriter
+#include <iosfwd> // std::ostream
 #include <string> // std::string
 #include <vector> // std::vector
 
@@ -33,6 +34,9 @@ public:
 
 private:
     void vecToJson(json::PrettyWriter<json::StringBuffer> &writer) const;
+
+    friend std::ostream &operator<<(std::ostream &os,
+                                    const ExampleType &exampleType);
 
     std::string m_str;
     Struct m_struct;

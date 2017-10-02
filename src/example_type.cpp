@@ -2,6 +2,7 @@
 #include "../include/json.hpp" // cr::fetchString, cr::fetchDouble, cr::fetchObject, cr::fetchArray
 #include <ciso646> // not
 #include <utility> // std::move
+#include <ostream> // std::ostream
 #include <string> // std::string
 #include <iterator> // std::back_inserter
 #include <algorithm> // std::transform
@@ -91,5 +92,10 @@ void ExampleType::vecToJson(json::PrettyWriter<json::StringBuffer> &writer) cons
         writer.Double(d);
     }
     writer.EndArray();
+}
+
+std::ostream &operator<<(std::ostream &os, const ExampleType &exampleType)
+{
+    return os << jsonAsText(asJson(exampleType));
 }
 } // namespace cr
