@@ -2,6 +2,7 @@
 #define INCG_CR_REST_SERVICE_HPP
 #include "../include/namespace_aliases.hpp"
 #include "../include/http_verb.hpp" // cr::HttpVerb
+#include "../include/except.hpp" // cr::NullPointerException
 #include <restbed> // restbed::Session, restbed::Resource, restbed::Service, restbed::Settings
 #include <boost/noncopyable.hpp> // boost::noncopyable
 #include <boost/utility/string_ref.hpp> // boost::string_ref
@@ -56,6 +57,8 @@ public:
     /*!
      * \brief Returns the HTTP URI of this RestService as text.
      * \return A textual representation of this RestService's HTTP URI.
+     * \throws cr::NullPointerException if the shared_ptr to the HTTP URI
+     *         that was fetched is nullptr.
     **/
     std::string getHttpUri() const;
 

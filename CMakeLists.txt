@@ -14,7 +14,7 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 project(cpp_rest)
-add_executable(${PROJECT_NAME} "src/main.cpp" "src/rest_service.cpp" "include/rest_service.hpp" "include/namespace_aliases.hpp" "include/http_verb.hpp" "src/http_verb.cpp" "include/rest_api.hpp" "include/example_rest_api.hpp" "src/example_rest_api.cpp")
+add_executable(${PROJECT_NAME} "src/main.cpp" "src/rest_service.cpp" "include/rest_service.hpp" "include/namespace_aliases.hpp" "include/http_verb.hpp" "src/http_verb.cpp" "include/rest_api.hpp" "include/example_rest_api.hpp" "src/example_rest_api.cpp" "include/json.hpp" "src/json.cpp" "include/except.hpp" "include/glue.hpp" "include/stringify.hpp" "include/example_type.hpp" "src/example_type.cpp")
 
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)

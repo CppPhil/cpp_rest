@@ -1,5 +1,6 @@
 #include "../include/http_verb.hpp"
-#include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
+#include "../include/stringify.hpp" // CR_STRINGIFY
+#include "../include/except.hpp" // cr::InvalidEnumeratorValueException, CR_THROW_WITH_SOURCE_INFO
 #include <ostream> // std::ostream
 #include <stdexcept> // std::logic_error
 #include <string> // std::string, std::literals::string_literals::operator""s
@@ -8,8 +9,9 @@
  * \def CR_DETAIL_HTTP_VERB_PRINT(httpVerb)
  * \brief Implementation macro to print an HTTP verb.
 **/
-#define CR_DETAIL_HTTP_VERB_PRINT(httpVerb) case HttpVerb::httpVerb: os << #httpVerb; \
-                                                           break
+#define CR_DETAIL_HTTP_VERB_PRINT(httpVerb) \
+    case HttpVerb::httpVerb: os << CR_STRINGIFY(httpVerb); \
+                             break
 
 namespace cr
 {
@@ -36,10 +38,7 @@ std::ostream &operator<<(std::ostream &os, HttpVerb httpVerb)
     CR_DETAIL_HTTP_VERB_PRINT(CONNECT);
     CR_DETAIL_HTTP_VERB_PRINT(TRACE);
     default:
-        throw std::logic_error{
-            "Invalid enumerator value in "s
-            + BOOST_CURRENT_FUNCTION
-        };
+        CR_THROW_WITH_SOURCE_INFO(InvalidEnumeratorValueException, "enumerator had invalid value");
     }
 
     return os;

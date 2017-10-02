@@ -1,6 +1,7 @@
 #ifndef INCG_CR_REST_API_HPP
 #define INCG_CR_REST_API_HPP
 #include "../include/rest_service.hpp" // cr::RestService
+#include "../include/except.hpp" // CR_THROW_IF_NULL
 #include <boost/noncopyable.hpp> // boost::noncopyable
 #include <utility> // std::move
 
@@ -21,11 +22,13 @@ public:
     /*!
      * \brief Initializes the RestApi base class part.
      * \param derived Pointer to the derived type.
+     * \throws cr::NullPointerException if 'derived' is nullptr.
     **/
     explicit RestApi(derived_type *derived)
         : m_restService{ },
           m_derived{ derived }
     {
+        CR_THROW_IF_NULL(m_derived);
     }
 
 protected:
@@ -66,6 +69,8 @@ protected:
     /*!
      * \brief Returns the HTTP URI of the underlying REST service.
      * \return The HTTP URI as std::string.
+     * \throws cr::NullPointerException if the shared_ptr to the HTTP URI
+     *         fetched was nullptr.
     **/
     std::string getHttpUri() const
     {

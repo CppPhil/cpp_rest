@@ -1,4 +1,5 @@
 #include "../include/rest_service.hpp"
+#include "../include/except.hpp" // CR_THROW_IF_NULL
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
 #include <string> // std::string
 
@@ -45,7 +46,9 @@ RestService &RestService::startService(std::uint16_t port)
 
 std::string RestService::getHttpUri() const
 {
-    return m_service.get_http_uri()->to_string();
+    const std::shared_ptr<const rest::Uri> uriPtr{ m_service.get_http_uri() };
+    CR_THROW_IF_NULL(uriPtr);
+    return uriPtr->to_string();
 }
 
 void RestService::publishResources()
