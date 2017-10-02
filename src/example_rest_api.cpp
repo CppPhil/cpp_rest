@@ -24,25 +24,6 @@ ExampleRestApi &ExampleRestApi::start(std::uint16_t port)
 
 void ExampleRestApi::handlePostResource(rest::Session &session)
 {
-    /*
-     * rapidjson::StringBuffer sb{ };
-        rapidjson::PrettyWriter<rapidjson::StringBuffer> writer{ sb };
-        {
-            writer.StartObject();
-            const auto finalAct = gsl::finally([&writer] { writer.EndObject(); });
-            writer.String("test");
-            writer.String("String");
-        }
-        const std::string s{ sb.GetString() };
-        const restbed::Bytes bytes(std::begin(s), std::end(s));
-
-        const std::multimap<std::string, std::string> headers{
-            { "Content-Length", boost::lexical_cast<std::string>(bytes.size()) },
-            { "Content-Type", "application/json" }
-        };
-
-        session->close(OK, bytes, headers);
-     * */
 
     const auto request = session.get_request();
     int content_length = request->get_header("Content-Length", 0);

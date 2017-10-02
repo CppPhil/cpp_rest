@@ -23,7 +23,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
-    include_directories(C:/Libraries/boost_1_64_0)
+    include_directories(C:/Libraries/boost_1_63_0)
 
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Debug/restbed.lib)
