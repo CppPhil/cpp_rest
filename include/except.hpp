@@ -76,7 +76,7 @@
             CR_THROW_WITH_SOURCE_INFO(cr::NullPointerException, \
                                       CR_STRINGIFY(pointer) " was null!"); \
         } \
-    } while (static_cast<void>(0), 0)
+    } while (static_cast<void>(0), 0) /* avoid compiler warnings */
 
 namespace cr
 {

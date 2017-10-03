@@ -17,6 +17,11 @@ class RestApi
 public:
     using this_type = RestApi;
     using derived_type = Derived;
+
+    /*!
+     * \brief Pointer to a member function of 'derived_type' that returns void
+     *        and has a restbed::Session & parameter.
+    **/
     using RequestHandler = void (derived_type::*)(rest::Session &);
 
     /*!
@@ -28,7 +33,7 @@ public:
         : m_restService{ },
           m_derived{ derived }
     {
-        CR_THROW_IF_NULL(m_derived);
+        CR_THROW_IF_NULL(m_derived); // derived can't be nullptr.
     }
 
 protected:
@@ -59,6 +64,8 @@ protected:
      *        registered.
      * \param port The port to use.
      * \return A reference to this object.
+     * \note This thread will start running the REST API and will begin waiting
+     *       for requests.
     **/
     this_type &startRestApi(std::uint16_t port)
     {

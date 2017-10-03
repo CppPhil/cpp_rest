@@ -51,6 +51,8 @@ public:
      * \brief Brings the resources added online at port 'port'.
      * \param port The port to use.
      * \return A reference to this object.
+     * \note Will make the current thread run the REST API, waiting for
+     *       requests to come in.
     **/
     this_type &startService(std::uint16_t port);
 

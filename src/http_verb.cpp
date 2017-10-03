@@ -17,8 +17,6 @@ namespace cr
 {
 std::ostream &operator<<(std::ostream &os, HttpVerb httpVerb)
 {
-    using namespace std::literals::string_literals;
-
     switch (httpVerb) {
     CR_DETAIL_HTTP_VERB_PRINT(GET);
     CR_DETAIL_HTTP_VERB_PRINT(POST);
@@ -38,7 +36,8 @@ std::ostream &operator<<(std::ostream &os, HttpVerb httpVerb)
     CR_DETAIL_HTTP_VERB_PRINT(CONNECT);
     CR_DETAIL_HTTP_VERB_PRINT(TRACE);
     default:
-        CR_THROW_WITH_SOURCE_INFO(InvalidEnumeratorValueException, "enumerator had invalid value");
+        CR_THROW_WITH_SOURCE_INFO(InvalidEnumeratorValueException,
+                                  "enumerator had invalid value");
     }
 
     return os;

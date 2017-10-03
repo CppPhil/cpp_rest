@@ -10,6 +10,8 @@ namespace cr
 ExampleRestApi::ExampleRestApi()
     : base_type{ this }
 {
+    // Register the REST resources ...
+
     registerResource("/resource",
                      HttpVerb::POST,
                      &ExampleRestApi::handlePostResource);

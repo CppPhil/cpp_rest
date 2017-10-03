@@ -10,6 +10,8 @@ json::Document parseJson(boost::string_ref jsonText)
 {
     json::Document document{ };
 
+    // Parse the string into the document if possible,
+    // otherwise throw an exception.
     if (document.Parse(jsonText.data()).HasParseError()) {
         CR_THROW_WITH_SOURCE_INFO(FailedToParseJsonException,
                                   std::string{ jsonText.data() } + " was invalid");
@@ -20,6 +22,8 @@ json::Document parseJson(boost::string_ref jsonText)
 
 std::string jsonAsText(const json::Document &jsonDocument)
 {
+    // Convert the JSON document to a string.
+
     json::StringBuffer sb{ };
     json::PrettyWriter<json::StringBuffer> writer{ sb };
     jsonDocument.Accept(writer);
@@ -42,6 +46,7 @@ void ensureJsonHasMember(const json::GenericValue<json::UTF8<>> &json,
 {
     using namespace std::literals::string_literals;
 
+    // Throw if the JSON does not have the member.
     if (not json.HasMember(identifier.data())) {
         CR_THROW_WITH_SOURCE_INFO(InvalidJsonException,
                                   "member "s + identifier.data()
@@ -208,6 +213,7 @@ fetchString(boost::string_ref identifier,
                                   + " was not String");
     }
 
+    // make a std::string out of the C-Style String.
     return std::string{ json[identifier.data()].GetString() };
 }
 
