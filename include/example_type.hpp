@@ -32,6 +32,7 @@ public:
          * \brief Creates a Struct type from a rapidjson Object.
          * \param object The rapidjson Object to create a Struct from.
          * \return The Struct created.
+         * \throws cr::InvalidJsonException if the JSON given was invalid.
         **/
         static Struct fromJson(const json::GenericValue<json::UTF8<>> &object);
 
@@ -54,6 +55,7 @@ public:
      * \brief Creates an ExampleType object from a rapidjson Document.
      * \param jsonDocument The rapidjson Document to create an ExampleType from.
      * \return The ExampleType created.
+     * \throws cr::InvalidJsonException if the JSON given was invalid.
     **/
     static ExampleType fromJson(const json::Document &jsonDocument);
 

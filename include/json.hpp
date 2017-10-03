@@ -54,6 +54,7 @@ json::Document asJson(const Ty &ty)
  * \return The resulting object.
  * \note Calls the static member function fromJson of type 'Ty' passing a
  *       rapidjson::Document.
+ * \throws cr::InvalidJsonException if the JSON given was invalid.
 **/
 template <typename Ty>
 Ty fromJson(const json::Document &jsonDocument)

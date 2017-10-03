@@ -65,11 +65,29 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
                   [](const std::shared_ptr<rest::Session> session,
                      const rest::Bytes body) {
         const std::string s(std::begin(body), std::end(body));
+        try {
         const ExampleType o{ fromJson<ExampleType>(parseJson(s)) };
 
         std::cout << "Just got ExampleType object in "
                   << BOOST_CURRENT_FUNCTION
                   << ":\n" << o << std::endl;
+        } catch (const FailedToParseJsonException &ex) {
+            const std::string replStr{ "{\"You're doing it\": \"Wrong (Parse failure)\"}"};
+            const rest::Bytes repl(std::begin(replStr), std::end(replStr));
+            session->close(rest::BAD_REQUEST, repl,
+                           {
+                               { "Content-Length", boost::lexical_cast<std::string>(repl.size()) },
+                               { "Content-Type", "application/json" }
+                           });
+        } catch (const InvalidJsonException &ex) {
+            const std::string replStr{ "{\"You're doing it\": \"Wrong (invalid JSON)\"}"};
+            const rest::Bytes repl(std::begin(replStr), std::end(replStr));
+            session->close(rest::BAD_REQUEST, repl,
+                           {
+                               { "Content-Length", boost::lexical_cast<std::string>(repl.size()) },
+                               { "Content-Type", "application/json" }
+                           });
+        }
 
         const std::string replyStr{ "{\"string\": \"Thanks.\"}" };
         const rest::Bytes reply(std::begin(replyStr), std::end(replyStr));
