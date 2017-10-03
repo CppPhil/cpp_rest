@@ -1,9 +1,12 @@
 #include "../include/example_rest_api.hpp"
 #include "../include/example_type.hpp" // cr::ExampleType
 #include "../include/json.hpp" // cr::asJson
+#include "../include/request.hpp" // cr::getContentLength
+#include "../include/response.hpp" // cr::respond
 #include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
 #include <iostream> // std::cout
+#include <string> // std::string, std::literals::string_literals::operator""s
 
 namespace cr
 {
@@ -31,73 +34,86 @@ ExampleRestApi &ExampleRestApi::start(std::uint16_t port)
 
 void ExampleRestApi::handlePostResource(rest::Session &session)
 {
+    const std::shared_ptr<const rest::Request> request{ session.get_request() };
 
-    const auto request = session.get_request();
-    std::size_t content_length = request->get_header("Content-Length", 0U);
+    if (request == nullptr) {
+        // error.
+        return;
+    }
 
-    session.fetch(content_length, [](const std::shared_ptr<rest::Session> session,
-                                     const rest::Bytes &body) {
+    const std::size_t contentLength{ getContentLength(*request) };
+
+    // Fetch contentLength bytes and then reply to the request.
+    session.fetch(contentLength, [](const std::shared_ptr<rest::Session> session,
+                                    const rest::Bytes &body) {
 
         using namespace std::literals::string_literals;
+        // Interpret the bytes of the body of the request as a string.
         const std::string string(std::begin(body), std::end(body));
+
+        // Create the object to respond with.
         const cr::ExampleType obj{ "You sent "s + string,
                                    { 5, 5.5 },
                                    { 1.1, 2.2 } };
-        const std::string s{ jsonAsText(asJson(obj)) };
 
-        const rest::Bytes bytes(std::begin(s), std::end(s));
+        // Turn 'obj' into a JSON document.
+        const json::Document responseJson{ asJson(obj) };
 
-        const std::multimap<std::string, std::string> headers{
-            { "Content-Length", boost::lexical_cast<std::string>(bytes.size()) },
-            { "Content-Type", "application/json" }
-        };
-
-        session->close(rest::OK, bytes, headers);
+        // Respond by closing the session, replying with the JSON document
+        // and the HTTP status code set to 'OK'.
+        respond(*session, HttpStatusCode::OK, responseJson);
     });
 }
 
 void ExampleRestApi::handlePostResource2(rest::Session &session)
 {
-    const auto request = session.get_request();
-    const std::size_t contentLength{ request->get_header("Content-Length", 0U) };
+    using namespace std::literals::string_literals;
 
+    const std::shared_ptr<const rest::Request> request{ session.get_request() };
+
+    if (request == nullptr) {
+        // error.
+        return;
+    }
+
+    const std::size_t contentLength{ getContentLength(*request) };
+
+    // Fetch contentLength bytes and then reply to the request.
     session.fetch(contentLength,
                   [](const std::shared_ptr<rest::Session> session,
-                     const rest::Bytes body) {
+                     const rest::Bytes &body) {
+        // Interpret the bytes of the body of the request as a String.
         const std::string s(std::begin(body), std::end(body));
-        try {
-        const ExampleType o{ fromJson<ExampleType>(parseJson(s)) };
 
-        std::cout << "Just got ExampleType object in "
-                  << BOOST_CURRENT_FUNCTION
-                  << ":\n" << o << std::endl;
+        try {
+            // Try to parse the request body as JSON
+            // and then try to create an ExampleType object from the JSON.
+            const ExampleType o{ fromJson<ExampleType>(parseJson(s)) };
+
+            // Print the object to stdout.
+            std::cout << "Just got ExampleType object in "
+                      << BOOST_CURRENT_FUNCTION
+                      << ":\n" << o << std::endl;
         } catch (const FailedToParseJsonException &ex) {
-            const std::string replStr{ "{\"You're doing it\": \"Wrong (Parse failure)\"}"};
-            const rest::Bytes repl(std::begin(replStr), std::end(replStr));
-            session->close(rest::BAD_REQUEST, repl,
-                           {
-                               { "Content-Length", boost::lexical_cast<std::string>(repl.size()) },
-                               { "Content-Type", "application/json" }
-                           });
+            // The data could not be parsed as JSON.
+            const std::string replStr{ "Data received was not JSON.\n"s
+                                       + ex.what() };
+
+            // Respond with error message.
+            respond(*session, HttpStatusCode::BAD_REQUEST, replStr);
+            return; // Exit the lambda.
         } catch (const InvalidJsonException &ex) {
-            const std::string replStr{ "{\"You're doing it\": \"Wrong (invalid JSON)\"}"};
-            const rest::Bytes repl(std::begin(replStr), std::end(replStr));
-            session->close(rest::BAD_REQUEST, repl,
-                           {
-                               { "Content-Length", boost::lexical_cast<std::string>(repl.size()) },
-                               { "Content-Type", "application/json" }
-                           });
+            // The data was JSON, but the contents were not correct.
+            const std::string replStr{ "The JSON received was not valid.\n"s
+                                       + ex.what() };
+
+            // Respond with error message.
+            respond(*session, HttpStatusCode::IM_A_TEAPOT, replStr);
+            return; // Exit the lambda.
         }
 
-        const std::string replyStr{ "{\"string\": \"Thanks.\"}" };
-        const rest::Bytes reply(std::begin(replyStr), std::end(replyStr));
-
-        const std::multimap<std::string, std::string> headers{
-            { "Content-Length", boost::lexical_cast<std::string>(reply.size()) },
-            { "Content-Type", "application/json" }
-        };
-
-        session->close(rest::OK, reply, headers);
+        // Everything was OK. Respond with reply indicating success.
+        respond(*session, HttpStatusCode::ACCEPTED, "Thanks for the data.");
     });
 }
 } // namespace cr

@@ -3,18 +3,23 @@
 #include <rapidjson/stringbuffer.h> // rapidjson::StringBuffer
 #include <rapidjson/prettywriter.h> // rapidjson::PrettyWriter
 #include <ciso646> // not
+#include <string> // std::string, std::literals::string_literals::operator""s
 
 namespace cr
 {
 json::Document parseJson(boost::string_ref jsonText)
 {
+    using namespace std::literals::string_literals;
+
     json::Document document{ };
 
     // Parse the string into the document if possible,
     // otherwise throw an exception.
     if (document.Parse(jsonText.data()).HasParseError()) {
         CR_THROW_WITH_SOURCE_INFO(FailedToParseJsonException,
-                                  std::string{ jsonText.data() } + " was invalid");
+                                  "\""s
+                                  + std::string{ jsonText.data() }
+                                  + "\" is not valid JSON.");
     }
 
     return document;
