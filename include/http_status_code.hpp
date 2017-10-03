@@ -12,9 +12,12 @@ namespace cr
 **/
 enum class HttpStatusCode : int
 {
+    // 1xx Informational responses
     CONTINUE                        = rest::CONTINUE,
     SWITCHING_PROTOCOLS             = rest::SWITCHING_PROTOCOLS,
     PROCESSING                      = rest::PROCESSING,
+
+    // 2xx Success
     OK                              = rest::OK,
     CREATED                         = rest::CREATED,
     ACCEPTED                        = rest::ACCEPTED,
@@ -25,15 +28,19 @@ enum class HttpStatusCode : int
     MULTI_STATUS                    = rest::MULTI_STATUS,
     ALREADY_REPORTED                = rest::ALREADY_REPORTED,
     IM_USED                         = rest::IM_USED,
+
+    // 3xx Redirection
     MULTIPLE_CHOICES                = rest::MULTIPLE_CHOICES,
     MOVED_PERMANENTLY               = rest::MOVED_PERMANENTLY,
     FOUND                           = rest::FOUND,
     SEE_OTHER                       = rest::SEE_OTHER,
     NOT_MODIFIED                    = rest::NOT_MODIFIED,
     USE_PROXY                       = rest::USE_PROXY,
-    RESERVED                        = rest::RESERVED,
+    SWITCH_PROXY                    = 306,
     TEMPORARY_REDIRECT              = rest::TEMPORARY_REDIRECT,
     PERMANENT_REDIRECT              = rest::PERMANENT_REDIRECT,
+
+    // 4xx Client errors
     BAD_REQUEST                     = rest::BAD_REQUEST,
     UNAUTHORIZED                    = rest::UNAUTHORIZED,
     PAYMENT_REQUIRED                = rest::PAYMENT_REQUIRED,
@@ -52,6 +59,8 @@ enum class HttpStatusCode : int
     UNSUPPORTED_MEDIA_TYPE          = rest::UNSUPPORTED_MEDIA_TYPE,
     REQUESTED_RANGE_NOT_SATISFIABLE = rest::REQUESTED_RANGE_NOT_SATISFIABLE,
     EXPECTATION_FAILED              = rest::EXPECTATION_FAILED,
+    IM_A_TEAPOT                     = 418,
+    MISDIRECTED_REQUEST             = 421,
     UNPROCESSABLE_ENTITY            = rest::UNPROCESSABLE_ENTITY,
     LOCKED                          = rest::LOCKED,
     FAILED_DEPENDENCY               = rest::FAILED_DEPENDENCY,
@@ -59,6 +68,9 @@ enum class HttpStatusCode : int
     PRECONDITION_REQUIRED           = rest::PRECONDITION_REQUIRED,
     TOO_MANY_REQUESTS               = rest::TOO_MANY_REQUESTS,
     REQUEST_HEADER_FIELDS_TOO_LARGE = rest::REQUEST_HEADER_FIELDS_TOO_LARGE,
+    UNAVAILABLE_FOR_LEGAL_REASONS   = 451,
+
+    // 5xx Server errors
     INTERNAL_SERVER_ERROR           = rest::INTERNAL_SERVER_ERROR,
     NOT_IMPLEMENTED                 = rest::NOT_IMPLEMENTED,
     BAD_GATEWAY                     = rest::BAD_GATEWAY,
