@@ -26,7 +26,7 @@ test_script:
   - cmd: >-
       dir C:\cpp_rest\windows_launch_in_new_process_application\x64\Release
         
-      C:\cpp_rest\windows_launch_in_new_process_application\x64\Release\launchApplication.exe "C:\cpp_rest\Debug\cpp_rest.exe"
+      C:\cpp_rest\windows_launch_in_new_process_application\x64\Release\launchApplication.exe C:\cpp_rest\Debug\cpp_rest.exe
   
       ctest --verbose C:\cpp_rest
       

@@ -36,6 +36,12 @@ int _tmain(int argc, TCHAR *argv[]) {
                         &pi);
 
     if (result) {
+#ifdef UNICODE
+        fwprintf(stderr, L"Managed to launch %s\n", argv[programToLaunchIdx]);
+#else
+        fprintf(stderr, "Managed to launch %s\n", argv[programToLaunchIdx]);
+#endif 
+     
         return EXIT_SUCCESS;
     }
 
