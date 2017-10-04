@@ -19,7 +19,7 @@ build_script:
     
     cmake --build C:\cpp_rest --config "Debug"
     
-    msbuild /m /p:Configuration=Release /p:PlatformTarget=x86 C:\cpp_rest\windows_launch_in_new_process_application\launchApplication.sln
+    msbuild /m /p:Configuration=Release /p:PlatformTarget=Win32 C:\cpp_rest\windows_launch_in_new_process_application\launchApplication.sln
               
 test: on
 test_script:
