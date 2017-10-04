@@ -7,12 +7,21 @@
 #include "../include/namespace_aliases.hpp"
 #include "../include/http_status_code.hpp" // cr::HttpStatusCode
 #include <rapidjson/document.h> // rapidjson::Document
+#include <corvusoft/restbed/response.hpp> // restbed::Response
 #include <corvusoft/restbed/session.hpp> // restbed::Session
 #include <boost/utility/string_ref.hpp> // boost::string_ref
 #include <cstddef> // std::size_t
 
 namespace cr
 {
+/*!
+ * \brief Returns the Content-Length of a restbed::Response.
+ * \param response The response to get the Content-Length of.
+ * \return The Content-Length of 'response' or 0 if the header of 'response'
+ *         had no Content-Length in it.
+**/
+std::size_t getContentLength(const rest::Response &response);
+
 /*!
  * \brief Routine to respond to a request by closing a restbed::Session.
  * \param session The session to close.

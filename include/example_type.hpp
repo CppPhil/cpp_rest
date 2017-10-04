@@ -65,6 +65,24 @@ public:
     **/
     void asJson(json::PrettyWriter<json::StringBuffer> &writer) const;
 
+    /*!
+     * \brief Read accessor member function for the string.
+     * \return A reference to the string.
+    **/
+    const std::string &getStr() const noexcept;
+
+    /*!
+     * \brief Read accessor member function for the struct.
+     * \return A reference to the struct.
+    **/
+    const Struct &getStruct() const noexcept;
+
+    /*!
+     * \brief Read accessor member function for the vector.
+     * \return A reference to the vector.
+    **/
+    const std::vector<double> &getVec() const noexcept;
+
 private:
     /*!
      * \brief Helper routine to serialize the vector non static data member

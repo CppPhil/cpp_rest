@@ -1,6 +1,8 @@
 #include "../include/http_status_code.hpp"
 #include "../include/stringify.hpp" // CR_STRINGIFY
+#include <ciso646> // not
 #include <ostream> // std::ostream
+#include <type_traits> // std::underlying_type_t
 
 /*!
  * \def CR_DETAIL_PRINT_STATUS_CODE(statusCode)
@@ -84,6 +86,27 @@ std::ostream &operator<<(std::ostream &os, HttpStatusCode httpStatusCode)
     }
 
     return os;
+}
+
+bool operator==(HttpStatusCode statusCode, int num)
+{
+    return static_cast<std::underlying_type_t<HttpStatusCode>>(statusCode)
+        == num;
+}
+
+bool operator==(int num, HttpStatusCode statusCode)
+{
+    return statusCode == num;
+}
+
+bool operator!=(HttpStatusCode statusCode, int num)
+{
+    return not (statusCode == num);
+}
+
+bool operator!=(int num, HttpStatusCode statusCode)
+{
+    return statusCode != num;
 }
 } // namespace cr
 

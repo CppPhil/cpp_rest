@@ -24,6 +24,6 @@ script:
   - sh ./scripts/ci/travis/setup_doctest.sh
   - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake -DCMAKE_BUILD_TYPE=Debug . # generate build scripts
   - cmake --build . -- -j2                                                # build using 2 threads
-# TODO: The application may need to be started in a child process before running the tests, assuming that there are tests testing the REST API/s.
+  - ./cpp_rest &                                                          # launch the application
   - ctest --verbose .                                                     # run the tests
 

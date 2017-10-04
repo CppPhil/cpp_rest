@@ -25,7 +25,7 @@ set(APPLICATION_HEADER_FILES include/rest_service.hpp include/namespace_aliases.
 
 set(APPLICATION_SOURCE_FILES src/rest_service.cpp src/http_verb.cpp src/example_rest_api.cpp src/json.cpp src/example_type.cpp src/http_status_code.cpp src/request.cpp src/response.cpp)
 
-set(UNIT_TEST_SOURCE_FILES test/src/main.cpp test/src/json_test.cpp)
+set(UNIT_TEST_SOURCE_FILES test/src/main.cpp test/src/json_test.cpp test/src/example_rest_api_test.cpp)
 
 project(cpp_rest)
 add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}" "src/main.cpp")

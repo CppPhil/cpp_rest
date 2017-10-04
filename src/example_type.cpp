@@ -98,6 +98,21 @@ void ExampleType::asJson(json::PrettyWriter<json::StringBuffer> &writer) const
     writer.EndObject();
 }
 
+const std::string &ExampleType::getStr() const noexcept
+{
+    return m_str;
+}
+
+const ExampleType::Struct &ExampleType::getStruct() const noexcept
+{
+    return m_struct;
+}
+
+const std::vector<double> &ExampleType::getVec() const noexcept
+{
+    return m_v;
+}
+
 void ExampleType::vecToJson(json::PrettyWriter<json::StringBuffer> &writer) const
 {
     // Serialize the vector<double> as a JSON Array of doubles.

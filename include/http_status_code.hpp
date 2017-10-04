@@ -93,5 +93,37 @@ enum class HttpStatusCode : int
  *         invalid value.
 **/
 std::ostream &operator<<(std::ostream &os, HttpStatusCode httpStatusCode);
+
+/*!
+ * \brief Compares the underlying int value of 'statusCode' to 'num'.
+ * \param statusCode The first operand.
+ * \param num The second operand.
+ * \return true if the two operands are considered equal, otherwise false.
+**/
+bool operator==(HttpStatusCode statusCode, int num);
+
+/*!
+ * \brief Compares the underlying int value of 'statusCode' to 'num'.
+ * \param num The first operand.
+ * \param statusCode The second operand.
+ * \return true if the two operands are considered equal, otherwise false.
+**/
+bool operator==(int num, HttpStatusCode statusCode);
+
+/*!
+ * \brief Compares the underlying int value of 'statusCode' to 'num'.
+ * \param statusCode The first operand.
+ * \param num The second operand.
+ * \return true if the two operands are considered not equal, otherwise false.
+**/
+bool operator!=(HttpStatusCode statusCode, int num);
+
+/*!
+ * \brief Compares the underlying int value of 'statusCode' to 'num'.
+ * \param num The first operand.
+ * \param statusCode The second operand.
+ * \return true if the two operands are considered not equal, otherwise false.
+**/
+bool operator!=(int num, HttpStatusCode statusCode);
 } // namespace cr
 #endif // INCG_CR_HTTP_STATUS_CODE_HPP
