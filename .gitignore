@@ -160,4 +160,4 @@ CMakeLists.txt.user
 
 # executables
 cpp_rest
-tester
+unittest

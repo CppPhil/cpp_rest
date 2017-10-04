@@ -13,11 +13,31 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Weffc++ -pedantic -pedantic-errors -Wcast-align -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpointer-arith -Wredundant-decls -Wshadow -Wstack-protector -Wstrict-aliasing=2 -Wunreachable-code -Wunused -Wunused-parameter")
 endif()
 
+if(MSVC)
+    set(HOMEDIR $ENV{USERPROFILE})
+else()
+    set(HOMEDIR $ENV{HOME})
+endif()
+
+set(UNIT_TEST_NAME unittest)
+
+set(APPLICATION_HEADER_FILES include/rest_service.hpp include/namespace_aliases.hpp include/http_verb.hpp include/rest_api.hpp include/example_rest_api.hpp include/json.hpp include/except.hpp include/glue.hpp include/stringify.hpp include/example_type.hpp include/http_status_code.hpp include/request.hpp include/response.hpp)
+
+set(APPLICATION_SOURCE_FILES src/rest_service.cpp src/http_verb.cpp src/example_rest_api.cpp src/json.cpp src/example_type.cpp src/http_status_code.cpp src/request.cpp src/response.cpp)
+
+set(UNIT_TEST_SOURCE_FILES test/src/main.cpp test/src/json_test.cpp)
+
 project(cpp_rest)
-add_executable(${PROJECT_NAME} "src/main.cpp" "src/rest_service.cpp" "include/rest_service.hpp" "include/namespace_aliases.hpp" "include/http_verb.hpp" "src/http_verb.cpp" "include/rest_api.hpp" "include/example_rest_api.hpp" "src/example_rest_api.cpp" "include/json.hpp" "src/json.cpp" "include/except.hpp" "include/glue.hpp" "include/stringify.hpp" "include/example_type.hpp" "src/example_type.cpp" "include/http_status_code.hpp" "src/http_status_code.cpp" "include/request.hpp" "src/request.cpp" "include/response.hpp" "src/response.cpp")
+add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}" "src/main.cpp")
+
+enable_testing()
+
+add_executable(${UNIT_TEST_NAME} "${UNIT_TEST_SOURCE_FILES}" "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}")
+add_test(Unittest ${UNIT_TEST_NAME})
 
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
+target_link_libraries(${UNIT_TEST_NAME} Threads::Threads)
 
 if(MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
@@ -26,31 +46,21 @@ if(MSVC)
     include_directories(C:/Libraries/boost_1_63_0)
 
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Debug/restbed.lib)
+        target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
+        target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
     else()
-        target_link_libraries(${PROJECT_NAME} $ENV{USERPROFILE}/restbed/build/Release/restbed.lib)
+        target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
+        target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
     endif()
-
-    include_directories($ENV{USERPROFILE}/restbed/source)
-
-    include_directories($ENV{USERPROFILE}/rapidjson/include) # C:\Users\appveyor\restbed\build\Debug\restbed.lib
-
-    include_directories($ENV{USERPROFILE}/GSL/include)
-
-    include_directories($ENV{USERPROFILE}/doctest/doctest)
 else()
-    target_link_libraries(${PROJECT_NAME} $ENV{HOME}/restbed/build/librestbed.a)
-    include_directories($ENV{HOME}/restbed/source)
-
-    include_directories($ENV{HOME}/rapidjson/include)
-
-    include_directories($ENV{HOME}/GSL/include)
-
-    include_directories($ENV{HOME}/doctest/doctest)
+    target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
+    target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
 endif()
 
-enable_testing()
+include_directories(${HOMEDIR}/restbed/source)
 
-add_executable(tester "test/src/test.cpp")
-add_test(Tester tester)
+include_directories(${HOMEDIR}/rapidjson/include)
 
+include_directories(${HOMEDIR}/GSL/include)
+
+include_directories(${HOMEDIR}/doctest/doctest)
