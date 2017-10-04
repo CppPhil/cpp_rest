@@ -4,9 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
-int _tmain(int argc, TCHAR *argv[])
-{
-    enum
+int _tmain(int argc, TCHAR *argv[]) {
+    enum 
     {
         programToLaunchIdx = 1,
         expectedArgs = 2
@@ -24,7 +23,7 @@ int _tmain(int argc, TCHAR *argv[])
     PROCESS_INFORMATION pi;
     memset(&pi, 0, sizeof(pi));
 
-    const BOOL result 
+    const BOOL result
         = CreateProcess(NULL,
                         argv[programToLaunchIdx],
                         NULL,
@@ -43,14 +42,14 @@ int _tmain(int argc, TCHAR *argv[])
     LPTSTR errorText = NULL;
 
     FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM
-        | FORMAT_MESSAGE_ALLOCATE_BUFFER
-        | FORMAT_MESSAGE_IGNORE_INSERTS,
-        NULL,
-        GetLastError(),
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        (LPTSTR)&errorText,
-        0,
-        NULL);
+                  | FORMAT_MESSAGE_ALLOCATE_BUFFER
+                  | FORMAT_MESSAGE_IGNORE_INSERTS,
+                  NULL,
+                  GetLastError(),
+                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                  (LPTSTR) &errorText,
+                  0,
+                  NULL);
 
     if (errorText != NULL) {
 #ifdef UNICODE
