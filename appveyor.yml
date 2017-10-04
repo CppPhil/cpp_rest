@@ -22,7 +22,9 @@ build_script:
 test: on
 test_script:
   - cmd: >-
-      start cmd.exe @cmd /k "C:\cpp_rest\cpp_rest.exe"
+      ps: $Process = Start-Process C:\cpp_rest\cpp_rest.exe -PassThru
   
       ctest --verbose C:\cpp_rest
+      
+      ps: Stop-Process -Id $Process.Id
       
