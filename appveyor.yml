@@ -22,9 +22,7 @@ build_script:
 test: on
 test_script:
   - cmd: >-
-      ps: $Process = Start-Process C:\cpp_rest\cpp_rest.exe -PassThru
+      dir C:\cpp_rest
   
       ctest --verbose C:\cpp_rest
-      
-      ps: Stop-Process -Id $Process.Id
       
