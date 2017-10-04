@@ -22,7 +22,7 @@ build_script:
 test: on
 test_script:
   - cmd: >-
-      start cmd.exe @cmd /k "C:\cpp_rest\build\cpp_rest.exe"
+      dir C:\cpp_rest\build     
   
       ctest --verbose C:\cpp_rest
       
