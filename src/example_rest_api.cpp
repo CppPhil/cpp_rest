@@ -7,11 +7,12 @@
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
 #include <iostream> // std::cout
 #include <string> // std::string, std::literals::string_literals::operator""s
+#include <utility> // std::move
 
 namespace cr
 {
-ExampleRestApi::ExampleRestApi()
-    : base_type{ this }
+ExampleRestApi::ExampleRestApi(std::string restbedLogFilePath)
+    : base_type{ this, std::move(restbedLogFilePath) }
 {
     // Register the REST resources ...
 

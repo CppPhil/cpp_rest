@@ -27,8 +27,10 @@ public:
 
     /*!
      * \brief Creates a RestService object.
+     * \param restbedLogFilePath Path of the file that the restbed log shall
+     *                           be written to.
     **/
-    RestService();
+    explicit RestService(std::string restbedLogFilePath);
 
     /*!
      * \brief Destroys a RestService object.
@@ -74,6 +76,7 @@ private:
     rest::Service m_service; /*!< The underlying service */
     std::vector<std::pair<std::shared_ptr<rest::Resource>, RequestHandler>> m_resources;
     std::shared_ptr<rest::Settings> m_settings;
+    std::string m_restbedLogFilePath;
 };
 } // namespace cr
 #endif // INCG_CR_REST_SERVICE_HPP

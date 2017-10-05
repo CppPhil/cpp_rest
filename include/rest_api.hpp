@@ -3,6 +3,7 @@
 #include "../include/rest_service.hpp" // cr::RestService
 #include "../include/except.hpp" // CR_THROW_IF_NULL
 #include <boost/noncopyable.hpp> // boost::noncopyable
+#include <string> // std::string
 #include <utility> // std::move
 
 namespace cr
@@ -29,8 +30,8 @@ public:
      * \param derived Pointer to the derived type.
      * \throws cr::NullPointerException if 'derived' is nullptr.
     **/
-    explicit RestApi(derived_type *derived)
-        : m_restService{ },
+    RestApi(derived_type *derived, std::string restbedLogFilePath)
+        : m_restService{ std::move(restbedLogFilePath) },
           m_derived{ derived }
     {
         CR_THROW_IF_NULL(m_derived); // derived can't be nullptr.

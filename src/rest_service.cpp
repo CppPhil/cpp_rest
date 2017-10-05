@@ -1,14 +1,18 @@
 #include "../include/rest_service.hpp"
 #include "../include/except.hpp" // CR_THROW_IF_NULL
+#include "../include/restbed_logger.hpp" // cr::RestbedLogger
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
 #include <string> // std::string
+#include <memory> // std::make_shared
+#include <utility> // std::move
 
 namespace cr
 {
-RestService::RestService()
+RestService::RestService(std::string restbedLogFilePath)
     : m_service{ },
       m_resources{ },
-      m_settings{ std::make_shared<rest::Settings>() }
+      m_settings{ std::make_shared<rest::Settings>() },
+      m_restbedLogFilePath{ std::move(restbedLogFilePath) }
 {
 }
 
@@ -40,6 +44,9 @@ RestService &RestService::startService(std::uint16_t port)
     m_settings->set_default_header("Connection", "close");
 
     publishResources();
+
+    // Register the RestbedLogger with the service.
+    m_service.set_logger(std::make_shared<RestbedLogger>(m_restbedLogFilePath));
 
     // Start running the service.
     m_service.start(m_settings);

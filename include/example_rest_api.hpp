@@ -2,6 +2,7 @@
 #define INCG_CR_EXAMPLE_REST_API_HPP
 #include "../include/rest_api.hpp" // cr::RestApi
 #include <cstdint> // std::uint16_t
+#include <string> // std::string
 
 namespace cr
 {
@@ -18,8 +19,10 @@ public:
     /*!
      * \brief Creates an ExampleRestApi object.
      *        Registers the REST resources with the base type.
+     * \param restbedLogFilePath Path to the file that the log of the underlying
+     *                           restbed::Service shall be written to.
     **/
-    ExampleRestApi();
+    explicit ExampleRestApi(std::string restbedLogFilePath);
 
     /*!
      * \brief Destroys an ExampleRestApi object.
