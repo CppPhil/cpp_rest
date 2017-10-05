@@ -87,6 +87,7 @@ std::ostream &operator<<(std::ostream &os, HttpStatusCode httpStatusCode)
 
     return os;
 }
+#undef CR_DETAIL_PRINT_STATUS_CODE
 
 bool operator==(HttpStatusCode statusCode, int num)
 {
@@ -109,5 +110,3 @@ bool operator!=(int num, HttpStatusCode statusCode)
     return statusCode != num;
 }
 } // namespace cr
-
-#undef CR_DETAIL_PRINT_STATUS_CODE

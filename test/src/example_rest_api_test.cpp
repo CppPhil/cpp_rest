@@ -15,6 +15,7 @@
 #include <map> // std::multimap
 #include <memory> // std::shared_ptr
 
+#ifndef _WIN32
 TEST_CASE("POST_resource_test")
 {
     using namespace std::literals::string_literals;
@@ -78,3 +79,104 @@ TEST_CASE("POST_resource_test")
     CHECK(obj.getVec()[0U] == doctest::Approx(1.1));
     CHECK(obj.getVec()[1U] == doctest::Approx(2.2));
 }
+
+TEST_CASE("POST_resource2_positive_test")
+{
+    using namespace std::literals::string_literals;
+
+    static constexpr std::uint16_t portToSendTo{ 1984U };
+
+    const cr::ExampleType testObject{ "TEST_TEXT"s,
+                                      { 1, 2.734 },
+                                      {3.3, 4.4, 1.1, 5.23456 } };
+
+    const cr::json::Document jsonDocument{
+        cr::asJson(testObject)
+    };
+
+    const std::shared_ptr<cr::rest::Response> response{
+        cr::sendRequestSync("localhost", portToSendTo,
+                            cr::HttpVerb::POST, "/resource2",
+                            jsonDocument)
+    };
+
+    REQUIRE(response != nullptr);
+
+    REQUIRE(response->get_status_code() == cr::HttpStatusCode::ACCEPTED);
+
+    const std::multimap<std::string, std::string> headers{
+        response->get_headers()
+    };
+
+    const auto endIt = std::end(headers);
+
+    static const std::string contentType{ "Content-Type" };
+    static const std::string contentLength{ "Content-Length" };
+
+    REQUIRE(headers.find(contentType) != endIt);
+    REQUIRE(headers.find(contentType)->second == "text/plain"s);
+
+    REQUIRE(headers.find(contentLength) != endIt);
+
+    REQUIRE_NOTHROW(boost::lexical_cast<std::size_t>(headers.find(contentLength)->second));
+
+    const std::size_t length{
+        boost::lexical_cast<std::size_t>(headers.find(contentLength)->second)
+    };
+
+    // Fetch the response body.
+    cr::rest::Http::fetch(length, response);
+
+    const cr::rest::Bytes rawBody{ response->get_body() };
+    REQUIRE(rawBody.size() == length);
+
+    // interpret the bytes as string
+    const std::string bodyAsString(std::begin(rawBody), std::end(rawBody));
+
+    CHECK(bodyAsString == "Thanks for the data."s);
+}
+
+TEST_CASE("POST_resource2_no_json_sent")
+{
+    static constexpr std::uint16_t port{ 1984U };
+
+    const std::shared_ptr<cr::rest::Response> response{
+        cr::sendRequestSync("localhost", port, cr::HttpVerb::POST,
+                            "/resource2", "This isn't JSON.")
+    };
+
+    REQUIRE(response != nullptr);
+
+    CHECK(response->get_status_code() == cr::HttpStatusCode::BAD_REQUEST);
+}
+
+TEST_CASE("POST_resource2_invalid_json")
+{
+    static constexpr std::uint16_t port{ 1984U };
+    static constexpr char json[] = R"(
+                                      {
+                                          "str": "Text",
+                                          "moreText": "testtesttest",
+                                          "obj": {
+                                              "val": 5.5,
+                                              "int": 1
+                                          }
+                                      }
+                                   )";
+
+    REQUIRE_NOTHROW(cr::parseJson(json));
+
+    const cr::json::Document jsonDocument{
+        cr::parseJson(json)
+    };
+
+    const std::shared_ptr<cr::rest::Response> response{
+        cr::sendRequestSync("localhost", port, cr::HttpVerb::POST, "/resource2",
+                            jsonDocument)
+    };
+
+    REQUIRE(response != nullptr);
+
+    CHECK(response->get_status_code() == cr::HttpStatusCode::IM_A_TEAPOT);
+}
+#endif // !_WIN32
