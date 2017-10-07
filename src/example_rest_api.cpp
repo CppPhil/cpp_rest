@@ -3,6 +3,7 @@
 #include "../include/json.hpp" // cr::asJson
 #include "../include/request.hpp" // cr::getContentLength
 #include "../include/response.hpp" // cr::respond
+#include "../include/log.hpp" // CR_LOG
 #include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
 #include <iostream> // std::cout
@@ -96,6 +97,8 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
                       << BOOST_CURRENT_FUNCTION
                       << ":\n" << o << std::endl;
         } catch (const FailedToParseJsonException &ex) {
+            CR_LOG(LogLevel::error) << "Got invalid data: " << s;
+
             // The data could not be parsed as JSON.
             const std::string replStr{ "Data received was not JSON.\n"s
                                        + ex.what() };
@@ -104,6 +107,8 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
             respond(*session, HttpStatusCode::BAD_REQUEST, replStr);
             return; // Exit the lambda.
         } catch (const InvalidJsonException &ex) {
+            CR_LOG(LogLevel::error) << "Invalid JSON: " << s;
+
             // The data was JSON, but the contents were not correct.
             const std::string replStr{ "The JSON received was not valid.\n"s
                                        + ex.what() };
