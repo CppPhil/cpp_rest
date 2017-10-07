@@ -1,4 +1,5 @@
 #include "../include/restbed_logger.hpp"
+#include "../include/unused.hpp" // CR_UNUSED
 #include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
 #include <ciso646> // not
 #include <cstdarg> // std::va_list, va_start, va_end
@@ -35,7 +36,7 @@ void RestbedLogger::stop()
 
 void RestbedLogger::start(const std::shared_ptr<const rest::Settings> &settings)
 {
-    static_cast<void>(settings);
+    CR_UNUSED(settings);
 }
 
 void RestbedLogger::log(const Level level, const char *format, ...)

@@ -1,4 +1,5 @@
 #include "../include/example_rest_api.hpp"
+#include "../include/unused.hpp" // CR_UNUSED
 #include <cstddef> // std::size_t
 #include <cstring> // std::strlen
 #include <iostream> // std::cerr
@@ -11,7 +12,7 @@ int main(int argc, char *argv[])
 {
     static constexpr int applicationIdx = 0;
 
-    static_cast<void>(argc);
+    CR_UNUSED(argc);
 
     const std::size_t strLen{ std::strlen(argv[applicationIdx]) };
     const char * const begin{ argv[applicationIdx] };
