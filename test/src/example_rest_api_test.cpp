@@ -15,7 +15,7 @@
 #include <map> // std::multimap
 #include <memory> // std::shared_ptr
 
-#ifndef CI_APPVEYOR
+#if !defined(CI_APPVEYOR) && !defined(WIN32_DEBUG_MODE)
 TEST_CASE("POST_resource_test")
 {
     using namespace std::literals::string_literals;
@@ -179,5 +179,5 @@ TEST_CASE("POST_resource2_invalid_json")
 
     CHECK(response->get_status_code() == cr::HttpStatusCode::IM_A_TEAPOT);
 }
-#endif // !CI_APPVEYOR
+#endif // !defined(CI_APPVEYOR) && !defined(WIN32_DEBUG_MODE)
 

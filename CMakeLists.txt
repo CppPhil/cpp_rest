@@ -58,6 +58,8 @@ if(WIN32)
     include_directories(C:/Libraries/boost_1_63_0)
 
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+		target_compile_definitions(${PROJECT_NAME} PRIVATE WIN32_DEBUG_MODE)
+		target_compile_definitions(${UNIT_TEST_NAME} PRIVATE WIN32_DEBUG_MODE)
         target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
         target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
     else()
