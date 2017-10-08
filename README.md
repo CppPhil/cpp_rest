@@ -33,4 +33,5 @@
 	
 ## Running the tests
 After having built the application, launch the application.
+
 Run the tests: ctest --verbose .
