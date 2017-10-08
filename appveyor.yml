@@ -30,6 +30,5 @@ test_script:
       
       if exist C:\cpp_rest\example_rest_api_restbed.log type C:\cpp_rest\example_rest_api_restbed.log
       
-      if exist C:\cpp_rest\cpp_rest.log type C:\cpp_rest\cpp_rest.log&
-      
+      if exist C:\cpp_rest\cpp_rest.log type C:\cpp_rest\cpp_rest.log      
       
