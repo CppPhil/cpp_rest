@@ -470,3 +470,8 @@ CMakeLists.txt.user
 # executables
 cpp_rest
 unittest
+
+# Visual Studio project files
+*.vcxproj
+*.sln
+*.vcxproj.filters
