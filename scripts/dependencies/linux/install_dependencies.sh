@@ -10,9 +10,6 @@ make install
 # install rapidjson
 git clone https://github.com/Tencent/rapidjson.git ~/rapidjson
 
-# install boost
-sudo apt-get install libboost-all-dev
-
 # install GSL
 git clone https://github.com/Microsoft/GSL.git ~/GSL
 
