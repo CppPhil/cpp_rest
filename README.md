@@ -23,14 +23,14 @@
     
 ## Building
 - On GNU/Linux:
-	- Generate the build files: cmake .
-	- Build: cmake --build .
+	- Generate just the build files: sh ./generate_build_scripts.sh
+	- Build: sh ./build.sh
 - On Microsoft Windows:
-    - Generate the build files (debug mode): cmake -DCMAKE_BUILD_TYPE=Debug .
-	- Build (debug mode): cmake --build . --config "Debug"
-	- Generate the build files (release mode): cmake -DCMAKE_BUILD_TYPE=Release .
-	- Build (release mode): cmake --build . --config "Release"	
+    - Generate just the build files (debug mode): generate_build_scripts.bat debug
+	- Build (debug mode): build.bat debug
+	- Generate just the build files (release mode): generate_build_scripts.bat release 
+	- Build (release mode): build.bat release
 	
 ## Running the tests
 After having built the application, launch the application.
-Run the tests: cmake --verbose .
+Run the tests: ctest --verbose .
