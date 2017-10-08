@@ -8,13 +8,15 @@ GOTO ERROR
 
 :DEBUG_MODE
     cmake -DCMAKE_BUILD_TYPE=Debug .
-    exit 0
+    GOTO END
     
 :RELEASE_MODE
     cmake -DCMAKE_BUILD_TYPE=Release .
-    exit 0
+    GOTO END
     
 :ERROR
     ECHO Parameter must be Debug or Release!
-    exit 1
+    GOTO END
 
+:END
+	
