@@ -15,16 +15,23 @@
 #include <map> // std::multimap
 #include <memory> // std::shared_ptr
 
+namespace
+{
+constexpr std::uint16_t port{ 1984U };
+constexpr char ipv4Localhost[] = "127.0.0.1";
+constexpr char contentType[] = "Content-Type";
+constexpr char contentLength[] = "Content-Length";
+} // anonymous namespace
+
 #if !defined(CI_APPVEYOR) && !defined(WIN32_DEBUG_MODE)
 TEST_CASE("POST_resource_test")
 {
     using namespace std::literals::string_literals;
 
-    static constexpr std::uint16_t port{ 1984U };
     static constexpr char messageToSend[] = "\"Guten Tag\"";
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("127.0.0.1", port, cr::HttpVerb::POST,
+        cr::sendRequestSync(ipv4Localhost, port, cr::HttpVerb::POST,
                             "/resource", messageToSend)
     };
 
@@ -37,9 +44,6 @@ TEST_CASE("POST_resource_test")
     };
 
     const auto endIt = std::end(headers);
-
-    static const std::string contentType{ "Content-Type" };
-    static const std::string contentLength{ "Content-Length" };
 
     REQUIRE(headers.find(contentType) != endIt);
     REQUIRE(headers.find(contentType)->second == "application/json"s);
@@ -84,8 +88,6 @@ TEST_CASE("POST_resource2_positive_test")
 {
     using namespace std::literals::string_literals;
 
-    static constexpr std::uint16_t portToSendTo{ 1984U };
-
     const cr::ExampleType testObject{ "TEST_TEXT"s,
                                       { 1, 2.734 },
                                       {3.3, 4.4, 1.1, 5.23456 } };
@@ -95,7 +97,7 @@ TEST_CASE("POST_resource2_positive_test")
     };
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("127.0.0.1", portToSendTo,
+        cr::sendRequestSync(ipv4Localhost, port,
                             cr::HttpVerb::POST, "/resource2",
                             jsonDocument)
     };
@@ -109,9 +111,6 @@ TEST_CASE("POST_resource2_positive_test")
     };
 
     const auto endIt = std::end(headers);
-
-    static const std::string contentType{ "Content-Type" };
-    static const std::string contentLength{ "Content-Length" };
 
     REQUIRE(headers.find(contentType) != endIt);
     REQUIRE(headers.find(contentType)->second == "text/plain"s);
@@ -138,10 +137,8 @@ TEST_CASE("POST_resource2_positive_test")
 
 TEST_CASE("POST_resource2_no_json_sent")
 {
-    static constexpr std::uint16_t port{ 1984U };
-
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("127.0.0.1", port, cr::HttpVerb::POST,
+        cr::sendRequestSync(ipv4Localhost, port, cr::HttpVerb::POST,
                             "/resource2", "This isn't JSON.")
     };
 
@@ -152,7 +149,6 @@ TEST_CASE("POST_resource2_no_json_sent")
 
 TEST_CASE("POST_resource2_invalid_json")
 {
-    static constexpr std::uint16_t port{ 1984U };
     static constexpr char json[] = R"(
                                       {
                                           "str": "Text",
@@ -171,8 +167,8 @@ TEST_CASE("POST_resource2_invalid_json")
     };
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("127.0.0.1", port, cr::HttpVerb::POST, "/resource2",
-                            jsonDocument)
+        cr::sendRequestSync(ipv4Localhost, port, cr::HttpVerb::POST,
+                            "/resource2", jsonDocument)
     };
 
     REQUIRE(response != nullptr);
@@ -180,4 +176,3 @@ TEST_CASE("POST_resource2_invalid_json")
     CHECK(response->get_status_code() == cr::HttpStatusCode::IM_A_TEAPOT);
 }
 #endif // !defined(CI_APPVEYOR) && !defined(WIN32_DEBUG_MODE)
-
