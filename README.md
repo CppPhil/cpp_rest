@@ -36,6 +36,26 @@ After having built the application, launch the application.
 
 Run the tests: ctest --verbose .
 
+## Documentation
+Documentation for this project can be generated using Doxygen.
+
+
+restbed: https://github.com/Corvusoft/restbed/tree/master/documentation
+
+
+rapidjson: http://rapidjson.org/
+
+
+boost: http://www.boost.org/doc/libs/1_63_0/
+
+
+GSL: https://github.com/Microsoft/GSL (see the source code),
+
+also see: https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md
+
+
+doctest: https://github.com/onqtam/doctest/blob/master/doc/markdown/readme.md#reference
+
 ## REST parameters
 ### Receiving requests with path parameters
 In a registered callback function such as ExampleRestApi::handlePostResource
