@@ -32,8 +32,9 @@ std::string getApplicationRootPath(const char *argv0)
     });
 
     if (it == rend) {
-        CR_THROW_WITH_SOURCE_INFO(std::runtime_error,
-                                  R"(argv[0] had no "\" or "/"!)");
+        CR_THROW_WITH_SOURCE_INFO(
+            std::runtime_error,
+            R"(argv[0] had no "\" or "/"!)");
     }
 
     return std::string(begin, it.base());

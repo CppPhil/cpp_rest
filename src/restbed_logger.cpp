@@ -15,10 +15,11 @@ RestbedLogger::RestbedLogger(boost::string_ref logfilePath)
     using namespace std::literals::string_literals;
 
     if (m_file == nullptr) {
-        CR_THROW_WITH_SOURCE_INFO(FailedToCreateRestbedLogger,
-                                  "Failed to open file \""s
-                                  + logfilePath.data()
-                                  + "\"");
+        CR_THROW_WITH_SOURCE_INFO(
+            FailedToCreateRestbedLogger,
+            "Failed to open file \""s
+            + logfilePath.data()
+            + "\"");
     }
 }
 
@@ -47,9 +48,11 @@ void RestbedLogger::log(const Level level, const char *format, ...)
     va_end(args);
 }
 
-void RestbedLogger::log_if(bool expression,
-                           const Level level,
-                           const char *format, ...)
+void RestbedLogger::log_if(
+    bool expression,
+    const Level level,
+    const char *format,
+    ...)
 {
     if (not expression) {
         return;
@@ -83,9 +86,10 @@ const char *RestbedLogger::loglevelAsString(Level level)
     return "INVALID LEVEL!";
 }
 
-void RestbedLogger::vlog(Level level,
-                         const char *format,
-                         std::va_list args)
+void RestbedLogger::vlog(
+    Level level,
+    const char *format,
+    std::va_list args)
 {
     std::fprintf(m_file, "%s:", loglevelAsString(level));
     std::vfprintf(m_file, format, args);

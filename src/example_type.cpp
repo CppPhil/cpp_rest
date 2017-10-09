@@ -9,8 +9,8 @@
 
 namespace cr
 {
-ExampleType::Struct
-ExampleType::Struct::fromJson(const json::GenericValue<json::UTF8<>> &object)
+ExampleType::Struct ExampleType::Struct::fromJson(
+    const json::GenericValue<json::UTF8<>> &object)
 {
     // Fetch the components of a Struct.
     const int i{ fetchInt("i", object) };
@@ -21,8 +21,8 @@ ExampleType::Struct::fromJson(const json::GenericValue<json::UTF8<>> &object)
     return s;
 }
 
-void
-ExampleType::Struct::asJson(json::PrettyWriter<json::StringBuffer> &writer) const
+void ExampleType::Struct::asJson(
+    json::PrettyWriter<json::StringBuffer> &writer) const
 {
     // Write the Struct to the rapidjson writer as a JSON Object.
     writer.StartObject();
@@ -70,8 +70,9 @@ ExampleType ExampleType::fromJson(const json::Document &jsonDocument)
     std::transform(std::begin(a), std::end(a), std::back_inserter(v),
                    [](const json::GenericValue<json::UTF8<>> &e) {
         if (not e.IsDouble()) { // Each element of the JSON Array must be a double.
-            CR_THROW_WITH_SOURCE_INFO(InvalidJsonException,
-                                      "json array contained invalid value.");
+            CR_THROW_WITH_SOURCE_INFO(
+                InvalidJsonException,
+                "json array contained invalid value.");
         }
 
         return e.GetDouble(); // Put the double fetched into 'v'.

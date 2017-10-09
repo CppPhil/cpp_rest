@@ -1,6 +1,5 @@
 #include "../../include/json.hpp" // cr::parseJson
 #include <doctest.h>
-#include <utility> // std::declval
 
 TEST_CASE("parse_json_positive_test")
 {
@@ -39,13 +38,9 @@ TEST_CASE("parse_json_positive_test")
 
     using ArrayType = cr::json::GenericValue<cr::json::UTF8<>>::Array;
 
-    ArrayType array{
-        doc["ary"].GetArray()
-    };
+    ArrayType array{ doc["ary"].GetArray() };
 
-    for (decltype(std::declval<ArrayType &>().Size()) i{ 0U };
-         i < array.Size();
-         ++i) {
+    for (decltype(array.Size()) i{ 0U }; i < array.Size(); ++i) {
         REQUIRE(array[i].IsInt());
         REQUIRE(array[i] == (i + 1U));
     }

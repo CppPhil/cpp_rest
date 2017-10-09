@@ -43,16 +43,16 @@ std::size_t getContentLength(const rest::Request &request);
  * \return The response received.
  * \note Blocks the calling thread until the response is received.
 **/
-const std::shared_ptr<rest::Response>
-sendRequestSync(boost::string_ref hostIp,
-                std::uint16_t port,
-                HttpVerb httpVerb,
-                boost::string_ref pathToResource,
-                boost::string_ref contentType,
-                const void *dataToSend,
-                std::size_t dataToSendByteSize,
-                const std::multimap<std::string, std::string> &headers = { },
-                const std::multimap<std::string, std::string> &queryParameters = { });
+const std::shared_ptr<rest::Response> sendRequestSync(
+    boost::string_ref hostIp,
+    std::uint16_t port,
+    HttpVerb httpVerb,
+    boost::string_ref pathToResource,
+    boost::string_ref contentType,
+    const void *dataToSend,
+    std::size_t dataToSendByteSize,
+    const std::multimap<std::string, std::string> &headers = { },
+    const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a request asynchronously.
@@ -71,18 +71,19 @@ sendRequestSync(boost::string_ref hostIp,
  * \return A future to the response.
  * \note Returns immediately.
 **/
-std::future<std::shared_ptr<rest::Response>>
-sendRequestAsync(boost::string_ref hostIp,
-                 std::uint16_t port,
-                 HttpVerb httpVerb,
-                 boost::string_ref pathToResource,
-                 boost::string_ref contentType,
-                 const void *dataToSend,
-                 std::size_t dataToSendByteSize,
-                 const std::function<void (const std::shared_ptr<rest::Request>,
-                                           const std::shared_ptr<rest::Response>)> &callback,
-                 const std::multimap<std::string, std::string> &headers = { },
-                 const std::multimap<std::string, std::string> &queryParameters = { });
+std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
+    boost::string_ref hostIp,
+    std::uint16_t port,
+    HttpVerb httpVerb,
+    boost::string_ref pathToResource,
+    boost::string_ref contentType,
+    const void *dataToSend,
+    std::size_t dataToSendByteSize,
+    const std::function<void (
+        const std::shared_ptr<rest::Request>,
+        const std::shared_ptr<rest::Response>)> &callback,
+    const std::multimap<std::string, std::string> &headers = { },
+    const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a request of JSON data synchronously.
@@ -96,14 +97,14 @@ sendRequestAsync(boost::string_ref hostIp,
  * \return The response.
  * \note Blocks the calling thread until the response is received.
 **/
-const std::shared_ptr<rest::Response>
-sendRequestSync(boost::string_ref hostIp,
-                std::uint16_t port,
-                HttpVerb httpVerb,
-                boost::string_ref pathToResource,
-                const json::Document &json,
-                const std::multimap<std::string, std::string> &headers = { },
-                const std::multimap<std::string, std::string> &queryParameters = { });
+const std::shared_ptr<rest::Response> sendRequestSync(
+    boost::string_ref hostIp,
+    std::uint16_t port,
+    HttpVerb httpVerb,
+    boost::string_ref pathToResource,
+    const json::Document &json,
+    const std::multimap<std::string, std::string> &headers = { },
+    const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a request of JSON data asynchronously.
@@ -119,16 +120,17 @@ sendRequestSync(boost::string_ref hostIp,
  * \return A future to the response.
  * \note Returns immediately.
 **/
-std::future<std::shared_ptr<rest::Response>>
-sendRequestAsync(boost::string_ref hostIp,
-                 std::uint16_t port,
-                 HttpVerb httpVerb,
-                 boost::string_ref pathToResource,
-                 const json::Document &json,
-                 const std::function<void (const std::shared_ptr<rest::Request>,
-                                           const std::shared_ptr<rest::Response>)> &callback,
-                 const std::multimap<std::string, std::string> &headers = { },
-                 const std::multimap<std::string, std::string> &queryParameters = { });
+std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
+    boost::string_ref hostIp,
+    std::uint16_t port,
+    HttpVerb httpVerb,
+    boost::string_ref pathToResource,
+    const json::Document &json,
+    const std::function<void (
+        const std::shared_ptr<rest::Request>,
+        const std::shared_ptr<rest::Response>)> &callback,
+    const std::multimap<std::string, std::string> &headers = { },
+    const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a plain text string synchronously.
@@ -142,14 +144,14 @@ sendRequestAsync(boost::string_ref hostIp,
  * \return The response received.
  * \note Blocks the calling thread until the response is received.
 **/
-const std::shared_ptr<rest::Response>
-sendRequestSync(boost::string_ref hostIp,
-                std::uint16_t port,
-                HttpVerb httpVerb,
-                boost::string_ref pathToResource,
-                boost::string_ref stringToSend,
-                const std::multimap<std::string, std::string> &headers = { },
-                const std::multimap<std::string, std::string> &queryParameters = { });
+const std::shared_ptr<rest::Response> sendRequestSync(
+    boost::string_ref hostIp,
+    std::uint16_t port,
+    HttpVerb httpVerb,
+    boost::string_ref pathToResource,
+    boost::string_ref stringToSend,
+    const std::multimap<std::string, std::string> &headers = { },
+    const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Asynchronously sends a request containing a string.
@@ -166,15 +168,16 @@ sendRequestSync(boost::string_ref hostIp,
  * \return A future of the response.
  * \note Returns immediately.
 **/
-std::future<std::shared_ptr<rest::Response>>
-sentRequestAsync(boost::string_ref hostIp,
-                 std::uint16_t port,
-                 HttpVerb httpVerb,
-                 boost::string_ref pathToResource,
-                 boost::string_ref stringToSend,
-                 const std::function<void (const std::shared_ptr<rest::Request>,
-                                           const std::shared_ptr<rest::Response>)> &callback,
-                 const std::multimap<std::string, std::string> &headers = { },
-                 const std::multimap<std::string, std::string> &queryParameters = { });
+std::future<std::shared_ptr<rest::Response>> sentRequestAsync(
+    boost::string_ref hostIp,
+    std::uint16_t port,
+    HttpVerb httpVerb,
+    boost::string_ref pathToResource,
+    boost::string_ref stringToSend,
+    const std::function<void (
+        const std::shared_ptr<rest::Request>,
+        const std::shared_ptr<rest::Response>)> &callback,
+    const std::multimap<std::string, std::string> &headers = { },
+    const std::multimap<std::string, std::string> &queryParameters = { });
 } // namespace cr
 #endif // INCG_RC_REQUEST_HPP

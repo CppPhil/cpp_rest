@@ -46,7 +46,8 @@ public:
      * \brief Does nothing.
      * \param settings Unused parameter.
     **/
-    virtual void start(const std::shared_ptr<const rest::Settings> &settings) override;
+    virtual void start(
+        const std::shared_ptr<const rest::Settings> &settings) override;
 
     /*!
      * \brief Writes to the log file.
@@ -62,9 +63,11 @@ public:
      * \param level The log level.
      * \param format A null-terminated printf style format string.
     **/
-    virtual void log_if(bool expression,
-                        const Level level,
-                        const char *format, ...) override;
+    virtual void log_if(
+        bool expression,
+        const Level level,
+        const char *format,
+        ...) override;
 
 private:
     /*!

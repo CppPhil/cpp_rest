@@ -17,12 +17,13 @@ std::size_t getContentLength(const rest::Response &response)
     return response.get_header(contentLenStr, defaultValue);
 }
 
-void respond(rest::Session &session,
-             HttpStatusCode httpStatusCode,
-             const void *replyData,
-             std::size_t replyDataByteSize,
-             boost::string_ref contentType,
-             const std::multimap<std::string, std::string> &headers)
+void respond(
+    rest::Session &session,
+    HttpStatusCode httpStatusCode,
+    const void *replyData,
+    std::size_t replyDataByteSize,
+    boost::string_ref contentType,
+    const std::multimap<std::string, std::string> &headers)
 {
     using namespace std::literals::string_literals;
 
@@ -35,35 +36,41 @@ void respond(rest::Session &session,
         { "Content-Type"s, contentType.data() }
     };
 
-    std::copy(std::begin(headers), std::end(headers),
-              std::inserter(headersToSend, std::begin(headersToSend)));
+    std::copy(
+        std::begin(headers), std::end(headers),
+        std::inserter(headersToSend, std::begin(headersToSend)));
 
-    session.close(static_cast<std::underlying_type_t<HttpStatusCode>>(httpStatusCode),
-                  reply,
-                  headersToSend);
+    session.close(
+        static_cast<std::underlying_type_t<HttpStatusCode>>(httpStatusCode),
+        reply,
+        headersToSend);
 }
 
-void respond(rest::Session &session,
-             HttpStatusCode httpStatusCode,
-             const json::Document &jsonDocument,
-             const std::multimap<std::string, std::string> &headers)
+void respond(
+    rest::Session &session,
+    HttpStatusCode httpStatusCode,
+    const json::Document &jsonDocument,
+    const std::multimap<std::string, std::string> &headers)
 {
     static constexpr char contentType[] = "application/json";
 
     const std::string jsonString{ jsonAsText(jsonDocument) };
 
-    respond(session, httpStatusCode, jsonString.data(),
-            jsonString.size(), contentType, headers);
+    respond(
+        session, httpStatusCode, jsonString.data(),
+        jsonString.size(), contentType, headers);
 }
 
-void respond(rest::Session &session,
-             HttpStatusCode httpStatusCode,
-             boost::string_ref stringToSend,
-             const std::multimap<std::string, std::string> &headers)
+void respond(
+    rest::Session &session,
+    HttpStatusCode httpStatusCode,
+    boost::string_ref stringToSend,
+    const std::multimap<std::string, std::string> &headers)
 {
     static constexpr char contentType[] = "text/plain";
 
-    respond(session, httpStatusCode, stringToSend.data(),
-            stringToSend.size(), contentType, headers);
+    respond(
+        session, httpStatusCode, stringToSend.data(),
+        stringToSend.size(), contentType, headers);
 }
 } // namespace cr

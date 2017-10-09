@@ -31,8 +31,9 @@ TEST_CASE("POST_resource_test")
     static constexpr char messageToSend[] = "\"Guten Tag\"";
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync(ipv4Localhost, port, cr::HttpVerb::POST,
-                            "/resource", messageToSend)
+        cr::sendRequestSync(
+            ipv4Localhost, port, cr::HttpVerb::POST,
+            "/resource", messageToSend)
     };
 
     REQUIRE(response != nullptr);
@@ -50,7 +51,8 @@ TEST_CASE("POST_resource_test")
 
     REQUIRE(headers.find(contentLength) != endIt);
 
-    REQUIRE_NOTHROW(boost::lexical_cast<std::size_t>(headers.find(contentLength)->second));
+    REQUIRE_NOTHROW(
+        boost::lexical_cast<std::size_t>(headers.find(contentLength)->second));
 
     const std::size_t length{
         boost::lexical_cast<std::size_t>(headers.find(contentLength)->second)
@@ -97,9 +99,10 @@ TEST_CASE("POST_resource2_positive_test")
     };
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync(ipv4Localhost, port,
-                            cr::HttpVerb::POST, "/resource2",
-                            jsonDocument)
+        cr::sendRequestSync(
+            ipv4Localhost, port,
+            cr::HttpVerb::POST, "/resource2",
+            jsonDocument)
     };
 
     REQUIRE(response != nullptr);
@@ -117,7 +120,8 @@ TEST_CASE("POST_resource2_positive_test")
 
     REQUIRE(headers.find(contentLength) != endIt);
 
-    REQUIRE_NOTHROW(boost::lexical_cast<std::size_t>(headers.find(contentLength)->second));
+    REQUIRE_NOTHROW(
+        boost::lexical_cast<std::size_t>(headers.find(contentLength)->second));
 
     const std::size_t length{
         boost::lexical_cast<std::size_t>(headers.find(contentLength)->second)
@@ -138,8 +142,9 @@ TEST_CASE("POST_resource2_positive_test")
 TEST_CASE("POST_resource2_no_json_sent")
 {
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync(ipv4Localhost, port, cr::HttpVerb::POST,
-                            "/resource2", "This isn't JSON.")
+        cr::sendRequestSync(
+            ipv4Localhost, port, cr::HttpVerb::POST,
+            "/resource2", "This isn't JSON.")
     };
 
     REQUIRE(response != nullptr);
@@ -167,8 +172,9 @@ TEST_CASE("POST_resource2_invalid_json")
     };
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync(ipv4Localhost, port, cr::HttpVerb::POST,
-                            "/resource2", jsonDocument)
+        cr::sendRequestSync(
+            ipv4Localhost, port, cr::HttpVerb::POST,
+            "/resource2", jsonDocument)
     };
 
     REQUIRE(response != nullptr);

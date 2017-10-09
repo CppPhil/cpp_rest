@@ -71,9 +71,9 @@ Ty fromJson(const json::Document &jsonDocument)
  *         a member called 'identifier' or the associated value
  *         is not a JSON Array.
 **/
-json::GenericValue<json::UTF8<>>::Array
-fetchArray(boost::string_ref identifier,
-           json::GenericValue<json::UTF8<>> &json);
+json::GenericValue<json::UTF8<>>::Array fetchArray(
+    boost::string_ref identifier,
+    json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a JSON Array from a JSON object.
@@ -84,9 +84,9 @@ fetchArray(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a JSON Array.
 **/
-json::GenericValue<json::UTF8<>>::ConstArray
-fetchArray(boost::string_ref identifier,
-           const json::GenericValue<json::UTF8<>> &json);
+json::GenericValue<json::UTF8<>>::ConstArray fetchArray(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a bool from a JSON object.
@@ -97,9 +97,9 @@ fetchArray(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a bool.
 **/
-bool
-fetchBool(boost::string_ref identifier,
-          const json::GenericValue<json::UTF8<>> &json);
+bool fetchBool(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a double from a JSON object.
@@ -110,9 +110,9 @@ fetchBool(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a double.
 **/
-double
-fetchDouble(boost::string_ref identifier,
-            const json::GenericValue<json::UTF8<>> &json);
+double fetchDouble(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a float from a JSON object.
@@ -123,9 +123,9 @@ fetchDouble(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a float.
 **/
-float
-fetchFloat(boost::string_ref identifier,
-           const json::GenericValue<json::UTF8<>> &json);
+float fetchFloat(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches an int from a JSON object.
@@ -136,9 +136,9 @@ fetchFloat(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not an int.
 **/
-int
-fetchInt(boost::string_ref identifier,
-         const json::GenericValue<json::UTF8<>> &json);
+int fetchInt(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a std::int64_t from a JSON object.
@@ -149,9 +149,9 @@ fetchInt(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a std::int64_t.
 **/
-std::int64_t
-fetchInt64(boost::string_ref identifier,
-           const json::GenericValue<json::UTF8<>> &json);
+std::int64_t fetchInt64(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a JSON Object from a JSON object.
@@ -162,9 +162,9 @@ fetchInt64(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a JSON Object.
 **/
-json::GenericValue<json::UTF8<>> &
-fetchObject(boost::string_ref identifier,
-            json::GenericValue<json::UTF8<>> &json);
+json::GenericValue<json::UTF8<>> &fetchObject(
+    boost::string_ref identifier,
+    json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a JSON Object from a JSON object.
@@ -175,9 +175,9 @@ fetchObject(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a JSON Object.
 **/
-const json::GenericValue<json::UTF8<>> &
-fetchObject(boost::string_ref identifier,
-            const json::GenericValue<json::UTF8<>> &json);
+const json::GenericValue<json::UTF8<>> &fetchObject(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a string from a JSON object.
@@ -188,9 +188,9 @@ fetchObject(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a string.
 **/
-std::string
-fetchString(boost::string_ref identifier,
-            const json::GenericValue<json::UTF8<>> &json);
+std::string fetchString(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches an unsigned int from a JSON object.
@@ -201,9 +201,9 @@ fetchString(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not an unsigned int.
 **/
-unsigned
-fetchUint(boost::string_ref identifier,
-          const json::GenericValue<json::UTF8<>> &json);
+unsigned fetchUint(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 
 /*!
  * \brief Fetches a std::uint64_t from a JSON object.
@@ -214,8 +214,8 @@ fetchUint(boost::string_ref identifier,
  *         a member called 'identifier' or the associated value
  *         is not a std::uint64_t.
 **/
-std::uint64_t
-fetchUint64(boost::string_ref identifier,
-            const json::GenericValue<json::UTF8<>> &json);
+std::uint64_t fetchUint64(
+    boost::string_ref identifier,
+    const json::GenericValue<json::UTF8<>> &json);
 } // namespace cr
 #endif // INCG_CR_JSON_HPP

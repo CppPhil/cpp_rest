@@ -96,8 +96,9 @@ public:
      *         object.
     **/
     template <typename Ty>
-    friend const WriteToLogProxy &operator<<(const WriteToLogProxy &proxy,
-                                             Ty &&ty)
+    friend const WriteToLogProxy &operator<<(
+        const WriteToLogProxy &proxy,
+        Ty &&ty)
     {
         // the pointer can't be nullptr!
         CR_THROW_IF_NULL(proxy.m_ofstream);

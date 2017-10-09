@@ -23,7 +23,8 @@ class RestService
 {
 public:
     using this_type = RestService;
-    using RequestHandler = std::function<void (const std::shared_ptr<rest::Session>)>;
+    using RequestHandler = std::function<void (
+                               const std::shared_ptr<rest::Session>)>;
 
     /*!
      * \brief Creates a RestService object.
@@ -32,8 +33,9 @@ public:
      * \param bindAddress The IPv4 or IPv6 address that the service shall run on.
      *                    Defaults to the IPv4 localhost address.
     **/
-    explicit RestService(std::string restbedLogFilePath,
-                         std::string bindAddress = "127.0.0.1");
+    explicit RestService(
+        std::string restbedLogFilePath,
+        std::string bindAddress = "127.0.0.1");
 
     /*!
      * \brief Destroys a RestService object.
@@ -48,9 +50,10 @@ public:
      *                       is sent to 'path'.
      * \return A reference to this object.
     **/
-    this_type &addResource(boost::string_ref path,
-                           HttpVerb httpVerb,
-                           const RequestHandler &requestHandler);
+    this_type &addResource(
+        boost::string_ref path,
+        HttpVerb httpVerb,
+        const RequestHandler &requestHandler);
 
     /*!
      * \brief Brings the resources added online at port 'port'.
@@ -77,7 +80,8 @@ private:
     void publishResources();
 
     rest::Service m_service; /*!< The underlying service */
-    std::vector<std::pair<std::shared_ptr<rest::Resource>, RequestHandler>> m_resources;
+    std::vector<std::pair<std::shared_ptr<rest::Resource>,
+                          RequestHandler>> m_resources;
     std::shared_ptr<rest::Settings> m_settings;
     std::string m_restbedLogFilePath;
     std::string m_bindAddress; /*!< The IPv4 or IPv6 address to listen on */

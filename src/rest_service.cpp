@@ -8,8 +8,9 @@
 
 namespace cr
 {
-RestService::RestService(std::string restbedLogFilePath,
-                         std::string bindAddress)
+RestService::RestService(
+    std::string restbedLogFilePath,
+    std::string bindAddress)
     : m_service{ },
       m_resources{ },
       m_settings{ std::make_shared<rest::Settings>() },
@@ -20,13 +21,15 @@ RestService::RestService(std::string restbedLogFilePath,
 
 RestService::~RestService() = default;
 
-RestService &RestService::addResource(boost::string_ref path,
-                                      HttpVerb httpVerb,
-                                      const RequestHandler &requestHandler)
+RestService &RestService::addResource(
+    boost::string_ref path,
+    HttpVerb httpVerb,
+    const RequestHandler &requestHandler)
 {
     // Add the REST resource with the associated handler to the vector.
-    m_resources.emplace_back(std::make_shared<rest::Resource>(),
-                             requestHandler);
+    m_resources.emplace_back(
+        std::make_shared<rest::Resource>(),
+        requestHandler);
 
     auto &pair = m_resources.back();
     rest::Resource &resource{ *(pair.first) };
@@ -35,8 +38,10 @@ RestService &RestService::addResource(boost::string_ref path,
     resource.set_path(path.data()); // Set the path of the REST resource.
 
     // Register the callback function with the HTTP verb for the REST resource.
-    resource.set_method_handler(boost::lexical_cast<std::string>(httpVerb),
-                                callback);
+    resource.set_method_handler(
+        boost::lexical_cast<std::string>(httpVerb),
+        callback);
+
     return *this;
 }
 

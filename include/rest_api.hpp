@@ -34,9 +34,10 @@ public:
      *                    address.
      * \throws cr::NullPointerException if 'derived' is nullptr.
     **/
-    RestApi(derived_type *derived,
-            std::string restbedLogFilePath,
-            std::string bindAddress = "127.0.0.1")
+    RestApi(
+        derived_type *derived,
+        std::string restbedLogFilePath,
+        std::string bindAddress = "127.0.0.1")
         : m_restService{ std::move(restbedLogFilePath), std::move(bindAddress) },
           m_derived{ derived }
     {
@@ -52,9 +53,10 @@ protected:
      *                       that will take a restbed::Session &.
      * \return A reference to this object.
     **/
-    this_type &registerResource(boost::string_ref path,
-                                HttpVerb httpVerb,
-                                RequestHandler requestHandler)
+    this_type &registerResource(
+        boost::string_ref path,
+        HttpVerb httpVerb,
+        RequestHandler requestHandler)
     {
         auto callback // lambda that will be called by the RestService.
             = [requestHandler, this](const std::shared_ptr<rest::Session> session) {

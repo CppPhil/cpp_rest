@@ -17,13 +17,15 @@ ExampleRestApi::ExampleRestApi(std::string restbedLogFilePath)
 {
     // Register the REST resources ...
 
-    registerResource("/resource",
-                     HttpVerb::POST,
-                     &ExampleRestApi::handlePostResource);
+    registerResource(
+        "/resource",
+        HttpVerb::POST,
+        &ExampleRestApi::handlePostResource);
 
-    registerResource("/resource2",
-                     HttpVerb::POST,
-                     &ExampleRestApi::handlePostResource2);
+    registerResource(
+        "/resource2",
+        HttpVerb::POST,
+        &ExampleRestApi::handlePostResource2);
 }
 
 ExampleRestApi::~ExampleRestApi() = default;
@@ -36,7 +38,8 @@ ExampleRestApi &ExampleRestApi::start(std::uint16_t port)
 
 void ExampleRestApi::handlePostResource(rest::Session &session)
 {
-    const std::shared_ptr<const rest::Request> request{ session.get_request() };
+    const std::shared_ptr<const rest::Request> request{
+        session.get_request() };
 
     if (request == nullptr) {
         // error.
@@ -46,8 +49,9 @@ void ExampleRestApi::handlePostResource(rest::Session &session)
     const std::size_t contentLength{ getContentLength(*request) };
 
     // Fetch contentLength bytes and then reply to the request.
-    session.fetch(contentLength, [](const std::shared_ptr<rest::Session> session,
-                                    const rest::Bytes &body) {
+    session.fetch(contentLength,
+                  [](const std::shared_ptr<rest::Session> session,
+                     const rest::Bytes &body) {
 
         using namespace std::literals::string_literals;
         // Interpret the bytes of the body of the request as a string.
@@ -71,7 +75,8 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
 {
     using namespace std::literals::string_literals;
 
-    const std::shared_ptr<const rest::Request> request{ session.get_request() };
+    const std::shared_ptr<const rest::Request> request{
+        session.get_request() };
 
     if (request == nullptr) {
         // error.

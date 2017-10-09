@@ -9,4 +9,3 @@
 
 #define CR_UNUSED(arg) static_cast<void>((arg))
 #endif // INCG_CR_UNUSED_HPP
-

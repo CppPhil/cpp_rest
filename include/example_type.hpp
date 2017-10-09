@@ -97,8 +97,9 @@ private:
      * \param exampleType The object to print.
      * \return A reference to 'os'.
     **/
-    friend std::ostream &operator<<(std::ostream &os,
-                                    const ExampleType &exampleType);
+    friend std::ostream &operator<<(
+        std::ostream &os,
+        const ExampleType &exampleType);
 
     std::string m_str; /*!< The string */
     Struct m_struct; /*!< The nested structure (serialized as JSON Object) */

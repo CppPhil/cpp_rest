@@ -35,12 +35,13 @@ std::size_t getContentLength(const rest::Response &response);
  * \param headers The headers to send, can be used for sending header parameters.
  * \note Responds with just raw bytes.
 **/
-void respond(rest::Session &session,
-             HttpStatusCode httpStatusCode,
-             const void *replyData,
-             std::size_t replyDataByteSize,
-             boost::string_ref contentType,
-             const std::multimap<std::string, std::string> &headers = { });
+void respond(
+    rest::Session &session,
+    HttpStatusCode httpStatusCode,
+    const void *replyData,
+    std::size_t replyDataByteSize,
+    boost::string_ref contentType,
+    const std::multimap<std::string, std::string> &headers = { });
 
 /*!
  * \brief Routine to respond to a request by closing a restbed::Session.
@@ -51,10 +52,11 @@ void respond(rest::Session &session,
  * \note Responds with a JSON document.
  *       The Content-Type will be application/json
 **/
-void respond(rest::Session &session,
-             HttpStatusCode httpStatusCode,
-             const json::Document &jsonDocument,
-             const std::multimap<std::string, std::string> &headers = { });
+void respond(
+    rest::Session &session,
+    HttpStatusCode httpStatusCode,
+    const json::Document &jsonDocument,
+    const std::multimap<std::string, std::string> &headers = { });
 
 /*!
  * \brief Routine to respond to a request by closing a restbed::Session.
@@ -65,9 +67,10 @@ void respond(rest::Session &session,
  * \note Responds with plain text.
  *       The Content-Type will be text/plain
 **/
-void respond(rest::Session &session,
-             HttpStatusCode httpStatusCode,
-             boost::string_ref stringToSend,
-             const std::multimap<std::string, std::string> &headers = { });
+void respond(
+    rest::Session &session,
+    HttpStatusCode httpStatusCode,
+    boost::string_ref stringToSend,
+    const std::multimap<std::string, std::string> &headers = { });
 } // namespace cr
 #endif // INCG_CR_RESPONSE_HPP

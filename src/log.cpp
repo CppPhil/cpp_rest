@@ -112,7 +112,8 @@ Log::Log(std::string logfilePath)
     }
 
     // Enable exceptions for the filestream.
-    m_ofstream.exceptions(std::ofstream::failbit | std::ofstream::badbit
+    m_ofstream.exceptions(std::ofstream::failbit
+                          | std::ofstream::badbit
                           | std::ofstream::eofbit);
 }
 } // namespace cr
