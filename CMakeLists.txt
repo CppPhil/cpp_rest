@@ -40,7 +40,7 @@ if(CI_SERVER STREQUAL "appveyor")
     target_compile_definitions(${UNIT_TEST_NAME} PRIVATE CI_APPVEYOR)    
 elseif(CI_SERVER STREQUAL "travis")
     target_compile_definitions(${PROJECT_NAME} PRIVATE CI_TRAVIS)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE CI_TRAVIS)
+    target_compile_definitions(${UNIT_TEST_NAME} PRIVATE CI_TRAVIS)
 endif()
 
 find_package(Threads REQUIRED)
