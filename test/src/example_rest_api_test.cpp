@@ -24,7 +24,7 @@ TEST_CASE("POST_resource_test")
     static constexpr char messageToSend[] = "\"Guten Tag\"";
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("localhost", port, cr::HttpVerb::POST,
+        cr::sendRequestSync("127.0.0.1", port, cr::HttpVerb::POST,
                             "/resource", messageToSend)
     };
 
@@ -95,7 +95,7 @@ TEST_CASE("POST_resource2_positive_test")
     };
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("localhost", portToSendTo,
+        cr::sendRequestSync("127.0.0.1", portToSendTo,
                             cr::HttpVerb::POST, "/resource2",
                             jsonDocument)
     };
@@ -141,7 +141,7 @@ TEST_CASE("POST_resource2_no_json_sent")
     static constexpr std::uint16_t port{ 1984U };
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("localhost", port, cr::HttpVerb::POST,
+        cr::sendRequestSync("127.0.0.1", port, cr::HttpVerb::POST,
                             "/resource2", "This isn't JSON.")
     };
 
@@ -171,7 +171,7 @@ TEST_CASE("POST_resource2_invalid_json")
     };
 
     const std::shared_ptr<cr::rest::Response> response{
-        cr::sendRequestSync("localhost", port, cr::HttpVerb::POST, "/resource2",
+        cr::sendRequestSync("127.0.0.1", port, cr::HttpVerb::POST, "/resource2",
                             jsonDocument)
     };
 

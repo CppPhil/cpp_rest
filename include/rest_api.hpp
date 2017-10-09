@@ -28,10 +28,16 @@ public:
     /*!
      * \brief Initializes the RestApi base class part.
      * \param derived Pointer to the derived type.
+     * \param restbedLogFilePath The path to the restbed log file to write to.
+     * \param bindAddress The IPv4 or IPv6 address to have the underlying
+     *                    REST service listen on. Defaults to the IPv4 localhost
+     *                    address.
      * \throws cr::NullPointerException if 'derived' is nullptr.
     **/
-    RestApi(derived_type *derived, std::string restbedLogFilePath)
-        : m_restService{ std::move(restbedLogFilePath) },
+    RestApi(derived_type *derived,
+            std::string restbedLogFilePath,
+            std::string bindAddress = "127.0.0.1")
+        : m_restService{ std::move(restbedLogFilePath), std::move(bindAddress) },
           m_derived{ derived }
     {
         CR_THROW_IF_NULL(m_derived); // derived can't be nullptr.

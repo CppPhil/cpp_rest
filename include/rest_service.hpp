@@ -29,8 +29,11 @@ public:
      * \brief Creates a RestService object.
      * \param restbedLogFilePath Path of the file that the restbed log shall
      *                           be written to.
+     * \param bindAddress The IPv4 or IPv6 address that the service shall run on.
+     *                    Defaults to the IPv4 localhost address.
     **/
-    explicit RestService(std::string restbedLogFilePath);
+    explicit RestService(std::string restbedLogFilePath,
+                         std::string bindAddress = "127.0.0.1");
 
     /*!
      * \brief Destroys a RestService object.
@@ -77,6 +80,7 @@ private:
     std::vector<std::pair<std::shared_ptr<rest::Resource>, RequestHandler>> m_resources;
     std::shared_ptr<rest::Settings> m_settings;
     std::string m_restbedLogFilePath;
+    std::string m_bindAddress; /*!< The IPv4 or IPv6 address to listen on */
 };
 } // namespace cr
 #endif // INCG_CR_REST_SERVICE_HPP

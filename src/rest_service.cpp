@@ -8,11 +8,13 @@
 
 namespace cr
 {
-RestService::RestService(std::string restbedLogFilePath)
+RestService::RestService(std::string restbedLogFilePath,
+                         std::string bindAddress)
     : m_service{ },
       m_resources{ },
       m_settings{ std::make_shared<rest::Settings>() },
-      m_restbedLogFilePath{ std::move(restbedLogFilePath) }
+      m_restbedLogFilePath{ std::move(restbedLogFilePath) },
+      m_bindAddress{ std::move(bindAddress) }
 {
 }
 
@@ -42,6 +44,7 @@ RestService &RestService::startService(std::uint16_t port)
 {
     m_settings->set_port(port);
     m_settings->set_default_header("Connection", "close");
+    m_settings->set_bind_address(m_bindAddress);
 
     publishResources();
 

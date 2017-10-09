@@ -13,7 +13,7 @@
 namespace cr
 {
 ExampleRestApi::ExampleRestApi(std::string restbedLogFilePath)
-    : base_type{ this, std::move(restbedLogFilePath) }
+    : base_type{ this, std::move(restbedLogFilePath), "127.0.0.1" }
 {
     // Register the REST resources ...
 
