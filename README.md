@@ -39,9 +39,20 @@ Run the tests: ctest --verbose .
 ## REST parameters
 ### Receiving requests with path parameters
 In a registered callback function such as ExampleRestApi::handlePostResource
-Call has_path_parameter  (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requesthas_path_parameter),
-     get_path_parameter  (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_path_parameter) and
-     get_path_parameters (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_path_parameters)
+
+Call has_path_parameter  
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requesthas_path_parameter),
+
+
+get_path_parameter  
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_path_parameter) and
+     
+     
+get_path_parameters 
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_path_parameters)
 on the request object.
 
 ### Sending requests with path parameters
@@ -51,13 +62,24 @@ sendRequest functions exported by request.hpp
 ### Listening for requests with path parameters
 Use something like "/resource/{name: .*}" as the path parameter of 
 registerResource in ExampleRestApi::ExampleRestApi for instance.
+
+
 Restbed example: https://github.com/Corvusoft/restbed/blob/master/example/path_parameters/source/example.cpp
 
 ### Receiving requests with query parameters
 In a registered callback function such as ExampleRestApi::handlePostResource
-Call has_path_parameter  (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requesthas_query_parameter),
-     get_path_parameter  (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_query_parameter) and
-     get_path_parameters (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_query_parameters)
+
+Call has_path_parameter  
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requesthas_query_parameter),
+     
+get_path_parameter  
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_query_parameter) and
+     
+get_path_parameters 
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_query_parameters)
 on the request object.
 
 ### Sending requests with query parameters
@@ -69,6 +91,7 @@ Just use the resource itself, like "/resource".
 
 ### Receiving requests with body parameters
 The body parameters are part of the body, most likely JSON.
+
 They will have to conform to the REST API as it is specified.
 
 ### Sending requests with body parameters
@@ -80,9 +103,18 @@ Just use the resource itself, like "/resource".
 
 ### Receiving requests with header parameters
 In a registered callback function such as ExampleRestApi::handlePostResource
-Call has_header  (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requesthas_header),
-     get_header  (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_header) and
-     get_headers (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_headers)
+
+Call has_header  
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requesthas_header),
+
+get_header  
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_header) and
+     
+get_headers 
+
+(documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_headers)
 on the request object.
 
 ### Sending requests with header parameters
