@@ -39,7 +39,7 @@ Run the tests: ctest --verbose .
 ## Documentation
 Documentation for this project can be generated using Doxygen.
 
-
+### Documentation of the dependencies
 restbed: https://github.com/Corvusoft/restbed/tree/master/documentation
 
 
