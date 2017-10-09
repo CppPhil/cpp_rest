@@ -15,6 +15,8 @@
 #include <memory> // std::shared_ptr
 #include <functional> // std::function
 #include <future> // std::future
+#include <map> // std::multimap
+#include <string> // std::string
 
 namespace cr
 {
@@ -36,6 +38,8 @@ std::size_t getContentLength(const rest::Request &request);
  * \param dataToSend Pointer to the first (0th) byte of the memory to send.
  * \param dataToSendByteSize The size of the data pointed to by 'dataToSend'
  *                           in bytes.
+ * \param headers The headers to use, can be used to pass header parameters.
+ * \param queryParameters The query parameters. Used to pass query parameters.
  * \return The response received.
  * \note Blocks the calling thread until the response is received.
 **/
@@ -46,7 +50,9 @@ sendRequestSync(boost::string_ref hostIp,
                 boost::string_ref pathToResource,
                 boost::string_ref contentType,
                 const void *dataToSend,
-                std::size_t dataToSendByteSize);
+                std::size_t dataToSendByteSize,
+                const std::multimap<std::string, std::string> &headers = { },
+                const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a request asynchronously.
@@ -60,6 +66,8 @@ sendRequestSync(boost::string_ref hostIp,
  *                           in bytes.
  * \param callback The callback routine to be called when the response
  *                 is received.
+ * \param headers The headers to use, can be used to pass header parameters.
+ * \param queryParameters The query parameters. Used to pass query parameters.
  * \return A future to the response.
  * \note Returns immediately.
 **/
@@ -72,7 +80,9 @@ sendRequestAsync(boost::string_ref hostIp,
                  const void *dataToSend,
                  std::size_t dataToSendByteSize,
                  const std::function<void (const std::shared_ptr<rest::Request>,
-                                           const std::shared_ptr<rest::Response>)> &callback);
+                                           const std::shared_ptr<rest::Response>)> &callback,
+                 const std::multimap<std::string, std::string> &headers = { },
+                 const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a request of JSON data synchronously.
@@ -81,6 +91,8 @@ sendRequestAsync(boost::string_ref hostIp,
  * \param httpVerb The HTTP verb to use.
  * \param pathToResource The REST resource to send the JSON data to.
  * \param json The JSON data to send.
+ * \param headers The headers to use, can be used to pass header parameters.
+ * \param queryParameters The query parameters. Used to pass query parameters.
  * \return The response.
  * \note Blocks the calling thread until the response is received.
 **/
@@ -89,7 +101,9 @@ sendRequestSync(boost::string_ref hostIp,
                 std::uint16_t port,
                 HttpVerb httpVerb,
                 boost::string_ref pathToResource,
-                const json::Document &json);
+                const json::Document &json,
+                const std::multimap<std::string, std::string> &headers = { },
+                const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a request of JSON data asynchronously.
@@ -100,6 +114,8 @@ sendRequestSync(boost::string_ref hostIp,
  * \param json The JSON data to send.
  * \param callback The callback routine to be called when the response is
  *                 received.
+ * \param headers The headers to use, can be used to pass header parameters.
+ * \param queryParameters The query parameters. Used to pass query parameters.
  * \return A future to the response.
  * \note Returns immediately.
 **/
@@ -110,7 +126,9 @@ sendRequestAsync(boost::string_ref hostIp,
                  boost::string_ref pathToResource,
                  const json::Document &json,
                  const std::function<void (const std::shared_ptr<rest::Request>,
-                                           const std::shared_ptr<rest::Response>)> &callback);
+                                           const std::shared_ptr<rest::Response>)> &callback,
+                 const std::multimap<std::string, std::string> &headers = { },
+                 const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Sends a plain text string synchronously.
@@ -119,6 +137,8 @@ sendRequestAsync(boost::string_ref hostIp,
  * \param httpVerb The HTTP verb to use.
  * \param pathToResource The REST resource to send the request to.
  * \param stringToSend The string to be sent as the body of the request.
+ * \param headers The headers to use, can be used to pass header parameters.
+ * \param queryParameters The query parameters. Used to pass query parameters.
  * \return The response received.
  * \note Blocks the calling thread until the response is received.
 **/
@@ -127,7 +147,9 @@ sendRequestSync(boost::string_ref hostIp,
                 std::uint16_t port,
                 HttpVerb httpVerb,
                 boost::string_ref pathToResource,
-                boost::string_ref stringToSend);
+                boost::string_ref stringToSend,
+                const std::multimap<std::string, std::string> &headers = { },
+                const std::multimap<std::string, std::string> &queryParameters = { });
 
 /*!
  * \brief Asynchronously sends a request containing a string.
@@ -139,6 +161,8 @@ sendRequestSync(boost::string_ref hostIp,
  *                     request.
  * \param callback The callback routine to be called as soon as the response
  *                 is received.
+ * \param headers The headers to use, can be used to pass header parameters.
+ * \param queryParameters The query parameters. Used to pass query parameters.
  * \return A future of the response.
  * \note Returns immediately.
 **/
@@ -149,6 +173,8 @@ sentRequestAsync(boost::string_ref hostIp,
                  boost::string_ref pathToResource,
                  boost::string_ref stringToSend,
                  const std::function<void (const std::shared_ptr<rest::Request>,
-                                           const std::shared_ptr<rest::Response>)> &callback);
+                                           const std::shared_ptr<rest::Response>)> &callback,
+                 const std::multimap<std::string, std::string> &headers = { },
+                 const std::multimap<std::string, std::string> &queryParameters = { });
 } // namespace cr
 #endif // INCG_RC_REQUEST_HPP
