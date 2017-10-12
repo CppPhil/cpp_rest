@@ -104,7 +104,7 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
                       << BOOST_CURRENT_FUNCTION
                       << ":\n" << o;
         } catch (const FailedToParseJsonException &ex) {
-            CR_LOG(LogLevel::error) << "Got invalid data: " << s;
+            CR_LOG(LogLevel::error) << "Got invalid data: \n" << s;
 
             // The data could not be parsed as JSON.
             const std::string replStr{ "Data received was not JSON.\n"s
@@ -114,7 +114,7 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
             respond(*session, HttpStatusCode::BAD_REQUEST, replStr);
             return; // Exit the lambda.
         } catch (const InvalidJsonException &ex) {
-            CR_LOG(LogLevel::error) << "Invalid JSON: " << s;
+            CR_LOG(LogLevel::error) << "Invalid JSON: \n" << s;
 
             // The data was JSON, but the contents were not correct.
             const std::string replStr{ "The JSON received was not valid.\n"s

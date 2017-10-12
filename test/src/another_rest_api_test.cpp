@@ -10,6 +10,7 @@
 #include <cstddef> // std::size_t
 #include <cstdint> // std::uint16_t
 #include <string> // std::string, std::literals::string_literals::operator""s
+#include <map> // std::multimap
 
 namespace
 {
@@ -64,5 +65,57 @@ TEST_CASE("GET_path_param_resource")
     const std::string bodyAsString(std::begin(rawBody), std::end(rawBody));
 
     CHECK(bodyAsString == "You sent: \""s + msgToSend + "\"");
+}
+
+TEST_CASE("GET_query_param_resource")
+{
+    using namespace std::literals::string_literals;
+
+    const std::multimap<std::string, std::string> headersToSend{ };
+
+    const std::multimap<std::string, std::string> queryParametersToSend{
+        { "queryKey1", "queryValue1" },
+        { "queryKey2", "queryValue2" }
+    };
+
+    const std::shared_ptr<cr::rest::Response> response{
+        cr::sendRequestSync(
+            ipv4Localhost, port, cr::HttpVerb::GET,
+            "/query_param_resource", "MyMessage",
+            headersToSend, queryParametersToSend)
+    };
+
+    REQUIRE(response != nullptr);
+
+    REQUIRE(response->get_status_code() == cr::HttpStatusCode::ACCEPTED);
+
+    const std::multimap<std::string, std::string> headers{
+        response->get_headers()
+    };
+
+    const auto endIt = std::end(headers);
+
+    REQUIRE(headers.find(contentType) != endIt);
+    REQUIRE(headers.find(contentType)->second == "text/plain"s);
+
+    REQUIRE(headers.find(contentLength) != endIt);
+
+    REQUIRE_NOTHROW(
+        boost::lexical_cast<std::size_t>(headers.find(contentLength)->second));
+
+    const std::size_t length{
+        boost::lexical_cast<std::size_t>(headers.find(contentLength)->second)
+    };
+
+    // Fetch the response body.
+    cr::rest::Http::fetch(length, response);
+
+    const cr::rest::Bytes rawBody{ response->get_body() };
+    REQUIRE(rawBody.size() == length);
+
+    // interpret the bytes as string
+    const std::string bodyAsString(std::begin(rawBody), std::end(rawBody));
+
+    CHECK(bodyAsString == "query parameters are fun");
 }
 #endif // !defined(CI_APPVEYOR) && !defined(WIN32_DEBUG_MODE)
