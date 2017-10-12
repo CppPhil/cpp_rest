@@ -475,3 +475,6 @@ unittest
 *.vcxproj
 *.sln
 *.vcxproj.filters
+
+# Documentation subdirectory
+documentation
