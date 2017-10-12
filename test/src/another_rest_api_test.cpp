@@ -118,4 +118,51 @@ TEST_CASE("GET_query_param_resource")
 
     CHECK(bodyAsString == "query parameters are fun");
 }
+
+TEST_CASE("LINK_header_param_resource")
+{
+    using namespace std::literals::string_literals;
+
+    const std::shared_ptr<cr::rest::Response> response{
+        cr::sendRequestSync(
+            ipv4Localhost, port, cr::HttpVerb::LINK,
+            "/header_param_resource", "blahblahblah",
+            { { "Header-Param", "Value" },
+              { "Another-Header-Param", "Another value" } })
+    };
+
+    REQUIRE(response != nullptr);
+
+    REQUIRE(response->get_status_code()
+            == cr::HttpStatusCode::UNAVAILABLE_FOR_LEGAL_REASONS);
+
+    const std::multimap<std::string, std::string> headers{
+        response->get_headers()
+    };
+
+    const auto endIt = std::end(headers);
+
+    REQUIRE(headers.find(contentType) != endIt);
+    REQUIRE(headers.find(contentType)->second == "text/plain"s);
+
+    REQUIRE(headers.find(contentLength) != endIt);
+
+    REQUIRE_NOTHROW(
+        boost::lexical_cast<std::size_t>(headers.find(contentLength)->second));
+
+    const std::size_t length{
+        boost::lexical_cast<std::size_t>(headers.find(contentLength)->second)
+    };
+
+    // Fetch the response body.
+    cr::rest::Http::fetch(length, response);
+
+    const cr::rest::Bytes rawBody{ response->get_body() };
+    REQUIRE(rawBody.size() == length);
+
+    // interpret the bytes as string
+    const std::string bodyAsString(std::begin(rawBody), std::end(rawBody));
+
+    CHECK(bodyAsString == "sample text");
+}
 #endif // !defined(CI_APPVEYOR) && !defined(WIN32_DEBUG_MODE)

@@ -2,6 +2,7 @@
 #include "../include/request.hpp" // cr::getContentLength
 #include "../include/response.hpp" // cr::respond
 #include "../include/log.hpp" // CR_LOG
+#include "../include/unused.hpp" // CR_UNUSED
 #include <utility> // std::move
 #include <sstream> // std::ostringstream
 #include <string> // std::string
@@ -24,6 +25,12 @@ AnotherRestApi::AnotherRestApi(std::string restbedLogfilePath)
         "/query_param_resource",
         HttpVerb::GET,
         &AnotherRestApi::handleGetQueryParamResource
+    );
+
+    registerResource(
+        "/header_param_resource",
+        HttpVerb::LINK,
+        &AnotherRestApi::handleLinkHeaderParamResource
     );
 }
 
@@ -60,7 +67,9 @@ void AnotherRestApi::handleGetPathParamResource(rest::Session &session)
             oss << "path parameter: " << key << " => " << value << '\n';
         }
 
-        CR_LOG(LogLevel::info) << oss.str();
+        auto s = oss.str();
+        s.pop_back();
+        CR_LOG(LogLevel::info) << s;
     }
 
     const std::size_t contentLength{ getContentLength(*request) };
@@ -99,7 +108,9 @@ void AnotherRestApi::handleGetQueryParamResource(rest::Session &session)
             oss << "query parameter: " << key << " => " << value << '\n';
         }
 
-        CR_LOG(LogLevel::info) << oss.str();
+        auto s = oss.str();
+        s.pop_back();
+        CR_LOG(LogLevel::info) << s;
     }
 
     const std::size_t contentLength{ getContentLength(*request) };
@@ -107,9 +118,50 @@ void AnotherRestApi::handleGetQueryParamResource(rest::Session &session)
     session.fetch(contentLength,
                   [](const std::shared_ptr<rest::Session> session,
                      const rest::Bytes &body) {
-        const std::string s(std::begin(body), std::end(body));
+        CR_UNUSED(body);
         respond(*session, HttpStatusCode::ACCEPTED,
                 "query parameters are fun");
+    });
+}
+
+void AnotherRestApi::handleLinkHeaderParamResource(rest::Session &session)
+{
+    const std::shared_ptr<const rest::Request> request{
+        session.get_request()
+    };
+
+    if (request == nullptr) {
+        CR_LOG(LogLevel::error) << "request was nullptr";
+        return;
+    }
+
+    const std::multimap<std::string, std::string> headers{
+        request->get_headers()
+    };
+
+    {
+        std::ostringstream oss{ };
+
+        for (const auto &pair : headers) {
+            const auto &key   = pair.first;
+            const auto &value = pair.second;
+
+            oss << "Header: " << key << " => " << value << '\n';
+        }
+
+        auto s = oss.str();
+        s.pop_back();
+        CR_LOG(LogLevel::info) << s;
+    }
+
+    const std::size_t contentLength{ getContentLength(*request) };
+
+    session.fetch(contentLength,
+                  [](const std::shared_ptr<rest::Session> session,
+                     const rest::Bytes &body) {
+        CR_UNUSED(body);
+        respond(*session, HttpStatusCode::UNAVAILABLE_FOR_LEGAL_REASONS,
+                "sample text");
     });
 }
 } // namespace cr

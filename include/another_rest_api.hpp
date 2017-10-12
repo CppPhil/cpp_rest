@@ -25,6 +25,8 @@ private:
     void handleGetPathParamResource(rest::Session &session);
 
     void handleGetQueryParamResource(rest::Session &session);
+
+    void handleLinkHeaderParamResource(rest::Session &session);
 };
 } // namespace cr
 #endif // INCG_CR_ANOTHER_REST_API_HPP

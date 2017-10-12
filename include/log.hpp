@@ -26,7 +26,7 @@
         << "\nFile:    " << __FILE__ \
         << "\nFunction " << BOOST_CURRENT_FUNCTION \
         << "\nLine:    " << __LINE__ \
-        << "\nMessage: "
+        << "\nMessage: \n"
 
 namespace cr
 {
