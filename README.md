@@ -89,15 +89,15 @@ Restbed example: https://github.com/Corvusoft/restbed/blob/master/example/path_p
 ### Receiving requests with query parameters
 In a registered callback function such as ExampleRestApi::handlePostResource
 
-Call has_path_parameter  
+Call has_query_parameter  
 
 (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requesthas_query_parameter),
      
-get_path_parameter  
+get_query_parameter  
 
 (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_query_parameter) and
      
-get_path_parameters 
+get_query_parameters 
 
 (documentation: https://github.com/Corvusoft/restbed/blob/master/documentation/API.md#requestget_query_parameters)
 on the request object.
