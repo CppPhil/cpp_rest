@@ -1,14 +1,16 @@
-#include "../include/example_rest_api.hpp"
+#include "../include/example_rest_api.hpp" // cr::ExampleRestApi
+#include "../include/another_rest_api.hpp" // cr::AnotherRestApi
 #include "../include/unused.hpp" // CR_UNUSED
 #include "../include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
 #include <cstddef> // std::size_t
 #include <cstring> // std::strlen
-#include <iostream> // std::cerr
 #include <stdexcept> // std::runtime_error
 #include <exception> // std::terminate
 #include <string> // std::string
+#include <utility> // std::forward
 #include <iterator> // std::make_reverse_iterator
 #include <algorithm> // std::find_if
+#include <future> // std::async
 
 namespace
 {
@@ -39,6 +41,24 @@ std::string getApplicationRootPath(const char *argv0)
 
     return std::string(begin, it.base());
 }
+
+/*!
+ * \brief Wrapper function template to call std::async with std::launch::async.
+ *        Spawns a new thread and runs the invocation of 'callable' with 'args'
+ *        in the new thread.
+ * \param callable The callable to be invoked on the new thread.
+ * \param args The arguments to pass to 'callable'.
+ * \return A std::future to the result of invoking 'callable' with 'args'.
+**/
+template <typename Callable, typename ...Args>
+auto launchAsyncTask(Callable &&callable, Args &&...args) -> decltype(auto)
+{
+    return std::async(
+        std::launch::async,
+        std::forward<Callable>(callable),
+        std::forward<Args>(args)...
+    );
+}
 } // anonymous namespace
 
 int main(int argc, char *argv[])
@@ -47,14 +67,31 @@ int main(int argc, char *argv[])
 
     CR_UNUSED(argc);
 
-    const std::string exampleRestApiRestbedLogFilePath{
+    const std::string applicationRootPath{
         getApplicationRootPath(argv[applicationIdx])
+    };
+
+    const std::string exampleRestApiRestbedLogFilePath{
+        applicationRootPath
         + "example_rest_api_restbed.log"
     };
 
-    // Create the example REST API and have this thread run it.
+    const std::string anotherRestApiRestbedLogFilePath{
+        applicationRootPath
+        + "another_rest_api_restbed.log"
+    };
 
-    cr::ExampleRestApi exampleRestApi{ exampleRestApiRestbedLogFilePath };
-    static constexpr std::uint16_t port = 1984U;
-    exampleRestApi.start(port);
+    std::future<void> f1{ launchAsyncTask(
+        [&exampleRestApiRestbedLogFilePath] {
+            cr::ExampleRestApi exampleRestApi{ exampleRestApiRestbedLogFilePath };
+            static constexpr std::uint16_t port{ 1984U };
+            exampleRestApi.start(port);
+    }) };
+
+    std::future<void> f2{ launchAsyncTask(
+        [&anotherRestApiRestbedLogFilePath] {
+            cr::AnotherRestApi anotherRestApi{ anotherRestApiRestbedLogFilePath };
+            static constexpr std::uint16_t port{ 1985U };
+            anotherRestApi.start(port);
+    }) };
 }

@@ -6,7 +6,6 @@
 #include "../include/log.hpp" // CR_LOG
 #include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
-#include <iostream> // std::cout
 #include <string> // std::string, std::literals::string_literals::operator""s
 #include <utility> // std::move
 
@@ -39,10 +38,11 @@ ExampleRestApi &ExampleRestApi::start(std::uint16_t port)
 void ExampleRestApi::handlePostResource(rest::Session &session)
 {
     const std::shared_ptr<const rest::Request> request{
-        session.get_request() };
+        session.get_request()
+    };
 
     if (request == nullptr) {
-        // error.
+        CR_LOG(LogLevel::error) << "request was nullptr";
         return;
     }
 
@@ -76,10 +76,11 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
     using namespace std::literals::string_literals;
 
     const std::shared_ptr<const rest::Request> request{
-        session.get_request() };
+        session.get_request()
+    };
 
     if (request == nullptr) {
-        // error.
+        CR_LOG(LogLevel::error) << "request was nullptr";
         return;
     }
 
@@ -97,10 +98,11 @@ void ExampleRestApi::handlePostResource2(rest::Session &session)
             // and then try to create an ExampleType object from the JSON.
             const ExampleType o{ fromJson<ExampleType>(parseJson(s)) };
 
-            // Print the object to stdout.
-            std::cout << "Just got ExampleType object in "
+            // Print the object to the log.
+            CR_LOG(LogLevel::info)
+                      << "Just got ExampleType object in "
                       << BOOST_CURRENT_FUNCTION
-                      << ":\n" << o << std::endl;
+                      << ":\n" << o;
         } catch (const FailedToParseJsonException &ex) {
             CR_LOG(LogLevel::error) << "Got invalid data: " << s;
 

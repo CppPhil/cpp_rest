@@ -28,4 +28,5 @@ script:
   - ctest --verbose .                                                                        # run the tests
   - sh ./scripts/ci/travis/print_file_if_exists.sh ./example_rest_api_restbed.log
   - sh ./scripts/ci/travis/print_file_if_exists.sh ./cpp_rest.log
+  - sh ./scripts/ci/travis/print_file_if_exists.sh ./another_rest_api_restbed.log
     
