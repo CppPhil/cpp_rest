@@ -8,6 +8,10 @@
 
 namespace cr
 {
+/*!
+ * \brief Example REST API type that demonstrates the usage of various kinds
+ *        of REST parameters.
+**/
 class AnotherRestApi
     : public RestApi<AnotherRestApi>
 {
@@ -15,17 +19,46 @@ public:
     using this_type = AnotherRestApi;
     using base_type = RestApi<this_type>;
 
+    /*!
+     * \brief Creates an AnotherRestApi object.
+     *        Registers the REST resources of this type.
+     * \param restbedLogfilePath The file path to the restbed log of
+     *                           this REST API.
+    **/
     explicit AnotherRestApi(std::string restbedLogfilePath);
 
+    /*!
+     * \brief Destroys an object of type AnotherRestApi.
+    **/
     ~AnotherRestApi();
 
+    /*!
+     * \brief start Brings this REST API and its REST resources online.
+     * \param port The port to bring the REST API online on.
+     * \return A reference to this object.
+    **/
     this_type &start(std::uint16_t port);
 
 private:
+    /*!
+     * \brief Callback routine that handles GET requests to the path param
+     *        resource.
+     * \param session The associated restbed Session.
+    **/
     void handleGetPathParamResource(rest::Session &session);
 
+    /*!
+     * \brief Callback routine that handles GET requests to the query param
+     *        resource.
+     * \param session The associated restbed Session.
+    **/
     void handleGetQueryParamResource(rest::Session &session);
 
+    /*!
+     * \brief Callback routine that handles LINK requests to the header param
+     *        resource.
+     * \param session The associated restbed Session.
+    **/
     void handleLinkHeaderParamResource(rest::Session &session);
 };
 } // namespace cr

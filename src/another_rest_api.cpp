@@ -15,8 +15,8 @@ AnotherRestApi::AnotherRestApi(std::string restbedLogfilePath)
 {
     // Register the REST resources ...
 
-    registerResource(
-        "/path_param_resource/{name: .*}",
+    registerResource( // A resource with a path parameter
+        "/path_param_resource/{name: .*}", // The path parameter is called 'name'.
         HttpVerb::GET,
         &AnotherRestApi::handleGetPathParamResource
     );
@@ -57,6 +57,7 @@ void AnotherRestApi::handleGetPathParamResource(rest::Session &session)
         request->get_path_parameters()
     };
 
+    // Print the path parameters that were in the request to the log.
     {
         std::ostringstream oss{ };
 
@@ -98,6 +99,7 @@ void AnotherRestApi::handleGetQueryParamResource(rest::Session &session)
         request->get_query_parameters()
     };
 
+    // Print the query parameters that were in the request to the log.
     {
         std::ostringstream oss{ };
 
@@ -139,6 +141,7 @@ void AnotherRestApi::handleLinkHeaderParamResource(rest::Session &session)
         request->get_headers()
     };
 
+    // Print all the headers that were in the request to the log.
     {
         std::ostringstream oss{ };
 

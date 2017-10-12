@@ -30,7 +30,8 @@ TEST_CASE("GET_path_param_resource")
     const std::shared_ptr<cr::rest::Response> response{
         cr::sendRequestSync(
             ipv4Localhost, port, cr::HttpVerb::GET,
-            "/path_param_resource/TEST", msgToSend)
+            "/path_param_resource/TEST", // send TEST as the value of the 'name' path parameter
+            msgToSend)
     };
 
     REQUIRE(response != nullptr);
@@ -71,8 +72,11 @@ TEST_CASE("GET_query_param_resource")
 {
     using namespace std::literals::string_literals;
 
+    // no additional headers to send,
+    // just the auto-generated ones like Content-Length and Content-Type.
     const std::multimap<std::string, std::string> headersToSend{ };
 
+    // The query parameters to send.
     const std::multimap<std::string, std::string> queryParametersToSend{
         { "queryKey1", "queryValue1" },
         { "queryKey2", "queryValue2" }
@@ -127,7 +131,7 @@ TEST_CASE("LINK_header_param_resource")
         cr::sendRequestSync(
             ipv4Localhost, port, cr::HttpVerb::LINK,
             "/header_param_resource", "blahblahblah",
-            { { "Header-Param", "Value" },
+            { { "Header-Param", "Value" }, // the additional header parameters to send.
               { "Another-Header-Param", "Another value" } })
     };
 
@@ -163,6 +167,7 @@ TEST_CASE("LINK_header_param_resource")
     // interpret the bytes as string
     const std::string bodyAsString(std::begin(rawBody), std::end(rawBody));
 
+    // check the body of the reply.
     CHECK(bodyAsString == "sample text");
 }
 #endif // !defined(CI_APPVEYOR) && !defined(WIN32_DEBUG_MODE)
