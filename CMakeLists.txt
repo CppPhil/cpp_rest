@@ -10,7 +10,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
   endif()
 elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Weffc++ -pedantic -pedantic-errors -Wcast-align -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-field-initializers -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wpointer-arith -Wredundant-decls -Wshadow -Wstack-protector -Wstrict-aliasing=2 -Wunreachable-code -Wunused -Wunused-parameter")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Weffc++ -pedantic -pedantic-errors -Wcast-align -Wcast-qual -Wconversion -Wfloat-equal -Wmissing-field-initializers -Wmissing-include-dirs -Wmissing-noreturn -Wpointer-arith -Wredundant-decls -Wshadow -Wstack-protector -Wstrict-aliasing=2 -Wunreachable-code -Wunused -Wunused-parameter")
 endif()
 
 if(WIN32)
@@ -38,7 +38,12 @@ set(APPLICATION_HEADER_FILES
     include/restbed_logger.hpp
     include/unused.hpp
     include/log.hpp
-    include/another_rest_api.hpp)
+    include/another_rest_api.hpp
+    include/test_type.hpp
+    include/database_session.hpp
+    include/test_type_repository.hpp
+    include/os.hpp
+    include/compiler.hpp)
 
 set(APPLICATION_SOURCE_FILES
     src/rest_service.cpp
@@ -51,13 +56,17 @@ set(APPLICATION_SOURCE_FILES
     src/response.cpp
     src/restbed_logger.cpp
     src/log.cpp
-    src/another_rest_api.cpp)
+    src/another_rest_api.cpp
+    src/test_type.cpp
+    src/database_session.cpp
+    src/test_type_repository.cpp)
 
 set(UNIT_TEST_SOURCE_FILES
     test/src/main.cpp
     test/src/json_test.cpp
     test/src/example_rest_api_test.cpp
-    test/src/another_rest_api_test.cpp)
+    test/src/another_rest_api_test.cpp
+    test/src/test_type_repository_test.cpp)
 
 project(cpp_rest)
 add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}" "src/main.cpp")
@@ -101,6 +110,12 @@ if(WIN32)
 else() # not Windows
     target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
     target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
+
+    target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/cppdb/build/libcppdb.a ${CMAKE_DL_LIBS})
+    target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/cppdb/build/libcppdb.a ${CMAKE_DL_LIBS})
+
+    target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/cppdb/build/libcppdb_mysql.a ${CMAKE_DL_LIBS})
+    target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/cppdb/build/libcppdb_mysql.a ${CMAKE_DL_LIBS})
 endif()
 
 include_directories(${HOMEDIR}/restbed/source)
@@ -110,3 +125,5 @@ include_directories(${HOMEDIR}/rapidjson/include)
 include_directories(${HOMEDIR}/GSL/include)
 
 include_directories(${HOMEDIR}/doctest/doctest)
+
+include_directories(${HOMEDIR}/cppdb)
