@@ -21,11 +21,43 @@ endif()
 
 set(UNIT_TEST_NAME unittest)
 
-set(APPLICATION_HEADER_FILES include/rest_service.hpp include/namespace_aliases.hpp include/http_verb.hpp include/rest_api.hpp include/example_rest_api.hpp include/json.hpp include/except.hpp include/glue.hpp include/stringify.hpp include/example_type.hpp include/http_status_code.hpp include/request.hpp include/response.hpp include/restbed_logger.hpp include/unused.hpp include/log.hpp include/another_rest_api.hpp)
+set(APPLICATION_HEADER_FILES
+    include/rest_service.hpp
+    include/namespace_aliases.hpp
+    include/http_verb.hpp
+    include/rest_api.hpp
+    include/example_rest_api.hpp
+    include/json.hpp
+    include/except.hpp
+    include/glue.hpp
+    include/stringify.hpp
+    include/example_type.hpp
+    include/http_status_code.hpp
+    include/request.hpp
+    include/response.hpp
+    include/restbed_logger.hpp
+    include/unused.hpp
+    include/log.hpp
+    include/another_rest_api.hpp)
 
-set(APPLICATION_SOURCE_FILES src/rest_service.cpp src/http_verb.cpp src/example_rest_api.cpp src/json.cpp src/example_type.cpp src/http_status_code.cpp src/request.cpp src/response.cpp src/restbed_logger.cpp src/log.cpp src/another_rest_api.cpp)
+set(APPLICATION_SOURCE_FILES
+    src/rest_service.cpp
+    src/http_verb.cpp
+    src/example_rest_api.cpp
+    src/json.cpp
+    src/example_type.cpp
+    src/http_status_code.cpp
+    src/request.cpp
+    src/response.cpp
+    src/restbed_logger.cpp
+    src/log.cpp
+    src/another_rest_api.cpp)
 
-set(UNIT_TEST_SOURCE_FILES test/src/main.cpp test/src/json_test.cpp test/src/example_rest_api_test.cpp test/src/another_rest_api_test.cpp)
+set(UNIT_TEST_SOURCE_FILES
+    test/src/main.cpp
+    test/src/json_test.cpp
+    test/src/example_rest_api_test.cpp
+    test/src/another_rest_api_test.cpp)
 
 project(cpp_rest)
 add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}" "src/main.cpp")
@@ -66,7 +98,7 @@ if(WIN32)
         target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
         target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
     endif()
-else()
+else() # not Windows
     target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
     target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
 endif()
