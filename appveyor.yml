@@ -32,9 +32,9 @@ build_script:
     
     C:\cpp_rest\scripts\ci\appveyor\setup_restbed.bat 
     
-    dir C:\Users\appveyor\restbed
-    
-    dir C:\Users\appveyor\restbed\build
+    dir C:\Users\appveyor\restbed\build\Debug
+     
+    dir C:\Users\appveyor\restbed\build\Win32
     
     C:\cpp_rest\scripts\ci\appveyor\setup_cppdb.bat
                         
