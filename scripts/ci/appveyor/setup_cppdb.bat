@@ -7,7 +7,9 @@ mkdir "%USERPROFILE%\cppdb\build"
 
 cd "%USERPROFILE%\cppdb\build"
 
-cmake -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" ..
-make
-make install
+cmake -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" -G "NMake Makefiles" ..
+cmake --build .
+
+dir "%USERPROFILE%\cppdb"
+dir "%USERPROFILE%\cppdb\build"
 
