@@ -8,7 +8,9 @@ services:
 install:
   - ps: >-
       $env:MYSQL_PWD="Password12!"
+      
       $cmd = '"C:\Program Files\MySQL\MySQL Server 5.7\bin\mysql" -e C:\cpp_rest\scripts\sql\setup_db.sql --user=root'
+      
       iex "& $cmd"
   
 build_script:
