@@ -2,6 +2,7 @@
 
 ## Required software
 - Git 
+- SVN
 - CMake
 
 ## Installing the dependencies
@@ -55,6 +56,9 @@ also see: https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuideli
 
 
 doctest: https://github.com/onqtam/doctest/blob/master/doc/markdown/readme.md#reference
+
+
+cppdb: http://cppcms.com/sql/cppdb/index.html
 
 ## REST parameters
 ### Receiving requests with path parameters
