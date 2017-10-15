@@ -22,6 +22,8 @@ script:
   - sudo sh ./scripts/ci/travis/setup_boost.sh
   - sh ./scripts/ci/travis/setup_gsl.sh
   - sh ./scripts/ci/travis/setup_doctest.sh
+  - sudo sh ./scripts/ci/travis/setup_mysql_database.sh
+  - sh ./scripts/ci/travis/setup_cppdb.sh
   - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake -DCMAKE_BUILD_TYPE=Debug -DCI_SERVER=travis . # generate build scripts
   - cmake --build . -- -j2                                                                   # build using 2 threads
   - ./cpp_rest &                                                                             # launch the application

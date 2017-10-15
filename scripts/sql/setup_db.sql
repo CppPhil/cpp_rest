@@ -8,3 +8,5 @@ CREATE TABLE test_type (
     PRIMARY KEY (id)
 )
 
+GRANT ALL PRIVILEGES ON testdb.* To 'testuser'@'localhost' IDENTIFIED BY 'password';
+
