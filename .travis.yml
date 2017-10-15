@@ -19,10 +19,13 @@ addons:
     packages:
       - g++-5
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -y install libboost-all-dev
+
 script:
   - bash ./scripts/ci/travis/setup_restbed.sh
   - bash ./scripts/ci/travis/setup_rapidjson.sh
-  - sudo bash ./scripts/ci/travis/setup_boost.sh
   - bash ./scripts/ci/travis/setup_gsl.sh
   - bash ./scripts/ci/travis/setup_doctest.sh
   - bash ./scripts/ci/travis/setup_mysql_database.sh
