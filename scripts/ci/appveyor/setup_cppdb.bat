@@ -7,6 +7,8 @@ mkdir "%USERPROFILE%\cppdb\build"
 
 cd "%USERPROFILE%\cppdb\build"
 
+"C:\Program Files(x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat"
+
 cmake -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" -G "NMake Makefiles" ..
 cmake --build .
 
