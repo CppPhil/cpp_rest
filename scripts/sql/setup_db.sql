@@ -7,4 +7,4 @@ CREATE TABLE test_type (
     str TEXT NOT NULL,
     PRIMARY KEY (id)
 );
-GRANT ALL PRIVILEGES ON testdb.* TO 'testuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON testdb.* TO testuser@localhost IDENTIFIED BY 'password';
