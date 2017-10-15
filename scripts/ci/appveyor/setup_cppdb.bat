@@ -11,6 +11,8 @@ cmake -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" -DDISABLE_MYSQ
 cmake --build .
 
 xcopy "%USERPROFILE%\cppdb\build\Debug\cppdb.dll" "C:\cpp_rest" /Y
+mkdir "C:\cpp_rest\Debug"
+xcopy "%USERPROFILE%\cppdb\build\Debug\cppdb.dll" "C:\cpp_rest\Debug" /Y
 
-dir C:\cpp_rest
+dir "%USERPROFILE%\cppdb\build\Debug"
 
