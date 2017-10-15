@@ -17,6 +17,10 @@ build_script:
     
     C:\cpp_rest\scripts\ci\appveyor\setup_restbed.bat 
     
+    dir "C:\Program Files\MySQL\MySQL Server 5.7"
+    
+    dir "C:\Program Files\MySQL\MySQL Server 5.7\bin"
+    
     C:\cpp_rest\scripts\ci\appveyor\setup_mysql_database.bat
     
     C:\cpp_rest\scripts\ci\appveyor\setup_cppdb.bat
