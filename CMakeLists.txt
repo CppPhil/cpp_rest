@@ -104,12 +104,14 @@ if(WIN32)
         target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
         target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
 
-        target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/cppdb/build/Debug/cppdb.lib)
+        target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/cppdb/build/Debug/libcppdb.lib)
+        target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/cppdb/build/Debug/libcppdb.lib)
     else()
         target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
         target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
 
-        target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/cppdb/build/Release/cppdb.lib)
+        target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/cppdb/build/Release/libcppdb.lib)
+        target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/cppdb/build/Release/libcppdb.lib)
     endif()
 else() # not Windows
     target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
