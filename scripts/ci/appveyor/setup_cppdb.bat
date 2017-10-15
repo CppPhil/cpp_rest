@@ -10,5 +10,5 @@ cd "%USERPROFILE%\cppdb\build"
 cmake -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" -G "Visual Studio 14" ..
 cmake --build .
 
-dir "%USERPROFILE%\cppdb\build\Debug"
+xcopy "%USERPROFILE%\cppdb\build\Debug\cppdb.dll" "C:\cpp_rest" /Y
 

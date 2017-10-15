@@ -103,9 +103,13 @@ if(WIN32)
         target_compile_definitions(${UNIT_TEST_NAME} PRIVATE WIN32_DEBUG_MODE)
         target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
         target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Debug/restbed.lib)
+
+        target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/cppdb/build/Debug/cppdb.lib)
     else()
         target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
         target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/restbed/build/Release/restbed.lib)
+
+        target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/cppdb/build/Release/cppdb.lib)
     endif()
 else() # not Windows
     target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/restbed/build/librestbed.a)
