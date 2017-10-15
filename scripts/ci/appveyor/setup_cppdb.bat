@@ -10,6 +10,5 @@ cd "%USERPROFILE%\cppdb\build"
 cmake -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" -G "Visual Studio 14" ..
 cmake --build .
 
-dir "%USERPROFILE%\cppdb"
-dir "%USERPROFILE%\cppdb\build"
+dir "%USERPROFILE%\cppdb\build\Debug"
 
