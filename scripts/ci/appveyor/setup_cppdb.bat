@@ -1,7 +1,7 @@
 @echo off
 
 REM install cppdb
-svn checkout http://cppcms.svn.sourceforge.net/svnroot/cppcms/cppdb/trunk "%USERPROFILE%\cppdb"
+svn checkout --quiet http://cppcms.svn.sourceforge.net/svnroot/cppcms/cppdb/trunk "%USERPROFILE%\cppdb"
 
 mkdir "%USERPROFILE%\cppdb\build"
 

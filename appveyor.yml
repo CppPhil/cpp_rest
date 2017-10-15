@@ -4,6 +4,9 @@ clone_folder: C:\cpp_rest
 
 services:
   - mysql
+  
+install:
+  - cinst mysql-connector
     
 build_script:
 - ps: >-
