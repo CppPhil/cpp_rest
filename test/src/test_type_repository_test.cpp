@@ -103,3 +103,64 @@ TEST_CASE("update_test_type")
 
     CHECK_FALSE(cr::TestTypeRepository::exists(id));
 }
+
+TEST_CASE("count_test_type_test")
+{
+    cr::TestTypeRepository::create("myText", 1234U);
+
+    CHECK(cr::TestTypeRepository::count() == 1U);
+
+    const cr::TestType objectCreated{
+        cr::TestTypeRepository::create("AnotherText", 12U)
+    };
+
+    CHECK(cr::TestTypeRepository::count() == 2U);
+
+    cr::TestTypeRepository::create("more text", 1346425U);
+
+    CHECK(cr::TestTypeRepository::count() == 3U);
+
+    cr::TestTypeRepository::deleteOne(objectCreated.getId());
+
+    CHECK(cr::TestTypeRepository::count() == 2U);
+
+    cr::TestTypeRepository::deleteAll();
+
+    CHECK(cr::TestTypeRepository::count() == 0U);
+}
+
+TEST_CASE("read_all_test_type")
+{
+    std::vector<cr::TestType> container{
+      cr::TestTypeRepository::readAll()
+    };
+
+    CHECK(container.empty());
+
+    cr::TestTypeRepository::create("Sample Text", 25U);
+    cr::TestTypeRepository::create("More Sample Text", 5U);
+
+    container = cr::TestTypeRepository::readAll();
+
+    REQUIRE(container.size() == 2U);
+
+    CHECK(container[0U].getNum() == 25U);
+    CHECK(container[0U].getStr() == "Sample Text");
+    CHECK(container[1U].getNum() == 5U);
+    CHECK(container[1U].getStr() == "More Sample Text");
+
+    cr::TestTypeRepository::deleteOne(container[0U].getId());
+
+    container = cr::TestTypeRepository::readAll();
+
+    REQUIRE(container.size() == 1U);
+
+    CHECK(container[0U].getNum() == 5U);
+    CHECK(container[0U].getStr() == "More Sample Text");
+
+    cr::TestTypeRepository::deleteAll();
+
+    container = cr::TestTypeRepository::readAll();
+
+    CHECK(container.empty());
+}

@@ -15,6 +15,7 @@
 #include <boost/optional.hpp> // boost::optional
 #include <cstdint> // std::uint32_t
 #include <string> // std::string
+#include <vector> // std::vector
 
 namespace cr
 {
@@ -24,7 +25,13 @@ class TestTypeRepository
 public:
     static TestType create(std::string str, std::uint32_t num);
 
+    static bool exists(std::uint64_t id);
+
+    static std::uint64_t count();
+
     static boost::optional<TestType> read(std::uint64_t id);
+
+    static std::vector<TestType> readAll();
 
     static TestType update(
         std::uint64_t id,
@@ -33,7 +40,7 @@ public:
 
     static void deleteOne(std::uint64_t id);
 
-    static bool exists(std::uint64_t id);
+    static void deleteAll();
 
 private:
     static TestType fetchLastCreated();

@@ -7,6 +7,12 @@
 
 namespace cr
 {
+namespace
+{
+constexpr char oneEntryExpectedErrorText[]
+    = "Result set was empty, but should have contained one entry.";
+} // anonymous namespace
+
 TestType TestTypeRepository::create(std::string str, std::uint32_t num)
 {
     sql << "INSERT INTO test_type(num,str) "
@@ -14,6 +20,46 @@ TestType TestTypeRepository::create(std::string str, std::uint32_t num)
         << num << str << cppdb::exec;
 
     return fetchLastCreated();
+}
+
+bool TestTypeRepository::exists(std::uint64_t id)
+{
+    // the value returned by the SQL database if there was a tuple with ID 'id'.
+    static constexpr int trueValue{ 1 };
+
+    cppdb::result res{
+        sql << "SELECT COUNT(1) AS \"result\" "
+               "FROM test_type "
+               "WHERE id=?"
+            << id << cppdb::row // fetch just the 1st row
+    };
+
+    if (res.empty()) {
+        CR_THROW_WITH_SOURCE_INFO(
+            FailedToFetchFromDatabaseException,
+            oneEntryExpectedErrorText);
+    }
+
+    const int result{ res.get<int>("result") };
+
+    return result == trueValue;
+}
+
+std::uint64_t TestTypeRepository::count()
+{
+    cppdb::result res{
+        sql << "SELECT COUNT(*) AS \"result\" "
+               "FROM test_type "
+            << cppdb::row // fetch just one row
+    };
+
+    if (res.empty()) {
+        CR_THROW_WITH_SOURCE_INFO(
+            FailedToFetchFromDatabaseException,
+            oneEntryExpectedErrorText);
+    }
+
+    return res.get<std::uint64_t>("result");
 }
 
 boost::optional<TestType> TestTypeRepository::read(std::uint64_t id)
@@ -32,6 +78,32 @@ boost::optional<TestType> TestTypeRepository::read(std::uint64_t id)
 
     return boost::make_optional(
         TestType{ getStr(res), getNum(res), getId(res) });
+}
+
+std::vector<TestType> TestTypeRepository::readAll()
+{
+    std::uint64_t currentId{ 0U };
+    std::uint32_t currentNum{ 0U };
+    std::string currentStr{ };
+
+    cppdb::result result{
+        sql << "SELECT id,num,str "
+               "FROM test_type "
+               "WHERE 1"
+    };
+
+    std::vector<TestType> retVal{ };
+
+    while (result.next()) {
+        currentId  = result.get<std::uint64_t>("id");
+        currentNum = result.get<std::uint32_t>("num");
+        currentStr = result.get<std::string>("str");
+
+        retVal.push_back(
+            TestType{ std::move(currentStr), currentNum, currentId });
+    }
+
+    return retVal;
 }
 
 TestType TestTypeRepository::update(
@@ -66,24 +138,11 @@ void TestTypeRepository::deleteOne(std::uint64_t id)
         << id << cppdb::exec;
 }
 
-bool TestTypeRepository::exists(std::uint64_t id)
+void TestTypeRepository::deleteAll()
 {
-    cppdb::result res{
-        sql << "SELECT COUNT(1) AS \"result\" "
-               "FROM test_type "
-               "WHERE id=?"
-            << id << cppdb::row // fetch just the 1st row
-    };
-
-    if (res.empty()) {
-        CR_THROW_WITH_SOURCE_INFO(
-            FailedToFetchFromDatabaseException,
-            "Result set was empty, but should have contained one entry.");
-    }
-
-    const int result{ res.get<int>("result") };
-
-    return result == 1;
+    sql << "DELETE FROM test_type "
+           "WHERE 1"
+        << cppdb::exec;
 }
 
 TestType TestTypeRepository::fetchLastCreated()
@@ -97,7 +156,7 @@ TestType TestTypeRepository::fetchLastCreated()
     if (res.empty()) {
         CR_THROW_WITH_SOURCE_INFO(
             FailedToFetchFromDatabaseException,
-            "Result set was empty, but should have contained one entry");
+            oneEntryExpectedErrorText);
     }
 
     return TestType{ getStr(res), getNum(res), getId(res) };
