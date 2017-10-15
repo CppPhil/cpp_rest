@@ -67,7 +67,7 @@ int _tmain(int argc, TCHAR *argv[]) {
         LocalFree(errorText);
         errorText = NULL;
     } else {
-        fprintf(stderr, "%s\n", "Failed to allocated buffer for FormatMessage.");
+        fprintf(stderr, "%s\n", "Failed to allocate buffer for FormatMessage.");
     }
 
     return EXIT_FAILURE;

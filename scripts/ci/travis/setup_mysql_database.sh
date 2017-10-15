@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo sh ./scripts/dependencies/linux/install_mysql.sh
+sudo bash ./scripts/dependencies/linux/install_mysql.sh
 

@@ -17,18 +17,18 @@ addons:
       - g++-5
 
 script:
-  - sh ./scripts/ci/travis/setup_restbed.sh
-  - sh ./scripts/ci/travis/setup_rapidjson.sh
-  - sudo sh ./scripts/ci/travis/setup_boost.sh
-  - sh ./scripts/ci/travis/setup_gsl.sh
-  - sh ./scripts/ci/travis/setup_doctest.sh
-  - sudo sh ./scripts/ci/travis/setup_mysql_database.sh
-  - sh ./scripts/ci/travis/setup_cppdb.sh
+  - bash ./scripts/ci/travis/setup_restbed.sh
+  - bash ./scripts/ci/travis/setup_rapidjson.sh
+  - sudo bash ./scripts/ci/travis/setup_boost.sh
+  - bash ./scripts/ci/travis/setup_gsl.sh
+  - bash ./scripts/ci/travis/setup_doctest.sh
+  - sudo bash ./scripts/ci/travis/setup_mysql_database.sh
+  - bash ./scripts/ci/travis/setup_cppdb.sh
   - CXX=/usr/bin/g++-5 CC=/usr/bin/gcc-5 cmake -DCMAKE_BUILD_TYPE=Debug -DCI_SERVER=travis . # generate build scripts
   - cmake --build . -- -j2                                                                   # build using 2 threads
   - ./cpp_rest &                                                                             # launch the application
   - ctest --verbose .                                                                        # run the tests
-  - sh ./scripts/ci/travis/print_file_if_exists.sh ./example_rest_api_restbed.log
-  - sh ./scripts/ci/travis/print_file_if_exists.sh ./cpp_rest.log
-  - sh ./scripts/ci/travis/print_file_if_exists.sh ./another_rest_api_restbed.log
+  - bash ./scripts/ci/travis/print_file_if_exists.sh ./example_rest_api_restbed.log
+  - bash ./scripts/ci/travis/print_file_if_exists.sh ./cpp_rest.log
+  - bash ./scripts/ci/travis/print_file_if_exists.sh ./another_rest_api_restbed.log
     
