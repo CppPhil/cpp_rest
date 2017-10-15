@@ -6,7 +6,8 @@ CREATE TABLE test_type (
     num INTEGER NOT NULL,
     str TEXT NOT NULL,
     PRIMARY KEY (id)
-)
+);
 
-GRANT ALL PRIVILEGES ON testdb.* To 'testuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON testdb.* TO testuser@localhost;
+SET password FOR testuser = password('password');
 
