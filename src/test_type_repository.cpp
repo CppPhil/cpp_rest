@@ -27,6 +27,8 @@ bool TestTypeRepository::exists(std::uint64_t id)
     // the value returned by the SQL database if there was a tuple with ID 'id'.
     static constexpr int trueValue{ 1 };
 
+    // The query will return 1 if there is a tuple in test_type with the ID 'id'
+    // otherwise it will return 0.
     cppdb::result res{
         sql << "SELECT COUNT(1) AS \"result\" "
                "FROM test_type "
@@ -73,7 +75,7 @@ boost::optional<TestType> TestTypeRepository::read(std::uint64_t id)
     };
 
     if (res.empty()) {
-        return boost::none;
+        return boost::none; // Create an empty optional.
     }
 
     return boost::make_optional(
@@ -89,11 +91,12 @@ std::vector<TestType> TestTypeRepository::readAll()
     cppdb::result result{
         sql << "SELECT id,num,str "
                "FROM test_type "
-               "WHERE 1"
+               "WHERE 1" // The where clause always evaluates to true
     };
 
     std::vector<TestType> retVal{ };
 
+    // The vector will remain empty if there are no results.
     while (result.next()) {
         currentId  = result.get<std::uint64_t>("id");
         currentNum = result.get<std::uint32_t>("num");
@@ -141,7 +144,7 @@ void TestTypeRepository::deleteOne(std::uint64_t id)
 void TestTypeRepository::deleteAll()
 {
     sql << "DELETE FROM test_type "
-           "WHERE 1"
+           "WHERE 1" // The where clause always evaluates to true
         << cppdb::exec;
 }
 

@@ -1,11 +1,11 @@
 #include "../include/test_type.hpp"
-#include <ciso646> // not, and
+#include <ciso646> // not
 #include <utility> // std::move
 
 namespace cr
 {
 TestType::TestType(std::string str, std::uint32_t num)
-    : TestType{ std::move(str), num, 0U }
+    : TestType{ std::move(str), num, 0U } // Creates an invalid object.
 {
 }
 
@@ -33,9 +33,8 @@ TestType::TestType(std::string str, std::uint32_t num, std::uint64_t id)
 
 bool operator==(const TestType &lhs, const TestType &rhs)
 {
-    return (lhs.getId() == rhs.getId())
-        and (lhs.getNum() == rhs.getNum())
-        and (lhs.getStr() == rhs.getStr());
+    // Only need to compare the unique IDs.
+    return lhs.getId() == rhs.getId();
 }
 
 bool operator!=(const TestType &lhs, const TestType &rhs)

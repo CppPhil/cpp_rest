@@ -7,6 +7,8 @@ DataBaseSession::~DataBaseSession() = default;
 
 cppdb::session &DataBaseSession::getInstance()
 {
+    // For documentation of this MySQL connection string, see:
+    // http://cppcms.com/sql/cppdb/classcppdb_1_1session.html#a7ae75affbf1b2e809250a6e2ff36bf2c
     static constexpr char connectionString[]
         = "mysql:user=testuser;password=password;database=testdb;";
 
