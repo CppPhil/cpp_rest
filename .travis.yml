@@ -22,6 +22,7 @@ addons:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get -y install libboost-all-dev
+  - sudo apt-get -y install libmysqlclient-dev
 
 script:
   - bash ./scripts/ci/travis/setup_restbed.sh
