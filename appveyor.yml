@@ -1,6 +1,10 @@
 image:
   - Visual Studio 2015
 clone_folder: C:\cpp_rest
+
+services:
+  - mysql
+  
 build_script:
 - cmd: >-
     cd C:\cpp_rest
@@ -12,6 +16,10 @@ build_script:
     C:\cpp_rest\scripts\ci\appveyor\setup_rapidjson.bat
     
     C:\cpp_rest\scripts\ci\appveyor\setup_restbed.bat 
+    
+    C:\cpp_rest\scripts\ci\appveyor\setup_mysql_database.bat
+    
+    C:\cpp_rest\scripts\ci\appveyor\setup_cppdb.bat
                         
     mkdir C:\cpp_rest\build
             
