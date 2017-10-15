@@ -8,12 +8,12 @@
 - On GNU/Linux:
     Run the install_dependencies.sh in scripts/dependencies/linux like so:
     
-    sh ./scripts/dependencies/linux/install_dependencies.sh
+    bash ./scripts/dependencies/linux/install_dependencies.sh
     
     
     Then run the install_boost.sh in scripts/dependencies/linux like so:
     
-    sudo sh ./scripts/dependencies/linux/install_boost.sh
+    sudo bash ./scripts/dependencies/linux/install_boost.sh
 - On Microsoft Windows:
     Run the install_dependencies.bat in /scripts/dependencies/windows
 	
@@ -23,8 +23,8 @@
     
 ## Building
 - On GNU/Linux:
-	- Generate just the build files: sh ./generate_build_scripts.sh
-	- Build: sh ./build.sh
+	- Generate just the build files: bash ./generate_build_scripts.sh
+	- Build: bash ./build.sh
 - On Microsoft Windows:
     - Generate just the build files (debug mode): generate_build_scripts.bat debug
 	- Build (debug mode): build.bat debug
