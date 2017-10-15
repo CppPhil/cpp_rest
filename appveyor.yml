@@ -7,6 +7,9 @@ services:
   
 install:
   - cinst mysql-connector
+  - cinst mysql.workbench
+  - cinst mysql.utilities
+  - cinst mysql.odbc
     
 build_script:
 - ps: >-
@@ -28,6 +31,10 @@ build_script:
     C:\cpp_rest\scripts\ci\appveyor\setup_rapidjson.bat
     
     C:\cpp_rest\scripts\ci\appveyor\setup_restbed.bat 
+    
+    dir C:\Users\appveyor\restbed
+    
+    dir C:\Users\appveyor\restbed\build
     
     C:\cpp_rest\scripts\ci\appveyor\setup_cppdb.bat
                         
