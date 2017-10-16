@@ -23,6 +23,7 @@ install:
   - curl -kLO %MYSQL_DRIVER_URL%
   - 7z x %MYSQL_DRIVER_ARCHIVE% >nul
   - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib"
+  - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib\vs14"
     
 build_script:
 - ps: >-
