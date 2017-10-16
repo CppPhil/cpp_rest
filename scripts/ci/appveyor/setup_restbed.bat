@@ -8,5 +8,4 @@ msbuild /m /p:Configuration=Debug restbed.sln
 cd "C:\cpp_rest"
 
 mkdir "C:\cpp_rest\Debug"
-xcopy "%USERPROFILE%\restbed\build\Debug\restbed.dll" "C:\cpp_rest\Debug" /Y
 
