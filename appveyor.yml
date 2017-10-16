@@ -47,9 +47,9 @@ build_script:
     
     cd C:\cpp_rest
             
-    cmake -DCMAKE_BUILD_TYPE=Debug -DCI_SERVER=appveyor -G "Visual Studio 14" C:\cpp_rest
+    cmake -DCMAKE_BUILD_TYPE=Release -DCI_SERVER=appveyor -G "Visual Studio 14" C:\cpp_rest
     
-    cmake --build C:\cpp_rest --config "Debug"
+    cmake --build C:\cpp_rest --config "Release"
         
     msbuild /m /p:Configuration=Release C:\cpp_rest\windows_launch_in_new_process_application\launchApplication.sln
               
