@@ -19,7 +19,6 @@ install:
   - 7z x %MYSQL_DRIVER_ARCHIVE% >nul
   - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib"
   - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib\vs14"
-  - set "PATH=%PATH%;%USERPROFILE%\restbed\build\Release"
     
 build_script:
 - ps: >-

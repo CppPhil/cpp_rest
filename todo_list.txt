@@ -1,0 +1,44 @@
+All the piss must be /MT, /MTd on Windoofs
+
+perhaps try and build the libmysqlclient (MySQL Connector/C on Windoofs) directly from source,
+see: https://dev.mysql.com/doc/connector-c/en/connector-c-installation-source-windows.html
+
+try and download the linux tarball perhaps, seems like merely binary distrubutions are available for blood windows.....
+
+be able to put related links in the packet sent back.
+
+CI-Server support
+
+Make it work on GNU/Linux and Windows.
+
+script:
+  setup mysql
+  setup sql library
+
+script to install MySQL server on linux
+    sudo apt-get install mysql-server
+    sudo apt-get install libmysqlclient-dev
+
+http://cppcms.com/sql/cppdb/index.html
+
+try and have the tests run the service rather than having to launch the 
+application first.
+
+some way of having the REST servers be able to shut down.
+
+make the ExampleType be able to be put into the database
+  Repository.
+
+add mysql install script to the README
+
+Try to make it run on GNU/Linux laptop
+               and on Windows laptop
+
+clang format
+
+link cppdb backend drivers statically:
+    http://cppcms.com/sql/cppdb/advanced_drivers.html
+    
+libmysqlclient for windoofs: https://dev.mysql.com/downloads/connector/c/6.1.html
+
+
