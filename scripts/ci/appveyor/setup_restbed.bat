@@ -10,13 +10,15 @@ mkdir "C:\cpp_rest\Release"
 
 xcopy "%USERPROFILE%\restbed\build\Release\restbed.dll" "C:\cpp_rest\Release" /Y
 
-cd "C:\cpp_rest"
+xcopy "%USERPROFILE%\restbed\build\Release\restbed.dll" "C:\WINDOWS\System32" /Y
 
-ECHO ">>>>>>>>>>>>>>!!!!!!HEREHEREHERE<<<<<<<<<<<<<<<<<<!!!!!!!!!!"
+xcopy "%USERPROFILE%\restbed\build\Release\restbed.dll" "C:\WINDOWS\SysWoW64" /Y
 
-dir "%USERPROFILE%\restbed"
+ECHO ">>>>>>>>>>>!!!! HERE HERE HERE !!!!!<<<<<<<<<<"
 
 dir "%USERPROFILE%\restbed\build"
 
 dir "%USERPROFILE%\restbed\build\Release"
+
+dir "%USERPROFILE%\restbed\build\Win32"
 
