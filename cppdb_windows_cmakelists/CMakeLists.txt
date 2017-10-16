@@ -17,6 +17,13 @@ add_definitions(
 		-D_CRT_SECURE_NO_WARNINGS 
 		-D_SCL_SECURE_NO_WARNINGS
 	)
+	
+if(WIN32)
+    if(MSVC)
+        set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+    endif()
+endif()
 
 option(DISABLE_SQLITE	"Link sqlite3 backend into the libcppdb" OFF)
 option(DISABLE_PQ 	"Link postgresql backend into the libcppdb" OFF)
