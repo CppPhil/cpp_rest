@@ -6,9 +6,9 @@ services:
   - mysql
   
 environment:
-  MYSQL_DRIVER_URL: https://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.1.11-winx64.zip
-  MYSQL_DRIVER_ARCHIVE: mysql-connector-c-6.1.11-winx64.zip
-  MYSQL_DRIVER_NAME: mysql-connector-c-6.1.11-winx64
+  MYSQL_DRIVER_URL: https://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.1.11-win32.zip
+  MYSQL_DRIVER_ARCHIVE: mysql-connector-c-6.1.11-win32.zip
+  MYSQL_DRIVER_NAME: mysql-connector-c-6.1.11-win32
   
 install:
   - cinst curl 7zip mysql-connector mysql.workbench mysql.utilities mysql.odbc
