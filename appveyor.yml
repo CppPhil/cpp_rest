@@ -11,13 +11,8 @@ environment:
   MYSQL_DRIVER_NAME: mysql-connector-c-6.1.11-winx64
   
 install:
-  - cinst curl 7zip
-  - cinst mysql-connector
-  - cinst mysql.workbench
-  - cinst mysql.utilities
-  - cinst mysql.odbc
-  
-  
+  - cinst curl 7zip mysql-connector mysql.workbench mysql.utilities mysql.odbc
+    
   # install mysql driver
   - cd %USERPROFILE%
   - curl -kLO %MYSQL_DRIVER_URL%
