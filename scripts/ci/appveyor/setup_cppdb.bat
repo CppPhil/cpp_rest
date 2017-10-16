@@ -7,11 +7,7 @@ mkdir "%USERPROFILE%\cppdb\build"
 
 cd "%USERPROFILE%\cppdb\build"
 
-dir "C:\cpp_rest"
-
-dir "C:\cpp_rest\cppdb_windows_cmakelists"
-
-move /y "C:\cpp_rest\cppdb_windows_cmakelists\CMakeLists.txt" "%USERPROFILE\cppdb\CMakeLists.txt"
+move /y "C:\cpp_rest\cppdb_windows_cmakelists\CMakeLists.txt" "%USERPROFILE%\cppdb\CMakeLists.txt"
 
 cmake -DCMAKE_PREFIX_PATH="%USERPROFILE%\mysql-connector-c-6.1.11-winx64" -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" -DDISABLE_MYSQL="OFF" -DMYSQL_BACKEND_INTERNAL="ON" -G "Visual Studio 14" ..
 cmake --build .
