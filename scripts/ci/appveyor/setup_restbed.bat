@@ -22,3 +22,5 @@ dir "%USERPROFILE%\restbed\build\Release"
 
 dir "%USERPROFILE%\restbed\build\Win32"
 
+dir "%USERPROFILE%\restbed\build\Win32\Release"
+
