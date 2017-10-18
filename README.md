@@ -24,7 +24,9 @@
       sudo bash ./scripts/dependencies/linux/install_boost.sh
 - On Microsoft Windows:
     - Run the install_dependencies.bat in /scripts/dependencies/windows
+    
 	  using the Visual Studio 2017 Developer command prompt
+	
 	  located in C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio 2017\Visual Studio Tools
     
 ## Building
