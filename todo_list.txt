@@ -1,13 +1,3 @@
-try n have the CMakeLists.txt of the cppdb thing link to the MySQL Connector / C .libs -- tried that
-, also try n have the CMakeLists.txt of the actual project link to those as well.
-
-All the piss must be /MT, /MTd on Windoofs
-
-perhaps try and build the libmysqlclient (MySQL Connector/C on Windoofs) directly from source,
-see: https://dev.mysql.com/doc/connector-c/en/connector-c-installation-source-windows.html
-
-try and download the linux tarball perhaps, seems like merely binary distrubutions are available for blood windows.....
-
 be able to put related links in the packet sent back.
 
 CI-Server support

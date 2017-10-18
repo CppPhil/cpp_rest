@@ -100,10 +100,8 @@ if(WIN32)
     
     # NOTE: these mysql-connector windows thingies only work in release mode.
     target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/clientlib.lib)
-    #target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/libmysql.lib)
     target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/mysqlclient.lib)
     target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/clientlib.lib)
-    #target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/libmysql.lib)
     target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/mysqlclient.lib)
     
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
