@@ -1,29 +1,16 @@
 be able to put related links in the packet sent back.
+  Perhaps add them to the JSON object in the body of the response datagram?
 
-CI-Server support
-
-Make it work on GNU/Linux and Windows.
+Make it work and Windows.
 
 script:
   setup mysql
   setup sql library
 
-script to install MySQL server on linux
-    sudo apt-get install mysql-server
-    sudo apt-get install libmysqlclient-dev
-
-http://cppcms.com/sql/cppdb/index.html
-
 try and have the tests run the service rather than having to launch the 
 application first.
 
 some way of having the REST servers be able to shut down.
-
-make the ExampleType be able to be put into the database
-  Repository.
-
-Try to make it run on GNU/Linux laptop
-               and on Windows laptop
 
 clang format
 
