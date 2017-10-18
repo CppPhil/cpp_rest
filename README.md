@@ -17,6 +17,11 @@
     bash ./scripts/dependencies/linux/install_dependencies.sh
     
     
+    Navigate to ~/cppdb/build using cd ~/cppdb/build.
+    
+    Run sudo make install
+    
+    
     Then run the install_boost.sh in scripts/dependencies/linux like so:
     
     sudo bash ./scripts/dependencies/linux/install_boost.sh

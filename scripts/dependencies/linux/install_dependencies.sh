@@ -22,5 +22,4 @@ mkdir ~/cppdb/build
 cd ~/cppdb/build
 cmake -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" ..
 make
-make install
 
