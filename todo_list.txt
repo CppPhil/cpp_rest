@@ -1,4 +1,4 @@
-try n have the CMakeLists.txt of the cppdb thing link to the MySQL Connector / C .libs
+try n have the CMakeLists.txt of the cppdb thing link to the MySQL Connector / C .libs -- tried that
 , also try n have the CMakeLists.txt of the actual project link to those as well.
 
 All the piss must be /MT, /MTd on Windoofs
