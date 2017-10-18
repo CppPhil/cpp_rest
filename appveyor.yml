@@ -11,17 +11,16 @@ environment:
   MYSQL_DRIVER_NAME: mysql-connector-c-6.1.11-src
   
 install:
-  - cinst curl 7zip mysql-connector mysql.workbench mysql.utilities mysql.odbc
+  - cinst curl 7zip # mysql-connector mysql.workbench mysql.utilities mysql.odbc
     
   # install mysql driver
   - cd %USERPROFILE%
   - curl -kLO %MYSQL_DRIVER_URL%
   - 7z x %MYSQL_DRIVER_ARCHIVE% >nul
+  - dir %USERPROFILE%
   - mkdir %USERPROFILE%\%MYSOL_DRIVER_NAME%\build
   - cd %USERPROFILE%\%MYSQL_DRIVER_NAME%\build
   - cmake -G "Visual Studio 14" ..
-  - cd %USERPROFILE%\%MYSQL_DRIVER_NAME%
-  - cd %USERPROFILE%\%MYSQL_DRIVER_NAME%\build
   # - msbuild /m /p:Configuration=Release restbed.sln
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib"
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib\vs14"
