@@ -21,8 +21,7 @@ install:
   - cd %USERPROFILE%\%MYSQL_DRIVER_NAME%\build
   - cmake -G "Visual Studio 14" ..
   - msbuild /m /p:Configuration=Release LibMySQL.sln
-  - dir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build\Release
-  - dir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build\Win32
+  - dir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build\Win32\Release
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib"
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib\vs14"
     
