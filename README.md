@@ -8,29 +8,20 @@
 ## Installing the dependencies
 - On GNU/Linux:
     - Run the install_mysql.sh in scripts/dependencies/linux like so:
+        sudo bash ./scripts/dependencies/linux/install_mysql.sh
     
-    sudo bash ./scripts/dependencies/linux/install_mysql.sh
-    
-
     - Then run the install_dependencies.sh in scripts/dependencies/linux like so:
-    
-    bash ./scripts/dependencies/linux/install_dependencies.sh
-    
+        bash ./scripts/dependencies/linux/install_dependencies.sh
     
     - Navigate to ~/cppdb/build using cd ~/cppdb/build.
-    
-    Run sudo make install
-    
+        Run sudo make install
     
     - Then run the install_boost.sh in scripts/dependencies/linux like so:
-    
-    sudo bash ./scripts/dependencies/linux/install_boost.sh
+        sudo bash ./scripts/dependencies/linux/install_boost.sh
 - On Microsoft Windows:
-    Run the install_dependencies.bat in /scripts/dependencies/windows
-	
-	using the Visual Studio 2017 Developer command prompt
-	
-	located in C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio 2017\Visual Studio Tools
+    - Run the install_dependencies.bat in /scripts/dependencies/windows
+	  using the Visual Studio 2017 Developer command prompt
+	  located in C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Visual Studio 2017\Visual Studio Tools
     
 ## Building
 - On GNU/Linux:
