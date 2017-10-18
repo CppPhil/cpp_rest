@@ -7,7 +7,12 @@
 
 ## Installing the dependencies
 - On GNU/Linux:
-    Run the install_dependencies.sh in scripts/dependencies/linux like so:
+    Run the install_mysql.sh scripts/dependencies/linux like so:
+    
+    sudo bash ./scripts/dependencies/linux/install_mysql.sh
+    
+
+    Then run the install_dependencies.sh in scripts/dependencies/linux like so:
     
     bash ./scripts/dependencies/linux/install_dependencies.sh
     

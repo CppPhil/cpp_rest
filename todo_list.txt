@@ -22,16 +22,10 @@ some way of having the REST servers be able to shut down.
 make the ExampleType be able to be put into the database
   Repository.
 
-add mysql install script to the README
-
 Try to make it run on GNU/Linux laptop
                and on Windows laptop
 
 clang format
 
-link cppdb backend drivers statically:
-    http://cppcms.com/sql/cppdb/advanced_drivers.html
-    
-libmysqlclient for windoofs: https://dev.mysql.com/downloads/connector/c/6.1.html
-
+Add stuff required for the task.
 
