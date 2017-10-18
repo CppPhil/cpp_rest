@@ -99,8 +99,12 @@ if(WIN32)
     include_directories(C:/Libraries/boost_1_63_0)
     
     # NOTE: these mysql-connector windows thingies only work in release mode.
-    # target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-win32/lib/vs14/mysqlclient.lib)
-    # target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-win32/lib/vs14/mysqlclient.lib)
+    target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/clientlib.lib)
+    target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/libmysql.lib)
+    target_link_libraries(${PROJECT_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/mysqlclient.lib)
+    target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/clientlib.lib)
+    target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/libmysql.lib)
+    target_link_libraries(${UNIT_TEST_NAME} ${HOMEDIR}/mysql-connector-c-6.1.11-src/lib/mysqlclient.lib)
     
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_compile_definitions(${PROJECT_NAME} PRIVATE WIN32_DEBUG_MODE)
