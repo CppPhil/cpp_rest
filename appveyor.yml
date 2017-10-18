@@ -26,6 +26,16 @@ install:
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib"
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib\vs14"
     
+#    irectory of C:\Users\appveyor\mysql-connector-c-6.1.11-src\build\libmysql\Release
+#10/18/2017  01:15 PM    <DIR>          .
+#10/18/2017  01:15 PM    <DIR>          ..
+#10/18/2017  01:15 PM           257,046 clientlib.lib
+#10/18/2017  01:15 PM         3,908,608 libmysql.dll
+#10/18/2017  01:15 PM            16,811 libmysql.exp
+#10/18/2017  01:15 PM            28,714 libmysql.lib
+#10/18/2017  01:15 PM           102,400 libmysql_api_test.exe
+#10/18/2017  01:15 PM         5,943,220 mysqlclient.lib
+    
 build_script:
 - ps: >-
       $sqlScript = [IO.File]::ReadAllText("C:\cpp_rest\scripts\sql\setup_db.sql")
