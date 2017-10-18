@@ -1,5 +1,5 @@
 #!/bin/bash
 
 # install boost
-sudo apt-get install libboost-all-dev
+sudo apt-get -y install libboost-all-dev
 
