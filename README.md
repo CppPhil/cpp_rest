@@ -7,22 +7,22 @@
 
 ## Installing the dependencies
 - On GNU/Linux:
-    Run the install_mysql.sh in scripts/dependencies/linux like so:
+    - Run the install_mysql.sh in scripts/dependencies/linux like so:
     
     sudo bash ./scripts/dependencies/linux/install_mysql.sh
     
 
-    Then run the install_dependencies.sh in scripts/dependencies/linux like so:
+    - Then run the install_dependencies.sh in scripts/dependencies/linux like so:
     
     bash ./scripts/dependencies/linux/install_dependencies.sh
     
     
-    Navigate to ~/cppdb/build using cd ~/cppdb/build.
+    - Navigate to ~/cppdb/build using cd ~/cppdb/build.
     
     Run sudo make install
     
     
-    Then run the install_boost.sh in scripts/dependencies/linux like so:
+    - Then run the install_boost.sh in scripts/dependencies/linux like so:
     
     sudo bash ./scripts/dependencies/linux/install_boost.sh
 - On Microsoft Windows:
