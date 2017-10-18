@@ -21,8 +21,11 @@ install:
   - cd %USERPROFILE%\%MYSQL_DRIVER_NAME%\build
   - cmake -G "Visual Studio 14" ..
   - msbuild /m /p:Configuration=Release LibMySQL.sln
-  - dir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build\libmysql
-  - dir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build\libmysql\Release  
+  - curl -kLO https://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.1.11-win32.zip
+  - 7z x mysql-connector-c-6.1.11-win32.zip >nul
+  - xcopy /s mysql-connector-c-6.1.11-win32/include %USERPROFILE%\%MYSQL_DRIVER_NAME%\include /Y
+  #- dir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build\libmysql
+  #- dir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build\libmysql\Release  
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib"
   # - set "PATH=%PATH%;%USERPROFILE%\%MYSQL_DRIVER_NAME%\lib\vs14"
     

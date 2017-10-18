@@ -13,7 +13,9 @@ mkdir "%USERPROFILE%\cppdb\build\Release"
 
 xcopy "%USERPROFILE%\mysql-connector-c-6.1.11-src\build\libmysql\Release\libmysql.dll" "%USERPROFILE%\cppdb\build\Release" /Y
 
-xcopy /s "%USERPROFILE%\mysql-connector-c-6.1.11-src\build\libmysql\Release" "%USERPROFILE%\mysql-connector-c-6.1.11-src\"
+mkdir "%USERPROFILE%\mysql-connector-c-6.1.11-src\lib
+
+xcopy /s "%USERPROFILE%\mysql-connector-c-6.1.11-src\build\libmysql\Release" "%USERPROFILE%\mysql-connector-c-6.1.11-src\lib\"
 
 cmake -DCMAKE_PREFIX_PATH="%USERPROFILE%\mysql-connector-c-6.1.11-src" -DDISABLE_SQLITE="ON" -DDISABLE_PQ="ON" -DDISABLE_ODBC="ON" -DDISABLE_MYSQL="OFF" -DMYSQL_BACKEND_INTERNAL="ON" -DCMAKE_BUILD_TYPE="Release" -G "Visual Studio 14" ..
 msbuild /m /p:Configuration=Release cppdb.sln
