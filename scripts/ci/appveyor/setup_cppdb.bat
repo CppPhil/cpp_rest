@@ -24,3 +24,6 @@ xcopy "%USERPROFILE%\cppdb\build\Release\cppdb.dll" "C:\cpp_rest" /Y
 mkdir "C:\cpp_rest\Release"
 xcopy "%USERPROFILE%\cppdb\build\Release\cppdb.dll" "C:\cpp_rest\Release" /Y
 
+xcopy "%USERPROFILE%\mysql-connector-c-6.1.11-src\build\libmysql\Release\libmysql.dll" "C:\cpp_rest" /Y
+xcopy "%USERPROFILE%\mysql-connector-c-6.1.11-src\build\libmysql\Release\libmysql.dll" "C:\cpp_rest\Release" /Y
+
