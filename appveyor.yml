@@ -18,7 +18,7 @@ install:
   - curl -kLO %MYSQL_DRIVER_URL%
   - 7z x %MYSQL_DRIVER_ARCHIVE% >nul
   - dir %USERPROFILE%
-  - mkdir %USERPROFILE%\%MYSOL_DRIVER_NAME%\build
+  - mkdir %USERPROFILE%\%MYSQL_DRIVER_NAME%\build
   - cd %USERPROFILE%\%MYSQL_DRIVER_NAME%\build
   - cmake -G "Visual Studio 14" ..
   # - msbuild /m /p:Configuration=Release restbed.sln
