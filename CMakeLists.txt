@@ -32,7 +32,6 @@ set(UNIT_TEST_SOURCE_FILES
     test/src/json_test.cpp
     test/src/example_rest_api_test.cpp
     test/src/another_rest_api_test.cpp
-    test/src/test_type_repository_test.cpp
     src/rest_service.cpp
     src/http_verb.cpp
     src/example_rest_api.cpp
@@ -44,9 +43,7 @@ set(UNIT_TEST_SOURCE_FILES
     src/restbed_logger.cpp
     src/log.cpp
     src/another_rest_api.cpp
-    src/test_type.cpp
-    src/database_session.cpp
-    src/test_type_repository.cpp)
+    src/test_type.cpp)
 
 project(cpp_rest)
 add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}")
