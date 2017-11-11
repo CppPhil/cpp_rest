@@ -1,18 +1,8 @@
 be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
 
-Make it work and Windows.
-
-script:
-  setup mysql
-  setup sql library
-
 try and have the tests run the service rather than having to launch the 
 application first.
 
 some way of having the REST servers be able to shut down.
-
-clang format
-
-Add stuff required for the task.
 

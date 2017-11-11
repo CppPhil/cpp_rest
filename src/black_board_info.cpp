@@ -13,7 +13,11 @@ BlackBoardInfo BlackBoardInfo::create()
     return BlackBoardInfo{
         blackBoardListener.getBlackBoardIp().data(),
         blackBoardListener.getBlackBoardPort(),
+#if !defined(CI_APPVEYOR) && !defined(CI_TRAVIS)
         cr::parseBlackBoardMessage(blackBoardListener.getRecvBuf())
+#else
+        blackBoardListener.getBlackBoardPort()
+#endif
     };
 }
 
