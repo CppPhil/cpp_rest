@@ -33,7 +33,7 @@
 - On GNU/Linux:
 	- Generate just the build files: bash ./generate_build_scripts.sh
 	- Build: bash ./build.sh
-- On Microsoft Windows: NOTICE Microsoft Windows support is currently maintained as I currently have no machine running MS Windows.
+- On Microsoft Windows: NOTICE Microsoft Windows support is currently NOT maintained as I currently have no machine running MS Windows.
     - Generate just the build files (debug mode): generate_build_scripts.bat debug
 	- Build (debug mode): build.bat debug
 	- Generate just the build files (release mode): generate_build_scripts.bat release 

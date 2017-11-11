@@ -6,6 +6,7 @@ debconf-set-selections <<< "mysql-server mysql-server/root_password password mys
 debconf-set-selections <<< "mysql-server mysql-server/root_password_again password mysql"
 sudo apt-get -y install mysql-server
 sudo apt-get -y install default-libmysqlclient-dev
+sudo apt-get -y install libmysqlclient-dev
 sudo service mysql restart
 mysql --user=root --password="mysql" < ./scripts/sql/setup_db.sql
 

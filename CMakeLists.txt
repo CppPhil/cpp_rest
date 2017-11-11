@@ -21,31 +21,18 @@ endif()
 
 set(UNIT_TEST_NAME unittest)
 
-set(APPLICATION_HEADER_FILES
-    include/rest_service.hpp
-    include/namespace_aliases.hpp
-    include/http_verb.hpp
-    include/rest_api.hpp
-    include/example_rest_api.hpp
-    include/json.hpp
-    include/except.hpp
-    include/glue.hpp
-    include/stringify.hpp
-    include/example_type.hpp
-    include/http_status_code.hpp
-    include/request.hpp
-    include/response.hpp
-    include/restbed_logger.hpp
-    include/unused.hpp
-    include/log.hpp
-    include/another_rest_api.hpp
-    include/test_type.hpp
-    include/database_session.hpp
-    include/test_type_repository.hpp
-    include/os.hpp
-    include/compiler.hpp)
+file(GLOB APPLICATION_HEADER_FILES
+     include/*.hpp)
 
-set(APPLICATION_SOURCE_FILES
+file(GLOB APPLICATION_SOURCE_FILES
+     src/*.cpp)
+
+set(UNIT_TEST_SOURCE_FILES
+    test/src/main.cpp
+    test/src/json_test.cpp
+    test/src/example_rest_api_test.cpp
+    test/src/another_rest_api_test.cpp
+    test/src/test_type_repository_test.cpp
     src/rest_service.cpp
     src/http_verb.cpp
     src/example_rest_api.cpp
@@ -61,19 +48,12 @@ set(APPLICATION_SOURCE_FILES
     src/database_session.cpp
     src/test_type_repository.cpp)
 
-set(UNIT_TEST_SOURCE_FILES
-    test/src/main.cpp
-    test/src/json_test.cpp
-    test/src/example_rest_api_test.cpp
-    test/src/another_rest_api_test.cpp
-    test/src/test_type_repository_test.cpp)
-
 project(cpp_rest)
-add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}" "src/main.cpp")
+add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}")
 
 enable_testing()
 
-add_executable(${UNIT_TEST_NAME} "${UNIT_TEST_SOURCE_FILES}" "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}")
+add_executable(${UNIT_TEST_NAME} "${UNIT_TEST_SOURCE_FILES}" "${APPLICATION_HEADER_FILES}")
 add_test(Unittest ${UNIT_TEST_NAME})
 
 if(CI_SERVER STREQUAL "appveyor")
