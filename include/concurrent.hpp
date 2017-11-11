@@ -3,6 +3,7 @@
 #include "thread_safe_queue.hpp" // cr::ThreadSafeQueue
 #include "invoke.hpp" // cr::invoke
 #include <boost/noncopyable.hpp> // boost::noncopyable
+#include <ciso646> // not
 #include <utility> // std::move
 #include <memory> // std::make_shared
 #include <future> // std::future, std::promise
