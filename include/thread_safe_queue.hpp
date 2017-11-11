@@ -1,6 +1,7 @@
 #ifndef INCG_CR_THREAD_SAFE_QUEUE_HPP
 #define INCG_CR_THREAD_SAFE_QUEUE_HPP
 #include <boost/noncopyable.hpp> // boost::noncopyable
+#include <ciso646> // not
 #include <queue> // std::queue
 #include <mutex> // std::mutex, ...
 #include <condition_variable> // std::condition_variable
