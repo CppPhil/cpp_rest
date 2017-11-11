@@ -19,8 +19,8 @@ int main()
             "./another_rest_api_restbed.log"
         };
 
-        //const cr::BlackBoardInfo blackBoardInfo{ cr::BlackBoardInfo::create() };
-        //std::cout << blackBoardInfo << '\n';
+        const cr::BlackBoardInfo blackBoardInfo{ cr::BlackBoardInfo::create() };
+        std::cout << blackBoardInfo << '\n';
 
         cr::RestController<cr::ExampleRestApi> exampleRestApi{
             exampleRestApiRestbedLogFilePath };
