@@ -2,8 +2,11 @@
 #include "../include/another_rest_api.hpp" // cr::AnotherRestApi
 #include "../include/unused.hpp" // CR_UNUSED
 #include "../include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
+#include "../include/black_board_listener.hpp" // cr::BlackBoardListener
+#include <cstdlib> // EXIT_FAILURE
 #include <cstddef> // std::size_t
 #include <cstring> // std::strlen
+#include <iostream> // std::cerr, std::cout
 #include <stdexcept> // std::runtime_error
 #include <exception> // std::terminate
 #include <string> // std::string
@@ -63,35 +66,56 @@ auto launchAsyncTask(Callable &&callable, Args &&...args) -> decltype(auto)
 
 int main(int argc, char *argv[])
 {
-    static constexpr int applicationIdx = 0;
+    try {
+        static constexpr int applicationIdx = 0;
 
-    CR_UNUSED(argc);
+        CR_UNUSED(argc);
 
-    const std::string applicationRootPath{
-        getApplicationRootPath(argv[applicationIdx])
-    };
+        const std::string applicationRootPath{
+            getApplicationRootPath(argv[applicationIdx])
+        };
 
-    const std::string exampleRestApiRestbedLogFilePath{
-        applicationRootPath
-        + "example_rest_api_restbed.log"
-    };
+        const std::string exampleRestApiRestbedLogFilePath{
+            applicationRootPath
+            + "example_rest_api_restbed.log"
+        };
 
-    const std::string anotherRestApiRestbedLogFilePath{
-        applicationRootPath
-        + "another_rest_api_restbed.log"
-    };
+        const std::string anotherRestApiRestbedLogFilePath{
+            applicationRootPath
+            + "another_rest_api_restbed.log"
+        };
 
-    std::future<void> f1{ launchAsyncTask(
-        [&exampleRestApiRestbedLogFilePath] {
-            cr::ExampleRestApi exampleRestApi{ exampleRestApiRestbedLogFilePath };
-            static constexpr std::uint16_t port{ 1984U };
-            exampleRestApi.start(port);
-    }) };
+        cr::BlackBoardListener blackBoardListener{ };
+        const std::string blackBoardIp{
+            blackBoardListener.receiveData().getBlackBoardIp().data()
+        };
 
-    std::future<void> f2{ launchAsyncTask(
-        [&anotherRestApiRestbedLogFilePath] {
-            cr::AnotherRestApi anotherRestApi{ anotherRestApiRestbedLogFilePath };
-            static constexpr std::uint16_t port{ 1985U };
-            anotherRestApi.start(port);
-    }) };
+        std::cout << "blackBoardIp: "   << blackBoardIp << '\n'
+                  << "blackBoardPort: " << blackBoardListener.getBlackBoardPort() << '\n'
+                  << "data received: ";
+        for (auto e : blackBoardListener.getRecvBuf()) {
+            std::cout << static_cast<char>(e);
+        }
+        std::cout << '\n';
+
+        std::future<void> f1{ launchAsyncTask(
+            [&exampleRestApiRestbedLogFilePath] {
+                cr::ExampleRestApi exampleRestApi{ exampleRestApiRestbedLogFilePath };
+                static constexpr std::uint16_t port{ 1984U };
+                exampleRestApi.start(port);
+        }) };
+
+        std::future<void> f2{ launchAsyncTask(
+            [&anotherRestApiRestbedLogFilePath] {
+                cr::AnotherRestApi anotherRestApi{ anotherRestApiRestbedLogFilePath };
+                static constexpr std::uint16_t port{ 1985U };
+                anotherRestApi.start(port);
+        }) };
+    } catch (const std::exception &ex) {
+        std::cerr << "main(): caught exception: " << ex.what() << '\n';
+        return EXIT_FAILURE;
+    } catch (...) {
+        std::cerr << "main(): caught unknown exception!\n";
+        return EXIT_FAILURE;
+    }
 }
