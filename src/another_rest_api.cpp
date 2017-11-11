@@ -34,6 +34,17 @@ AnotherRestApi::AnotherRestApi(std::string restbedLogfilePath)
     );
 }
 
+AnotherRestApi::AnotherRestApi(this_type &&other)
+    : base_type{ std::move(other) }
+{
+}
+
+AnotherRestApi &AnotherRestApi::operator=(this_type &&other)
+{
+    base_type::operator=(std::move(other));
+    return *this;
+}
+
 AnotherRestApi::~AnotherRestApi() = default;
 
 AnotherRestApi &AnotherRestApi::start(std::uint16_t port)

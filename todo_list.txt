@@ -1,8 +1,34 @@
+documentation
+
 be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
 
-try and have the tests run the service rather than having to launch the 
-application first.
+class ConsoleMenuItem
+{
+public:
+    ConsoleMenuItem(string prompt, std::function<???> action)
+    
+    display()
+        
+    runAction()
+        
+private:
+   string prompt
+   std::function<???> action
+}
 
-some way of having the REST servers be able to shut down.
 
+class ConsoleMenu
+{
+    addItem(ConsoleMenuItem)
+    
+    addItems(BeginIt, EndIt)
+    
+    clear()
+    
+    size()
+    
+    replaceItems(BeginIt, EndIt)
+    
+    run()
+}

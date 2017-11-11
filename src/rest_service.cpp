@@ -11,12 +11,32 @@ namespace cr
 RestService::RestService(
     std::string restbedLogFilePath,
     std::string bindAddress)
-    : m_service{ },
+    : m_service{ std::make_unique<rest::Service>() },
       m_resources{ },
       m_settings{ std::make_shared<rest::Settings>() },
       m_restbedLogFilePath{ std::move(restbedLogFilePath) },
       m_bindAddress{ std::move(bindAddress) }
 {
+}
+
+RestService::RestService(RestService &&other)
+    : m_service{ std::move(other.m_service) },
+      m_resources{ std::move(other.m_resources) },
+      m_settings{ std::move(other.m_settings) },
+      m_restbedLogFilePath{ std::move(other.m_restbedLogFilePath) },
+      m_bindAddress{ std::move(other.m_bindAddress) }
+{
+}
+
+RestService &RestService::operator=(RestService &&other)
+{
+    m_service            = std::move(other.m_service);
+    m_resources          = std::move(other.m_resources);
+    m_settings           = std::move(other.m_settings);
+    m_restbedLogFilePath = std::move(other.m_restbedLogFilePath);
+    m_bindAddress        = std::move(other.m_bindAddress);
+
+    return *this;
 }
 
 RestService::~RestService() = default;
@@ -54,18 +74,24 @@ RestService &RestService::startService(std::uint16_t port)
     publishResources();
 
     // Register the RestbedLogger with the service.
-    m_service.set_logger(std::make_shared<RestbedLogger>(m_restbedLogFilePath));
+    m_service->set_logger(std::make_shared<RestbedLogger>(m_restbedLogFilePath));
 
     // Start running the service.
-    m_service.start(m_settings);
+    m_service->start(m_settings);
     return *this;
 }
 
 std::string RestService::getHttpUri() const
 {
-    const std::shared_ptr<const rest::Uri> uriPtr{ m_service.get_http_uri() };
+    const std::shared_ptr<const rest::Uri> uriPtr{ m_service->get_http_uri() };
     CR_THROW_IF_NULL(uriPtr); // uriPtr should not be nullptr.
     return uriPtr->to_string();
+}
+
+RestService &RestService::stop()
+{
+    m_service->stop();
+    return *this;
 }
 
 void RestService::publishResources()
@@ -73,7 +99,7 @@ void RestService::publishResources()
     // Publish all the resources.
     for (const auto &pair : m_resources) {
         const std::shared_ptr<rest::Resource> &resource{ pair.first };
-        m_service.publish(resource);
+        m_service->publish(resource);
     }
 }
 } // namespace cr

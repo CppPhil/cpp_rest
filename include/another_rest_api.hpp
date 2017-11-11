@@ -27,6 +27,10 @@ public:
     **/
     explicit AnotherRestApi(std::string restbedLogfilePath);
 
+    AnotherRestApi(this_type &&other);
+
+    this_type &operator=(this_type &&other);
+
     /*!
      * \brief Destroys an object of type AnotherRestApi.
     **/

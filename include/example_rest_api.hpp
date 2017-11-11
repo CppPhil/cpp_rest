@@ -24,6 +24,10 @@ public:
     **/
     explicit ExampleRestApi(std::string restbedLogFilePath);
 
+    ExampleRestApi(this_type &&other);
+
+    this_type &operator=(this_type &&other);
+
     /*!
      * \brief Destroys an ExampleRestApi object.
     **/

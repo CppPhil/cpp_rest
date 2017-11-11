@@ -8,7 +8,7 @@
 #include <boost/utility/string_ref.hpp> // boost::string_ref
 #include <cstdint> // std::uint16_t
 #include <utility> // std::pair
-#include <memory> // std::shared_ptr
+#include <memory> // std::shared_ptr, std::unique_ptr
 #include <functional> // std::function
 #include <vector> // std::vector
 
@@ -36,6 +36,10 @@ public:
     explicit RestService(
         std::string restbedLogFilePath,
         std::string bindAddress = "127.0.0.1");
+
+    RestService(this_type &&other);
+
+    this_type &operator=(this_type &&other);
 
     /*!
      * \brief Destroys a RestService object.
@@ -72,6 +76,12 @@ public:
     **/
     std::string getHttpUri() const;
 
+    /*!
+     * \brief Shuts down this RestService.
+     * \return A reference to this object.
+    **/
+    this_type &stop();
+
 private:
     /*!
      * \brief Implementation function to publish the resources.
@@ -79,7 +89,7 @@ private:
     **/
     void publishResources();
 
-    rest::Service m_service; /*!< The underlying service */
+    std::unique_ptr<rest::Service> m_service;
     std::vector<std::pair<std::shared_ptr<rest::Resource>,
                           RequestHandler>> m_resources;
     std::shared_ptr<rest::Settings> m_settings;

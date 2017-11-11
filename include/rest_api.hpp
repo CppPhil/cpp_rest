@@ -44,6 +44,29 @@ public:
         CR_THROW_IF_NULL(m_derived); // derived can't be nullptr.
     }
 
+    RestApi(this_type &&other)
+        : m_restService{ std::move(other.m_restService) },
+          m_derived{ std::move(other.m_derived) }
+    {
+    }
+
+    this_type &operator=(this_type &&other)
+    {
+        m_restService = std::move(other.m_restService);
+        m_derived     = std::move(other.m_derived);
+        return *this;
+    }
+
+    /*!
+     * \brief Shuts down the RestApi.
+     * \return A reference to this object.
+    **/
+    this_type &stop()
+    {
+        m_restService.stop();
+        return *this;
+    }
+
 protected:
     /*!
      * \brief Registers a resource with the underlying REST service.

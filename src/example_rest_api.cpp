@@ -27,6 +27,17 @@ ExampleRestApi::ExampleRestApi(std::string restbedLogFilePath)
         &ExampleRestApi::handlePostResource2);
 }
 
+ExampleRestApi::ExampleRestApi(this_type &&other)
+    : base_type{ std::move(other) }
+{
+}
+
+ExampleRestApi &ExampleRestApi::operator=(this_type &&other)
+{
+    base_type::operator=(std::move(other));
+    return *this;
+}
+
 ExampleRestApi::~ExampleRestApi() = default;
 
 ExampleRestApi &ExampleRestApi::start(std::uint16_t port)
