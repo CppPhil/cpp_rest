@@ -1,5 +1,7 @@
 #include "../include/black_board_listener.hpp"
-#include <arpa/inet.h> // htons, htonl
+#ifndef _WIN32
+#   include <arpa/inet.h> // htons, htonl
+#endif
 #include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
 #include <cstring> // std::memset
 #include <exception> // std::terminate
@@ -11,10 +13,13 @@ BlackBoardListener::BlackBoardListener()
     : m_recvBuf(s_recvBufSiz, Byte{ }),
       m_blackBoardIp{ },
       m_blackBoardPort{ s_blackBoardPort },
+#ifndef _WIN32
       m_localSockAddr{ },
       m_blackBoardSockAddr{ },
+#endif
       m_socket{ -1 } // invalid socket by default
 {
+#ifndef _WIN32
     std::memset(&m_localSockAddr, 0, sizeof(m_localSockAddr));
     std::memset(&m_blackBoardSockAddr, 0, sizeof(m_blackBoardSockAddr));
 
@@ -29,20 +34,23 @@ BlackBoardListener::BlackBoardListener()
     if (m_socket == -1) {
         CR_THROW_WITH_SOURCE_INFO(SocketErrorException, "socket failed!");
     }
+#endif
 }
 
 BlackBoardListener::~BlackBoardListener()
 {
+#ifndef _WIN32
     if (close(m_socket) == -1) {
         std::cerr << "Failed to close socket in "
                   << BOOST_CURRENT_FUNCTION << '\n';
         std::terminate();
     }
+#endif
 }
 
 BlackBoardListener &BlackBoardListener::receiveData()
 {
-#if !defined(CI_APPVEYOR) && !defined(CI_TRAVIS)
+#if !defined(CI_APPVEYOR) && !defined(CI_TRAVIS) && !defined(_WIN32)
     const int errCode{
         bind(
             m_socket,

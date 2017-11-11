@@ -2,7 +2,9 @@
 #define INCG_CR_BLACK_BOARD_LISTENER_HPP
 #include "except.hpp" // cr::SocketErrorException
 #include "byte.hpp" // cr::Byte
-#include <netinet/in.h> // struct sockaddr_in
+#ifndef _WIN32
+#   include <netinet/in.h> // struct sockaddr_in
+#endif
 #include <boost/noncopyable.hpp> // boost::noncopyable
 #include <boost/utility/string_ref.hpp> // boost::string_ref
 #include <cstddef> // std::size_t
@@ -38,8 +40,10 @@ private:
     std::vector<Byte> m_recvBuf;
     std::string m_blackBoardIp;
     std::uint16_t m_blackBoardPort;
+#ifndef _WIN32
     struct sockaddr_in m_localSockAddr;
     struct sockaddr_in m_blackBoardSockAddr;
+#endif
     int m_socket;
 };
 } // namespace cr

@@ -2,7 +2,7 @@
 #include "../include/another_rest_api.hpp" // cr::AnotherRestApi
 #include "../include/unused.hpp" // CR_UNUSED
 #include "../include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
-#include "../include/black_board_listener.hpp" // cr::BlackBoardListener
+#include "../include/black_board_info.hpp" // cr::BlackBoardInfo
 #include <cstdlib> // EXIT_FAILURE
 #include <cstddef> // std::size_t
 #include <cstring> // std::strlen
@@ -85,18 +85,8 @@ int main(int argc, char *argv[])
             + "another_rest_api_restbed.log"
         };
 
-        cr::BlackBoardListener blackBoardListener{ };
-        const std::string blackBoardIp{
-            blackBoardListener.receiveData().getBlackBoardIp().data()
-        };
-
-        std::cout << "blackBoardIp: "   << blackBoardIp << '\n'
-                  << "blackBoardPort: " << blackBoardListener.getBlackBoardPort() << '\n'
-                  << "data received: ";
-        for (auto e : blackBoardListener.getRecvBuf()) {
-            std::cout << static_cast<char>(e);
-        }
-        std::cout << '\n';
+        const cr::BlackBoardInfo blackBoardInfo{ cr::BlackBoardInfo::create() };
+        std::cout << blackBoardInfo << '\n';
 
         std::future<void> f1{ launchAsyncTask(
             [&exampleRestApiRestbedLogFilePath] {

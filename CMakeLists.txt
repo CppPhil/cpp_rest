@@ -44,7 +44,9 @@ set(UNIT_TEST_SOURCE_FILES
     src/log.cpp
     src/another_rest_api.cpp
     src/test_type.cpp
-    src/black_board_listener.cpp)
+    src/black_board_listener.cpp
+    src/parse_black_board_message.cpp
+    src/black_board_info.cpp)
 
 project(cpp_rest)
 add_executable(${PROJECT_NAME} "${APPLICATION_HEADER_FILES}" "${APPLICATION_SOURCE_FILES}")
