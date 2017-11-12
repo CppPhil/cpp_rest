@@ -104,9 +104,12 @@ BlackBoardRegistration &BlackBoardRegistration::login()
         << static_cast<HttpStatusCode>(responsePtr->get_status_code())
         << '\n';
 
-    const rest::Bytes bytes{ rest::Http::to_bytes(responsePtr) };
-    const std::string str(std::begin(bytes), std::end(bytes));
-    ostream << "bytes: " << str << '\n';
+    const std::size_t length{
+        getContentLength(*responsePtr)
+    };
+
+    // Fetch the response body.
+    cr::rest::Http::fetch(length, responsePtr);
 
     return *this;
 }
