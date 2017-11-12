@@ -51,7 +51,7 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
     std::ostream &ostream{ *m_ostream };
     std::istream &istream{ *m_istream };
 
-    ostream << "Options:\n";
+    ostream << "\nOptions:\n";
 
     if (m_menuItems.empty()) {
         ostream << "There is nothing to do.\n";
@@ -75,6 +75,7 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
     const std::size_t index{ opt.value() - s_offset };
     runByIndex(index);
 
+    ostream << '\n';
     return m_menuItems.at(index).getIdentifier();
 }
 
