@@ -15,6 +15,9 @@
 
 namespace cr
 {
+/*!
+ * \brief Type representing the console menu.
+**/
 class ConsoleMenu
 {
 public:
@@ -22,12 +25,33 @@ public:
     using value_type = ConsoleMenuItem;
     using container_type = std::vector<value_type>;
 
+    /*!
+     * \brief Creates the ConsoleMenu.
+     * \param ostream The ostream given by the Application class.
+     * \param istream The istream given by the Application class.
+    **/
     ConsoleMenu(std::ostream &ostream, std::istream &istream);
 
+    /*!
+     * \brief Adds an lvalue menu item.
+     * \param menuItem The menu item to add.
+     * \return A reference to this object.
+    **/
     this_type &addItem(const ConsoleMenuItem &menuItem);
 
+    /*!
+     * \brief Adds an rvalue menu item.
+     * \param menuItem The menu item to add.
+     * \return A reference to this object.
+    **/
     this_type &addItem(ConsoleMenuItem &&menuItem) noexcept;
 
+    /*!
+     * \brief Adds a range of ConsoleMenuItems denoted by two iterators.
+     * \param first The begin iterator of the range.
+     * \param last The end iterator of the range.
+     * \return A reference to this object.
+    **/
     template <typename InputIterator>
     this_type &addItems(InputIterator first, InputIterator last)
     {
@@ -38,10 +62,25 @@ public:
         return *this;
     }
 
+    /*!
+     * \brief Removes all MenuItems.
+     * \return A reference to this object.
+    **/
     this_type &clear();
 
+    /*!
+     * \brief Returns the amount of menu items that this object contains.
+     * \return The amount of menu itemns that this object contains.
+    **/
     container_type::size_type size() const noexcept;
 
+    /*!
+     * \brief Replaces the current menu items with the ones from a range
+     *        denoted by iterators.
+     * \param first The begin iterator of the range.
+     * \param last The end iterator of the range.
+     * \return A reference to this object.
+    **/
     template <typename InputIterator>
     this_type &replaceItems(InputIterator first, InputIterator last)
     {
@@ -49,8 +88,19 @@ public:
         return addItems(first, last);
     }
 
+    /*!
+     * \brief Removes all ConsoleMenuItems that have the identifier passed in.
+     * \param identifier The identifier of the ConsoleMenuItem to delete.
+     * \return A reference to this object.
+    **/
     this_type &erase(ConsoleMenuItem::Identifier identifier);
 
+    /*!
+     * \brief Removes all the ConsoleMenuItems that satisfy the given predicate.
+     * \param unaryPredicate The predicate that shall return true when invoked
+     *                       if the ConsoleMenuItem passed to it shall be removed.
+     * \return A reference to this object.
+    **/
     template <typename UnaryPredicate>
     this_type &eraseIf(UnaryPredicate unaryPredicate)
     {
@@ -65,30 +115,71 @@ public:
         return *this;
     }
 
+    /*!
+     * \brief Runs the ConsoleMenu by printing the available options and
+     *        prompting the user for input until a valid input is entered.
+     *        As soon as a valid input is entered the associated menu item's
+     *        action is run.
+     * \return The identifier of the ConsoleMenuItem that had its action run.
+    **/
     ConsoleMenuItem::Identifier run();
 
 private:
-    static const std::size_t s_offset;
+    static const std::size_t s_offset; /*!< Offset translating from 0 and 1
+                                        *   based indexing and vice versa.
+                                       **/
+    static const int s_idxWidth; /*!< The width of an index when printing it */
 
-    static const int s_idxWidth;
+    static const int s_defaultWidth; /*!< The default width, to be used when not
+                                      *   printing an index.
+                                     **/
+    static const char s_promptText[]; /*!< The text prompting the user to enter
+                                       *   a valid index, after having printed
+                                       *   the available options.
+                                      **/
 
-    static const int s_defaultWidth;
-
-    static const char s_promptText[];
-
+    /*!
+     * \brief Prints all the options available.
+     * \param ostream The ostream to print to.
+    **/
     void displayItems(std::ostream &ostream);
 
+    /*!
+     * \brief Prompts the user for input.
+     *        To be used after having printed the options available.
+     * \param ostream The ostream to print to.
+    **/
     void displayPrompt(std::ostream &ostream);
 
+    /*!
+     * \brief Function to attempt to read one time.
+     * \param istream The istream to try to read an index from.
+     * \return boost::none if reading failed, or an optional containing the
+     *         value read if reading succeeded.
+    **/
     boost::optional<std::size_t> readInput(std::istream &istream);
 
-    bool isInputValid(std::string &inputLine);
+    /*!
+     * \brief Function to check whether or not a user input is valid.
+     * \param inputLine The line that was successfully read.
+     * \return true if the input is considered valid, false otherwise.
+    **/
+    bool isInputValid(const std::string &inputLine);
 
+    /*!
+     * \brief Runs the action of the MenuItem at index 'idx'.
+     * \param idx The zero-based index of the MenuItem that shall have its
+     *            action run.
+    **/
     void runByIndex(std::size_t idx);
 
-    container_type m_menuItems;
-    gsl::not_null<std::ostream *> m_ostream;
-    gsl::not_null<std::istream *> m_istream;
+    container_type m_menuItems; /*!< The menu items */
+    gsl::not_null<std::ostream *> m_ostream; /*!< The ostream given by
+                                              *   the Application class.
+                                             **/
+    gsl::not_null<std::istream *> m_istream; /*!< The istream given by
+                                              *   the Application class.
+                                             **/
 };
 } // namespace cr
 #endif // INCG_CR_CONSOLE_MENU_HPP

@@ -27,8 +27,10 @@ struct ApplicationState
     gsl::not_null<std::ostream *> ostream; /*!< The ostream that the MenuItems'
                                             *   actions will print to
                                             **/
-    gsl::not_null<std::istream *> istream;
-    boost::optional<BlackBoardInfo> blackBoardInfo;
+    gsl::not_null<std::istream *> istream; /*!< The istream that the MenuItems'
+                                            *   actions can read from
+                                           **/
+    boost::optional<BlackBoardInfo> blackBoardInfo; /*!< The BlackBoardInfo */
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_STATE_HPP

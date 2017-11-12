@@ -28,6 +28,8 @@ Application &Application::start()
         const ConsoleMenuItem::Identifier lastRun{ m_consoleMenu.run() };
 
         switch (lastRun) {
+        case ConsoleMenuItem::Identifier::None:
+            // FALLTHROUGH
         case ConsoleMenuItem::Identifier::ExitApplication:
             return *this;
         }

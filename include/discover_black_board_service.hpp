@@ -5,6 +5,10 @@
 
 namespace cr
 {
+/*!
+ * \brief The action of the discovenr BlackBoard service ConsoleMenuItem.
+ * \param appState The application state, given by the Application class.
+**/
 void discoverBlackBoardService(cr::ApplicationState &appState);
 } // namespace cr
 #endif // INCG_CR_DISCOVER_BLACK_BOARD_SERVICE_HPP

@@ -6,6 +6,12 @@
 
 namespace cr
 {
+/*!
+ * \brief Safely accesses an optional.
+ * \param optional The optional to get the value from.
+ * \return The value extracted.
+ * \throws OptionalHadNoValueException if 'optional' had no value.
+**/
 template <typename Ty>
 Ty &safeOptionalAccess(boost::optional<Ty> &optional)
 {
@@ -18,6 +24,12 @@ Ty &safeOptionalAccess(boost::optional<Ty> &optional)
     return *optional;
 }
 
+/*!
+ * \brief Safely accesses an optional.
+ * \param optional The optional to get the value from.
+ * \return The value extracted.
+ * \throws OptionalHadNoValueException if 'optional' had no value.
+**/
 template <typename Ty>
 const Ty &safeOptionalAccess(const boost::optional<Ty> &optional)
 {

@@ -63,6 +63,7 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
 
     boost::optional<std::size_t> opt{ boost::none };
 
+    // keep trying again until a value that was valid is entered.
     for (bool firstTry{ true }; not opt; firstTry = false) {
         if (firstTry) {
             displayPrompt(ostream);
@@ -82,7 +83,7 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
 
 const std::size_t ConsoleMenu::s_offset = 1U;
 
-const int ConsoleMenu::s_idxWidth = 3;
+const int ConsoleMenu::s_idxWidth = 3; /* hopefully there won't be more than 999 menu items */
 
 const int ConsoleMenu::s_defaultWidth = 0;
 
@@ -110,30 +111,37 @@ boost::optional<std::size_t> ConsoleMenu::readInput(std::istream &istream)
 
     std::getline(istream, lineRead);
 
-    boost::trim(lineRead);
+    boost::trim(lineRead); // get rid of superfluous whitespace at the front and back.
 
+    // if the istream is still ok and the input is valid -> good.
     if (istream and isInputValid(lineRead)) {
         return boost::make_optional(boost::lexical_cast<std::size_t>(lineRead));
     }
 
-    istream.clear();
-    return boost::none;
+    // otherwise, an error occurred.
+    istream.clear(); // clear the istream error flags, so that it works again.
+    return boost::none; // return an optional indicating failure to read.
 }
 
-bool ConsoleMenu::isInputValid(std::string &inputLine)
+bool ConsoleMenu::isInputValid(const std::string &inputLine)
 {
+    // some garbage dummy value.
     std::size_t value{ std::numeric_limits<std::size_t>::max() };
 
     try {
+        // replace the value with the value extracted from 'inputLine'.
         value = boost::lexical_cast<std::size_t>(inputLine);
     } catch (const boost::bad_lexical_cast &) {
+        // if lexical_cast failed -> the input is invalid.
         return false;
     }
 
+    // lexical_cast succeeded.
+    // check if the value extracted is within the allowable bounds.
     return (value - s_offset) < size();
 }
 
-void ConsoleMenu::runByIndex(std::size_t idx)
+void ConsoleMenu::runByIndex(std::size_t idx) /* note: zero based index here. */
 {
     m_menuItems.at(idx).runAction();
 }
