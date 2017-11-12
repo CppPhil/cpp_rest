@@ -24,6 +24,8 @@ struct BlackBoardInfo
     std::uint16_t senderPort; /*!< The sender UDP port of the BlackBoard */
     std::uint16_t portFromMessage; /*!< The port contained in the JSON send
                                     *   by the BlackBoard.
+                                    *   This is where the BlackBoardRegistration
+                                    *   will want to send requests to.
                                    **/
     std::uint16_t blackBoardPort = 24000U;
 };

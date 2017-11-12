@@ -103,7 +103,7 @@ bool Application::createBlackBoardRegistration()
         = BlackBoardRegistration{
             m_applicationState,
             blackBoardInfo.ipAddress,
-            blackBoardInfo.portFromMessage /* TODO: this might need to be different */
+            blackBoardInfo.portFromMessage
     };
 
     return true;
