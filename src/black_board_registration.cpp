@@ -4,9 +4,9 @@
 #include "../include/response.hpp" // cr::getContentLength
 #include "../include/json.hpp" // cr::asJson
 #include "../include/get_none_empty_line.hpp" // cr::getNoneEmptyLine
+#include "../include/http_status_code.hpp" // cr::HttpStatusCode
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
 #include <corvusoft/restbed/response.hpp> // restbed::Response
-#include <corvusoft/restbed/http.hpp> // restbed::Http::fetch
 #include <cstddef> // std::size_t
 #include <utility> // std::move
 
@@ -49,22 +49,13 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
     const std::string userName{ getUserNameFromUser() };
     const std::string passWord{ getPassWordFromUser() };
 
-    CR_LOG(LogLevel::debug) << "Got userName: " << userName << "\n"
-                            << "and passWord: " << passWord;
-
     m_appState->blackBoardRegistrationInfo = BlackBoardRegistrationInfo{
         userName, passWord
     };
 
-    CR_LOG(LogLevel::debug) << "replaced BlackBoardRegistrationInfo";
-
     const RegisterUserType registerUserType = { userName, passWord };
 
-    CR_LOG(LogLevel::debug) << "created registerUserType";
-
     json::Document jsonDocument{ asJson(registerUserType) };
-
-    CR_LOG(LogLevel::debug) << "converted registerUserType to JSON";
 
     std::shared_ptr<rest::Response> responsePtr{ sendRequestSync(
         m_blackBoardIpAddress,
@@ -74,31 +65,12 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
         jsonDocument)
     };
 
-    CR_LOG(LogLevel::debug) << "send synchronous request";
-
     CR_THROW_IF_NULL(responsePtr);
 
-    CR_LOG(LogLevel::debug) << "responsePtr was not nullptr";
-
-    rest::Response &response{ *responsePtr };
-    const std::size_t contentLength{ getContentLength(response) };
-
-    CR_LOG(LogLevel::debug) << "got contentLength: " << contentLength;
-
-    //rest::Http::fetch(contentLength, responsePtr);
-
-    CR_LOG(LogLevel::debug) << "fetched bytes";
-
-    const rest::Bytes body{ response.get_body() };
-
-    CR_LOG(LogLevel::debug) << "got body";
-
-    // TODO: here
-    m_appState->ostream->write(
-        reinterpret_cast<const char *>(body.data()),
-        static_cast<std::streamsize>(body.size()));
-
-    CR_LOG(LogLevel::debug) << "wrote body to ostream";
+    (*(m_appState->ostream))
+        << "Got status code "
+        << static_cast<HttpStatusCode>(responsePtr->get_status_code())
+        << '\n';
 
     return *this;
 }
