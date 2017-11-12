@@ -79,7 +79,7 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
     const std::size_t contentLength{ getContentLength(response) };
     ostream << "Content-Length: " << contentLength << '\n';
 
-    rest::Http::fetch(contentLength, responsePtr);
+    //rest::Http::fetch(contentLength, responsePtr);
 
     const rest::Bytes body{ response.get_body() };
     const std::string bodyAsString(std::begin(body), std::end(body));
