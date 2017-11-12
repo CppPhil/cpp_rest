@@ -85,7 +85,7 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
 
     CR_LOG(LogLevel::debug) << "got contentLength: " << contentLength;
 
-    rest::Http::fetch(contentLength, responsePtr);
+    //rest::Http::fetch(contentLength, responsePtr);
 
     CR_LOG(LogLevel::debug) << "fetched bytes";
 
