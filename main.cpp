@@ -2,8 +2,8 @@
 #include "include/another_rest_api.hpp" // cr::AnotherRestApi
 #include "include/unused.hpp" // CR_UNUSED
 #include "include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
-#include "include/black_board_info.hpp" // cr::BlackBoardInfo
 #include "include/rest_controller.hpp" // cr::RestController
+#include "include/application.hpp" // cr::Application
 #include <cstdlib> // EXIT_FAILURE
 #include <iostream> // std::cerr, std::cout
 #include <string> // std::string
@@ -19,8 +19,8 @@ int main()
             "./another_rest_api_restbed.log"
         };
 
-        const cr::BlackBoardInfo blackBoardInfo{ cr::BlackBoardInfo::create() };
-        std::cout << blackBoardInfo << '\n';
+        cr::Application application{ };
+        application.start();
 
         cr::RestController<cr::ExampleRestApi> exampleRestApi{
             exampleRestApiRestbedLogFilePath };

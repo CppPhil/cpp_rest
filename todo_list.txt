@@ -1,66 +1,6 @@
 be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
-   
-struct ApplicationState
-{
-    Optional<stuffThatsNeeded> a;
-    Optional<stuffThatsNeeded> b;
-    Optional<stuffThatsNeeded> c;
-    /* ... */
-}
-    
-class Application
-{
-public:
-
-private:
-    ConsoleMenuItem m_consoleMenuItem;
-    /* ... */
-}
-
-class ConsoleMenuItem
-{
-public:
-    enum class Identifier
-    {
-        /* ... */
-    };
-
-    ConsoleMenuItem(string prompt, std::function<???> action)
-    
-    display()
-        
-    runAction()
-    
-    Identifier getIdentifier() const noexcept;
-        
-private:
-   string prompt
-   std::function<???> action
-   Identifier m_identifier
-}
-
-
-class ConsoleMenu
-{
-    addItem(ConsoleMenuItem)
-    
-    addItems(BeginIt, EndIt)
-    
-    clear()
-    
-    size()
-    
-    replaceItems(BeginIt, EndIt)
-    
-    run()
-    
-    erase(ConsoleMenuItem::Identifier);
-    
-    template <UnaryPredicate>
-    eraseIf(UnaryPredicate unaryPredicate);
-}
-
+       
 
 
 
