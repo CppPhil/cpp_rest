@@ -81,7 +81,7 @@ std::ostream &operator<<(std::ostream &os, HttpStatusCode httpStatusCode)
     CR_DETAIL_PRINT_STATUS_CODE(NOT_EXTENDED);
     CR_DETAIL_PRINT_STATUS_CODE(NETWORK_AUTHENTICATION_REQUIRED);
     default:
-        os << "invalid status code: " << static_cast<int>(httpStatusCode);
+        os << static_cast<int>(httpStatusCode) << " (invalid)";
     }
 
     return os;

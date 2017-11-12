@@ -7,6 +7,8 @@ namespace cr
 {
 BlackBoardInfo BlackBoardInfo::create()
 {
+    static constexpr std::uint16_t defaultBlackBoardPort{ 24000U };
+
     BlackBoardListener blackBoardListener{ };
     blackBoardListener.receiveData(); // this is a blocking call.
 
@@ -14,10 +16,11 @@ BlackBoardInfo BlackBoardInfo::create()
         blackBoardListener.getBlackBoardIp().data(),
         blackBoardListener.getBlackBoardPort(),
 #if !defined(CI_APPVEYOR) && !defined(CI_TRAVIS)
-        cr::parseBlackBoardMessage(blackBoardListener.getRecvBuf())
+        cr::parseBlackBoardMessage(blackBoardListener.getRecvBuf()),
 #else
-        blackBoardListener.getBlackBoardPort()
+        blackBoardListener.getBlackBoardPort(),
 #endif
+        defaultBlackBoardPort // black board port
     };
 }
 
@@ -26,8 +29,9 @@ std::ostream &operator<<(
     const BlackBoardInfo &blackBoardInfo)
 {
     return os << "black board info:\n"
-              << "IP address: "        << blackBoardInfo.ipAddress << '\n'
-              << "port: "              << blackBoardInfo.port      << '\n'
-              << "port from message: " << blackBoardInfo.portFromMessage;
+              << "IP address:        " << blackBoardInfo.ipAddress  << '\n'
+              << "sender port:       " << blackBoardInfo.senderPort << '\n'
+              << "port from message: " << blackBoardInfo.portFromMessage << '\n'
+              << "port:              " << blackBoardInfo.blackBoardPort;
 }
 } // namespace cr
