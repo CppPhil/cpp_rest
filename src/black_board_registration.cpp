@@ -5,6 +5,7 @@
 #include "../include/json.hpp" // cr::asJson
 #include "../include/get_none_empty_line.hpp" // cr::getNoneEmptyLine
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
+#include <corvusoft/restbed/response.hpp> // restbed::Response
 #include <corvusoft/restbed/http.hpp> // restbed::Http::fetch
 #include <cstddef> // std::size_t
 #include <utility> // std::move
