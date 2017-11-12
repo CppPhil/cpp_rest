@@ -25,7 +25,8 @@ public:
         None, /*!< The none task -> does nothing */
         ExitApplication, /*!< The user wishes to exit the application */
         DiscoverBlackBoard, /*!< The discover BlackBoard task */
-        RegisterUser /*!< The register a user with the BlackBoard task */
+        RegisterUser, /*!< The register a user with the BlackBoard task */
+        Login /*< Login to the BlackBoard */
     };
 
     /*!

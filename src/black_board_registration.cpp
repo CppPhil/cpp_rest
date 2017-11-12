@@ -5,6 +5,7 @@
 #include "../include/json.hpp" // cr::asJson
 #include "../include/get_none_empty_line.hpp" // cr::getNoneEmptyLine
 #include "../include/http_status_code.hpp" // cr::HttpStatusCode
+#include "../include/safe_optional_access.hpp" // cr::safeOptionalAccess
 #include <corvusoft/restbed/http.hpp> // rest::Http::fetch
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
 #include <corvusoft/restbed/response.hpp> // restbed::Response
@@ -44,7 +45,7 @@ BlackBoardRegistration::BlackBoardRegistration(
 
 BlackBoardRegistration &BlackBoardRegistration::registerUser()
 {
-    static constexpr HttpVerb verb = HttpVerb::POST;
+    static constexpr HttpVerb verb         = HttpVerb::POST;
     static constexpr char pathToResource[] = "/users";
 
     const std::string userName{ getUserNameFromUser() };
@@ -54,13 +55,9 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
         userName, passWord
     };
 
-    const RegisterUserType registerUserType = { userName, passWord };
+    const json::Document jsonDocument{ createJsonUserNamePw(userName, passWord) };
 
-    json::Document jsonDocument{ asJson(registerUserType) };
-
-    std::shared_ptr<rest::Response> responsePtr{ sendRequestSync(
-        m_blackBoardIpAddress,
-        m_port,
+    std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
         verb,
         pathToResource,
         jsonDocument)
@@ -75,14 +72,43 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
         << static_cast<HttpStatusCode>(responsePtr->get_status_code())
         << '\n';
 
-    const rest::Bytes bytes{ rest::Http::to_bytes(responsePtr) };
+    return *this;
+}
 
-    ostream << "bytes: ";
-    ostream.write(
-        reinterpret_cast<const char *>(bytes.data()),
-        static_cast<std::streamsize>(bytes.size()));
-    ostream << '\n';
+BlackBoardRegistration &BlackBoardRegistration::login()
+{
+    static constexpr HttpVerb verb         = HttpVerb::GET;
+    static constexpr char pathToResource[] = "/login";
 
+    const BlackBoardRegistrationInfo &blackBoardRegistrationInfo{
+        safeOptionalAccess(m_appState->blackBoardRegistrationInfo)
+    };
+
+    const json::Document jsonDocument{ createJsonUserNamePw(
+        blackBoardRegistrationInfo.userName,
+        blackBoardRegistrationInfo.passWord)
+    };
+
+    std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
+        verb,
+        pathToResource,
+        jsonDocument)
+    };
+
+    CR_THROW_IF_NULL(responsePtr);
+
+    std::ostream &ostream{ *(m_appState->ostream) };
+
+    ostream
+        << "\nGot status code: "
+        << static_cast<HttpStatusCode>(responsePtr->get_status_code())
+        << '\n';
+
+    const std::size_t contentLength{ getContentLength(*responsePtr) };
+    rest::Http::fetch(contentLength, responsePtr);
+    const rest::Bytes body{ responsePtr->get_body() };
+    const std::string str(std::begin(body), std::end(body));
+    ostream << "body: " << str;
     return *this;
 }
 
@@ -114,5 +140,26 @@ std::string BlackBoardRegistration::getPassWordFromUser()
         prompt);
 
     return passWord;
+}
+
+json::Document BlackBoardRegistration::createJsonUserNamePw(
+    boost::string_ref userName,
+    boost::string_ref passWord) const
+{
+    const RegisterUserType registerUserType = { userName, passWord };
+    return asJson(registerUserType);
+}
+
+std::shared_ptr<rest::Response> BlackBoardRegistration::sendToBlackBoardSync(
+    HttpVerb httpVerb,
+    boost::string_ref pathToResource,
+    const json::Document &jsonDocument)
+{
+    return sendRequestSync(
+        m_blackBoardIpAddress,
+        m_port,
+        httpVerb,
+        pathToResource,
+        jsonDocument);
 }
 } // namespace cr

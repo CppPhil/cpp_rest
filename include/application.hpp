@@ -68,6 +68,7 @@ private:
     const ConsoleMenuItem m_exitApplication; /*!< The exit application menu item */
     const ConsoleMenuItem m_discoverBlackBoard; /*!< The discover BlackBoard menu item */
     const ConsoleMenuItem m_registerUser; /*!< The register a user with the BlackBoard menu item */
+    const ConsoleMenuItem m_login; /*!< Login to the BlackBoard */
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_HPP

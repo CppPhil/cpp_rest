@@ -1,7 +1,9 @@
 be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
        
-do the stuff
+login and receive authentication token
+
+check login via /whoami
 
 swagger API thing
 

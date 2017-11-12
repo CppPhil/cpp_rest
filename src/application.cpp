@@ -34,6 +34,17 @@ Application::Application()
 
               blackBoardRegistration.registerUser();
           })
+      },
+      m_login{ makeConsoleMenuItem(
+          ConsoleMenuItem::Identifier::Login,
+          "Login to the BlackBoard",
+          [this](ApplicationState &) {
+              BlackBoardRegistration &blackBoardRegistration{
+                  safeOptionalAccess(m_blackBoardRegistration)
+              };
+
+              blackBoardRegistration.login();
+          })
       }
 {
     setConsoleMenuToDefaultItems();
@@ -55,6 +66,10 @@ Application &Application::start()
                     std::logic_error,
                     "BlackBoardRegistration could not be created!");
             }
+            break;
+        case ConsoleMenuItem::Identifier::RegisterUser:
+            m_consoleMenu.erase(ConsoleMenuItem::Identifier::RegisterUser);
+            m_consoleMenu.addItem(m_login);
             break;
         case ConsoleMenuItem::Identifier::None:
             // FALLTHROUGH
