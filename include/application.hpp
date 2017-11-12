@@ -5,8 +5,10 @@
 #include "../include/console_menu.hpp" // cr::ConsoleMenu
 #include "../include/console_menu_item.hpp" // cr::ConsoleMenuItem
 #include "../include/black_board_registration.hpp" // cr::BlackBoardRegistration
+#include "../include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
 #include <ostream> // std::ostream
 #include <istream> // std::istream
+#include <stdexcept> // std::logic_error
 
 namespace cr
 {
@@ -53,6 +55,12 @@ private:
      * \brief Replaces the menu items in the console menu with the default ones.
     **/
     void setConsoleMenuToDefaultItems();
+
+    /*!
+     * \brief Creates the BlackBoardRegistration object in the optional.
+     * \return bool if it could be created, false otherwise.
+    **/
+    bool createBlackBoardRegistration();
 
     boost::optional<BlackBoardRegistration> m_blackBoardRegistration;
     ApplicationState m_applicationState; /*!< The current application state */

@@ -1,6 +1,7 @@
 #include "../include/application.hpp"
 #include "../include/discover_black_board_service.hpp" // cr::discoverBlackBoardService
 #include "../include/safe_optional_access.hpp" // cr::safeOptionalAccess
+#include <ciso646> // not
 #include <string> // std::getline
 #include <iostream> // std::cout, std::cin
 #include <utility> // std::move
@@ -47,6 +48,11 @@ Application &Application::start()
         case ConsoleMenuItem::Identifier::DiscoverBlackBoard:
             m_consoleMenu.erase(ConsoleMenuItem::Identifier::DiscoverBlackBoard);
             m_consoleMenu.addItem(m_registerUser);
+            if (not createBlackBoardRegistration()) {
+                CR_THROW_WITH_SOURCE_INFO(
+                    std::logic_error,
+                    "BlackBoardRegistration could not be created!");
+            }
             break;
         case ConsoleMenuItem::Identifier::None:
             // FALLTHROUGH
@@ -77,6 +83,28 @@ void Application::setConsoleMenuToDefaultItems()
     m_consoleMenu.clear();
     m_consoleMenu.addItem(m_discoverBlackBoard);
     m_consoleMenu.addItem(m_exitApplication);
+}
+
+bool Application::createBlackBoardRegistration()
+{
+    boost::optional<BlackBoardInfo> &optional{
+        m_applicationState.blackBoardInfo
+    };
+
+    if (not optional) {
+        return false;
+    }
+
+    BlackBoardInfo &blackBoardInfo{ *optional };
+
+    m_blackBoardRegistration
+        = BlackBoardRegistration{
+            m_applicationState,
+            blackBoardInfo.ipAddress,
+            blackBoardInfo.port
+    };
+
+    return true;
 }
 } // namespace cr
 
