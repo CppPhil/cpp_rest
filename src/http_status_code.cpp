@@ -81,8 +81,7 @@ std::ostream &operator<<(std::ostream &os, HttpStatusCode httpStatusCode)
     CR_DETAIL_PRINT_STATUS_CODE(NOT_EXTENDED);
     CR_DETAIL_PRINT_STATUS_CODE(NETWORK_AUTHENTICATION_REQUIRED);
     default:
-        CR_THROW_WITH_SOURCE_INFO(InvalidEnumeratorValueException,
-                                  "httpStatusCode was invalid.");
+        os << "invalid status code: " << static_cast<int>(httpStatusCode);
     }
 
     return os;
