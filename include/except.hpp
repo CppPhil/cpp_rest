@@ -87,5 +87,6 @@ CR_DEFINE_EXCEPTION_TYPE(InvalidJsonException, std::runtime_error);
 CR_DEFINE_EXCEPTION_TYPE(FailedToCreateRestbedLogger, std::runtime_error);
 CR_DEFINE_EXCEPTION_TYPE(FailedToFetchFromDatabaseException, std::runtime_error);
 CR_DEFINE_EXCEPTION_TYPE(SocketErrorException, std::runtime_error);
+CR_DEFINE_EXCEPTION_TYPE(OptionalHadNoValueException, std::runtime_error);
 } // namespace cr
 #endif // INCG_CR_EXCEPT_HPP
