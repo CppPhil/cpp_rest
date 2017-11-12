@@ -15,7 +15,9 @@ Application::Application()
       m_exitApplication{ makeConsoleMenuItem(
           ConsoleMenuItem::Identifier::ExitApplication,
           "Exit the application",
-          [](ApplicationState &) { })
+          [](ApplicationState &) {
+              s_ostream << "\nExiting application.\n";
+          })
       },
       m_discoverBlackBoard{ makeConsoleMenuItem(
           ConsoleMenuItem::Identifier::DiscoverBlackBoard,
@@ -101,7 +103,7 @@ bool Application::createBlackBoardRegistration()
         = BlackBoardRegistration{
             m_applicationState,
             blackBoardInfo.ipAddress,
-            blackBoardInfo.blackBoardPort /* TODO: this might need to be different */
+            blackBoardInfo.portFromMessage /* TODO: this might need to be different */
     };
 
     return true;

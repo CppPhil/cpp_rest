@@ -68,7 +68,7 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
     CR_THROW_IF_NULL(responsePtr);
 
     (*(m_appState->ostream))
-        << "Got status code "
+        << "\nGot status code "
         << static_cast<HttpStatusCode>(responsePtr->get_status_code())
         << '\n';
 
