@@ -1,9 +1,9 @@
-#include "../include/example_rest_api.hpp" // cr::ExampleRestApi
-#include "../include/another_rest_api.hpp" // cr::AnotherRestApi
-#include "../include/unused.hpp" // CR_UNUSED
-#include "../include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
-#include "../include/black_board_info.hpp" // cr::BlackBoardInfo
-#include "../include/rest_controller.hpp" // cr::RestController
+#include "include/example_rest_api.hpp" // cr::ExampleRestApi
+#include "include/another_rest_api.hpp" // cr::AnotherRestApi
+#include "include/unused.hpp" // CR_UNUSED
+#include "include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
+#include "include/black_board_info.hpp" // cr::BlackBoardInfo
+#include "include/rest_controller.hpp" // cr::RestController
 #include <cstdlib> // EXIT_FAILURE
 #include <iostream> // std::cerr, std::cout
 #include <string> // std::string

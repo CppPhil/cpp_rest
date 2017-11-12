@@ -1,12 +1,6 @@
 be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
-  
-2 applications:
-    - application: application_main.cpp
-    - test:        test_main.cpp
-1 statically linked library:
-    - statically linked library: the rest
- 
+   
 struct ApplicationState
 {
     Optional<stuffThatsNeeded> a;
