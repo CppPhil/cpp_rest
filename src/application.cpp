@@ -19,9 +19,7 @@ Application::Application()
           &discoverBlackBoardService)
       }
 {
-
-    m_consoleMenu.addItem(m_discoverBlackBoard);
-    m_consoleMenu.addItem(m_exitApplication);
+    setConsoleMenuToDefaultItems();
 }
 
 Application &Application::start()
@@ -49,6 +47,13 @@ ConsoleMenuItem Application::makeConsoleMenuItem(
     return ConsoleMenuItem{
         identifier, m_applicationState, std::move(text), std::move(action)
     };
+}
+
+void Application::setConsoleMenuToDefaultItems()
+{
+    m_consoleMenu.clear();
+    m_consoleMenu.addItem(m_discoverBlackBoard);
+    m_consoleMenu.addItem(m_exitApplication);
 }
 } // namespace cr
 

@@ -9,6 +9,9 @@
 
 namespace cr
 {
+/*!
+ * \brief Type representing the console application.
+**/
 class Application
 {
 public:
@@ -16,23 +19,44 @@ public:
 
     CR_NONCOPYABLE(Application);
 
+    /*!
+     * \brief Initializes the console menu with the default items.
+    **/
     Application();
 
+    /*!
+     * \brief Runs the application by running the console menu over and over
+     *        again until the console menu has indicated that the user wishes
+     *        to exit the application.
+     * \return A reference to this object.
+    **/
     this_type &start();
 
 private:
-    static std::ostream &s_ostream;
-    static std::istream &s_istream;
+    static std::ostream &s_ostream; /*!< The ostream to print to by default */
+    static std::istream &s_istream; /*!< The istream to read from by default */
 
+    /*!
+     * \brief Helper function to easily create a ConsoleMenuItem.
+     * \param identifier The identifier of the ConsoleMenuItem to create.
+     * \param text The text to print for the option for the ConsoleMenuItem.
+     * \param action The action to perform if the ConsoleMenuItem is selected.
+     * \return The ConsoleMenuItem created.
+    **/
     ConsoleMenuItem makeConsoleMenuItem(
         ConsoleMenuItem::Identifier identifier,
         std::string text,
         std::function<void (ApplicationState &)> action);
 
-    ApplicationState m_applicationState;
-    ConsoleMenu m_consoleMenu;
-    const ConsoleMenuItem m_exitApplication;
-    const ConsoleMenuItem m_discoverBlackBoard;
+    /*!
+     * \brief Replaces the menu items in the console menu with the default ones.
+    **/
+    void setConsoleMenuToDefaultItems();
+
+    ApplicationState m_applicationState; /*!< The current application state */
+    ConsoleMenu m_consoleMenu; /*!< The console menu */
+    const ConsoleMenuItem m_exitApplication; /*!< The exit application menu item */
+    const ConsoleMenuItem m_discoverBlackBoard; /*!< The discover BlackBoard menu item */
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_HPP

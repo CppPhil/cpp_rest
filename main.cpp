@@ -22,6 +22,8 @@ int main()
         cr::Application application{ };
         application.start();
 
+        return EXIT_SUCCESS;
+
         cr::RestController<cr::ExampleRestApi> exampleRestApi{
             exampleRestApiRestbedLogFilePath };
         static constexpr std::uint16_t exampleRestApiPort{ 1984U };

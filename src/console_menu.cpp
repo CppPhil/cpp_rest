@@ -1,4 +1,5 @@
 #include "../include/console_menu.hpp"
+#include "../include/safe_optional_access.hpp" // cr::safeOptionalAccess
 #include <boost/lexical_cast.hpp> // boost::lexical_cast
 #include <boost/algorithm/string/trim.hpp> // boost::trim
 #include <ciso646> // and, not
@@ -72,7 +73,7 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
         opt = readInput(istream);
     }
 
-    const std::size_t index{ opt.value() - s_offset };
+    const std::size_t index{ safeOptionalAccess(opt) - s_offset };
     runByIndex(index);
 
     ostream << '\n';
