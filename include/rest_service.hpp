@@ -37,8 +37,17 @@ public:
         std::string restbedLogFilePath,
         std::string bindAddress = "127.0.0.1");
 
+    /*!
+     * \brief Move constructor.
+     * \param other Reference to the rvalue to move construct from.
+    **/
     RestService(this_type &&other);
 
+    /*!
+     * \brief Move assignment operator.
+     * \param other A reference to the rvalue to move assign with.
+     * \return A reference to this object.
+    **/
     this_type &operator=(this_type &&other);
 
     /*!

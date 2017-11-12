@@ -44,12 +44,21 @@ public:
         CR_THROW_IF_NULL(m_derived); // derived can't be nullptr.
     }
 
+    /*!
+     * \brief Move constructor.
+     * \param other Reference to the rvalue to move construct from.
+    **/
     RestApi(this_type &&other)
         : m_restService{ std::move(other.m_restService) },
           m_derived{ std::move(other.m_derived) }
     {
     }
 
+    /*!
+     * \brief Move assignment operator.
+     * \param other Reference to the rvalue to move assign with.
+     * \return A reference to this object.
+    **/
     this_type &operator=(this_type &&other)
     {
         m_restService = std::move(other.m_restService);

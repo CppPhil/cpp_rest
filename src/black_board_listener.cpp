@@ -114,5 +114,5 @@ std::uint16_t BlackBoardListener::getBlackBoardPort() const noexcept
 
 const std::uint16_t BlackBoardListener::s_blackBoardPort = 24000U;
 
-const std::size_t BlackBoardListener::s_recvBufSiz = 1024U;
+const std::size_t BlackBoardListener::s_recvBufSiz = 1024U; /* One kilobyte */
 } // namespace cr

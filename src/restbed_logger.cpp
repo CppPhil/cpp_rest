@@ -33,6 +33,7 @@ RestbedLogger::~RestbedLogger()
 
 void RestbedLogger::stop()
 {
+    /* does nothing */
 }
 
 void RestbedLogger::start(const std::shared_ptr<const rest::Settings> &settings)

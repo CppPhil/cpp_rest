@@ -27,8 +27,17 @@ public:
     **/
     explicit AnotherRestApi(std::string restbedLogfilePath);
 
+    /*!
+     * \brief Move constructor.
+     * \param other A reference to the rvalue to move construct from.
+    **/
     AnotherRestApi(this_type &&other);
 
+    /*!
+     * \brief Move assignment operator.
+     * \param other A reference to the rvalue to move assign with.
+     * \return A reference to this object.
+    **/
     this_type &operator=(this_type &&other);
 
     /*!

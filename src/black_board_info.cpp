@@ -8,7 +8,7 @@ namespace cr
 BlackBoardInfo BlackBoardInfo::create()
 {
     BlackBoardListener blackBoardListener{ };
-    blackBoardListener.receiveData();
+    blackBoardListener.receiveData(); // this is a blocking call.
 
     return BlackBoardInfo{
         blackBoardListener.getBlackBoardIp().data(),
