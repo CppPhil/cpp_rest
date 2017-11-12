@@ -5,12 +5,13 @@
 #include "../include/json.hpp" // cr::asJson
 #include "../include/get_none_empty_line.hpp" // cr::getNoneEmptyLine
 #include "../include/http_status_code.hpp" // cr::HttpStatusCode
+#include <corvusoft/restbed/http.hpp> // rest::Http::fetch
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
 #include <corvusoft/restbed/response.hpp> // restbed::Response
 #include <cstddef> // std::size_t
+#include <iterator> // std::begin, std::end
+#include <string> // std::string
 #include <utility> // std::move
-
-#include "../include/log.hpp"
 
 namespace cr
 {
@@ -67,10 +68,22 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
 
     CR_THROW_IF_NULL(responsePtr);
 
-    (*(m_appState->ostream))
+    std::ostream &ostream{ *(m_appState->ostream) };
+
+    ostream
         << "\nGot status code: "
         << static_cast<HttpStatusCode>(responsePtr->get_status_code())
         << '\n';
+
+    rest::Response &response{ *responsePtr };
+    const std::size_t contentLength{ getContentLength(response) };
+    ostream << "Content-Length: " << contentLength << '\n';
+
+    rest::Http::fetch(contentLength, responsePtr);
+
+    const rest::Bytes body{ response.get_body() };
+    const std::string bodyAsString(std::begin(body), std::end(body));
+    ostream << "body: " << bodyAsString;
 
     return *this;
 }
