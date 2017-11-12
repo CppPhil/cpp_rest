@@ -2,6 +2,7 @@
 #define INCG_CR_CONSOLE_MENU_ITEM_HPP
 #include "../include/application_state.hpp" // cr::ApplicationState
 #include <gsl/gsl> // gsl::not_null
+#include <cstdint> // std::uint64_t
 #include <iosfwd> // std::ostream
 #include <string> // std::string
 #include <functional> // std::function
@@ -19,11 +20,12 @@ public:
     /*!
      * \brief Type that defines enumerators identifying the ConsoleMenuItems.
     **/
-    enum class Identifier
+    enum class Identifier : std::uint64_t
     {
         None, /*!< The none task -> does nothing */
         ExitApplication, /*!< The user wishes to exit the application */
-        DiscoverBlackBoard /*!< The discover BlackBoard task */
+        DiscoverBlackBoard, /*!< The discover BlackBoard task */
+        RegisterUser /*!< The register a user with the BlackBoard task */
     };
 
     /*!

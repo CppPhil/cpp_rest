@@ -1,12 +1,15 @@
 #include "../include/application.hpp"
 #include "../include/discover_black_board_service.hpp" // cr::discoverBlackBoardService
+#include "../include/safe_optional_access.hpp" // cr::safeOptionalAccess
+#include <string> // std::getline
 #include <iostream> // std::cout, std::cin
 #include <utility> // std::move
 
 namespace cr
 {
 Application::Application()
-    : m_applicationState{ s_ostream, s_istream },
+    : m_blackBoardRegistration{ boost::none },
+      m_applicationState{ s_ostream, s_istream },
       m_consoleMenu{ s_ostream, s_istream },
       m_exitApplication{ makeConsoleMenuItem(
           ConsoleMenuItem::Identifier::ExitApplication,
@@ -17,6 +20,17 @@ Application::Application()
           ConsoleMenuItem::Identifier::DiscoverBlackBoard,
           "Discover the BlackBoard service",
           &discoverBlackBoardService)
+      },
+      m_registerUser{ makeConsoleMenuItem(
+          ConsoleMenuItem::Identifier::RegisterUser,
+          "Register a user with the BlackBoard service",
+          [this](ApplicationState &) {
+              BlackBoardRegistration &blackBoardRegistration{
+                  safeOptionalAccess(m_blackBoardRegistration)
+              };
+
+              blackBoardRegistration.registerUser();
+          })
       }
 {
     setConsoleMenuToDefaultItems();
@@ -25,16 +39,23 @@ Application::Application()
 Application &Application::start()
 {
     for (;;) {
+        m_consoleMenu.sort(); // sort the menu items.
+
         const ConsoleMenuItem::Identifier lastRun{ m_consoleMenu.run() };
 
         switch (lastRun) {
+        case ConsoleMenuItem::Identifier::DiscoverBlackBoard:
+            m_consoleMenu.erase(ConsoleMenuItem::Identifier::DiscoverBlackBoard);
+            m_consoleMenu.addItem(m_registerUser);
+            break;
         case ConsoleMenuItem::Identifier::None:
             // FALLTHROUGH
         case ConsoleMenuItem::Identifier::ExitApplication:
-            return *this;
+            goto exit;
         }
     }
 
+exit:
     return *this;
 }
 

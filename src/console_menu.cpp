@@ -7,6 +7,8 @@
 #include <utility> // std::move
 #include <iomanip> // std::setw
 #include <limits> // std::numeric_limits
+#include <iterator> // std::begin, std::end
+#include <type_traits> // std::underlying_type_t
 
 namespace cr
 {
@@ -79,6 +81,22 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
 
     ostream << '\n';
     return m_menuItems.at(index).getIdentifier();
+}
+
+ConsoleMenu &ConsoleMenu::sort()
+{
+    std::sort(
+        std::begin(m_menuItems),
+        std::end(m_menuItems),
+        [](const ConsoleMenuItem &lhs, const ConsoleMenuItem &rhs) {
+            using Underlying
+                = std::underlying_type_t<ConsoleMenuItem::Identifier>;
+
+            return static_cast<Underlying>(lhs.getIdentifier())
+                > static_cast<Underlying>(rhs.getIdentifier());
+    });
+
+    return *this;
 }
 
 const std::size_t ConsoleMenu::s_offset = 1U;

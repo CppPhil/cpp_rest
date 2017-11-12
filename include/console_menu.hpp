@@ -11,7 +11,7 @@
 #include <string> // std::string
 #include <vector> // std::vector
 #include <type_traits> // std::is_same
-#include <algorithm> // std::copy, std::remove_if
+#include <algorithm> // std::copy, std::remove_if, std::sort
 
 namespace cr
 {
@@ -123,6 +123,13 @@ public:
      * \return The identifier of the ConsoleMenuItem that had its action run.
     **/
     ConsoleMenuItem::Identifier run();
+
+    /*!
+     * \brief Sorts the ConsoleMenuItem so that the ConsoleMenuItems with
+     *        the lower integer values for their Identifiers come last.
+     * \return A reference to this object.
+    **/
+    this_type &sort();
 
 private:
     static const std::size_t s_offset; /*!< Offset translating from 0 and 1

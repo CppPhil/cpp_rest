@@ -5,7 +5,8 @@ namespace cr
 ApplicationState::ApplicationState(std::ostream &os, std::istream &is)
     : ostream{ &os },
       istream{ &is },
-      blackBoardInfo{ boost::none }
+      blackBoardInfo{ boost::none },
+      blackBoardRegistrationInfo{ boost::none }
 {
 }
 } // namespace cr

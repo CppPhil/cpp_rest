@@ -4,6 +4,7 @@
 #include "../include/application_state.hpp" // cr::ApplicationState
 #include "../include/console_menu.hpp" // cr::ConsoleMenu
 #include "../include/console_menu_item.hpp" // cr::ConsoleMenuItem
+#include "../include/black_board_registration.hpp" // cr::BlackBoardRegistration
 #include <ostream> // std::ostream
 #include <istream> // std::istream
 
@@ -53,10 +54,12 @@ private:
     **/
     void setConsoleMenuToDefaultItems();
 
+    boost::optional<BlackBoardRegistration> m_blackBoardRegistration;
     ApplicationState m_applicationState; /*!< The current application state */
     ConsoleMenu m_consoleMenu; /*!< The console menu */
     const ConsoleMenuItem m_exitApplication; /*!< The exit application menu item */
     const ConsoleMenuItem m_discoverBlackBoard; /*!< The discover BlackBoard menu item */
+    const ConsoleMenuItem m_registerUser; /*!< The register a user with the BlackBoard menu item */
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_HPP

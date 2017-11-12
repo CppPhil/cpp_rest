@@ -1,6 +1,7 @@
 #ifndef INCG_CR_APPLICATION_STATE_HPP
 #define INCG_CR_APPLICATION_STATE_HPP
 #include "../include/black_board_info.hpp" // cr::BlackBoardInfo
+#include "../include/black_board_registration_info.hpp" // cr::BlackBoardRegistrationInfo
 #include <gsl/gsl> // gsl::not_null
 #include <boost/optional.hpp> // boost::optional
 #include <ostream> // std::ostream
@@ -31,6 +32,10 @@ struct ApplicationState
                                             *   actions can read from
                                            **/
     boost::optional<BlackBoardInfo> blackBoardInfo; /*!< The BlackBoardInfo */
+
+    boost::optional<BlackBoardRegistrationInfo> blackBoardRegistrationInfo; /*! Has the password and
+                                                                             * user name
+                                                                            **/
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_STATE_HPP
