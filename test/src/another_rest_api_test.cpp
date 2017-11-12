@@ -38,8 +38,10 @@ TEST_CASE("another_rest_api_test")
 
         static constexpr char msgToSend[] = "Test";
 
+        std::shared_ptr<cr::rest::Request> request{ nullptr };
         const std::shared_ptr<cr::rest::Response> response{
             cr::sendRequestSync(
+                request,
                 ipv4Localhost, port, cr::HttpVerb::GET,
                 "/path_param_resource/TEST", // send TEST as the value of the 'name' path parameter
                 msgToSend)
@@ -97,8 +99,10 @@ TEST_CASE("another_rest_api_test")
             { "queryKey2", "queryValue2" }
         };
 
+        std::shared_ptr<cr::rest::Request> request{ nullptr };
         const std::shared_ptr<cr::rest::Response> response{
             cr::sendRequestSync(
+                request,
                 ipv4Localhost, port, cr::HttpVerb::GET,
                 "/query_param_resource", "MyMessage",
                 headersToSend, queryParametersToSend)
@@ -146,8 +150,10 @@ TEST_CASE("another_rest_api_test")
 
         using namespace std::literals::string_literals;
 
+        std::shared_ptr<cr::rest::Request> request{ nullptr };
         const std::shared_ptr<cr::rest::Response> response{
             cr::sendRequestSync(
+                request,
                 ipv4Localhost, port, cr::HttpVerb::LINK,
                 "/header_param_resource", "blahblahblah",
                 { { "Header-Param", "Value" }, // the additional header parameters to send.

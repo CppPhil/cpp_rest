@@ -41,8 +41,10 @@ TEST_CASE("example_rest_api_test")
 
         static constexpr char messageToSend[] = "\"Guten Tag\"";
 
+        std::shared_ptr<cr::rest::Request> request{ nullptr };
         const std::shared_ptr<cr::rest::Response> response{
             cr::sendRequestSync(
+                request,
                 ipv4Localhost, port, cr::HttpVerb::POST,
                 "/resource", messageToSend)
         };
@@ -113,8 +115,10 @@ TEST_CASE("example_rest_api_test")
             cr::asJson(testObject)
         };
 
+        std::shared_ptr<cr::rest::Request> request{ nullptr };
         const std::shared_ptr<cr::rest::Response> response{
             cr::sendRequestSync(
+                request,
                 ipv4Localhost, port,
                 cr::HttpVerb::POST, "/resource2",
                 jsonDocument)
@@ -160,8 +164,10 @@ TEST_CASE("example_rest_api_test")
             restApiFuture.wait();
         });
 
+        std::shared_ptr<cr::rest::Request> request{ nullptr };
         const std::shared_ptr<cr::rest::Response> response{
             cr::sendRequestSync(
+                request,
                 ipv4Localhost, port, cr::HttpVerb::POST,
                 "/resource2", "This isn't JSON.")
         };
@@ -194,8 +200,10 @@ TEST_CASE("example_rest_api_test")
             cr::parseJson(json)
         };
 
+        std::shared_ptr<cr::rest::Request> request{ nullptr };
         const std::shared_ptr<cr::rest::Response> response{
             cr::sendRequestSync(
+                request,
                 ipv4Localhost, port, cr::HttpVerb::POST,
                 "/resource2", jsonDocument)
         };

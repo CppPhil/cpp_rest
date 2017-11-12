@@ -30,6 +30,10 @@ std::size_t getContentLength(const rest::Request &request);
 
 /*!
  * \brief Sends a request synchronously.
+ * \param requestOutParam Output parameter. The Request created is written
+ *                        to the object referenced by this reference.
+ *                        The Request must be kept alive as long as the
+ *                        Response.
  * \param hostIp The IP address to send the request to.
  * \param port The port on the remote host to send the request to.
  * \param httpVerb The HTTP verb to use.
@@ -44,6 +48,7 @@ std::size_t getContentLength(const rest::Request &request);
  * \note Blocks the calling thread until the response is received.
 **/
 const std::shared_ptr<rest::Response> sendRequestSync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -56,6 +61,10 @@ const std::shared_ptr<rest::Response> sendRequestSync(
 
 /*!
  * \brief Sends a request asynchronously.
+ * \param requestOutParam Output parameter. The Request created is written
+ *                        to the object referenced by this reference.
+ *                        The Request must be kept alive as long as the
+ *                        Response.
  * \param hostIp The IP address to send the request to.
  * \param port The port on the remote host to send the request to.
  * \param httpVerb The HTTP verb to use.
@@ -72,6 +81,7 @@ const std::shared_ptr<rest::Response> sendRequestSync(
  * \note Returns immediately.
 **/
 std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -87,6 +97,10 @@ std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
 
 /*!
  * \brief Sends a request of JSON data synchronously.
+ * \param requestOutParam Output parameter. The Request created is written
+ *                        to the object referenced by this reference.
+ *                        The Request must be kept alive as long as the
+ *                        Response.
  * \param hostIp The IP address to send the JSON data to.
  * \param port The port on the remote host to send the JSON data to.
  * \param httpVerb The HTTP verb to use.
@@ -98,6 +112,7 @@ std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
  * \note Blocks the calling thread until the response is received.
 **/
 const std::shared_ptr<rest::Response> sendRequestSync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -108,6 +123,10 @@ const std::shared_ptr<rest::Response> sendRequestSync(
 
 /*!
  * \brief Sends a request of JSON data asynchronously.
+ * \param requestOutParam Output parameter. The Request created is written
+ *                        to the object referenced by this reference.
+ *                        The Request must be kept alive as long as the
+ *                        Response.
  * \param hostIp The IP address to send the JSON data to.
  * \param port The port on the remote host to send the JSON data to.
  * \param httpVerb The HTTP verb to use.
@@ -121,6 +140,7 @@ const std::shared_ptr<rest::Response> sendRequestSync(
  * \note Returns immediately.
 **/
 std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -134,6 +154,10 @@ std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
 
 /*!
  * \brief Sends a plain text string synchronously.
+ * \param requestOutParam Output parameter. The Request created is written
+ *                        to the object referenced by this reference.
+ *                        The Request must be kept alive as long as the
+ *                        Response.
  * \param hostIp The IP address to send the string to.
  * \param port The port on the remote host to send the string to.
  * \param httpVerb The HTTP verb to use.
@@ -145,6 +169,7 @@ std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
  * \note Blocks the calling thread until the response is received.
 **/
 const std::shared_ptr<rest::Response> sendRequestSync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -155,6 +180,10 @@ const std::shared_ptr<rest::Response> sendRequestSync(
 
 /*!
  * \brief Asynchronously sends a request containing a string.
+ * \param requestOutParam Output parameter. The Request created is written
+ *                        to the object referenced by this reference.
+ *                        The Request must be kept alive as long as the
+ *                        Response.
  * \param hostIp The IP address to send the request to.
  * \param port The port on the remote host to send the request to.
  * \param httpVerb The HTTP verb to use.
@@ -169,6 +198,7 @@ const std::shared_ptr<rest::Response> sendRequestSync(
  * \note Returns immediately.
 **/
 std::future<std::shared_ptr<rest::Response>> sentRequestAsync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,

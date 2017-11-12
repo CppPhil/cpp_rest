@@ -135,6 +135,7 @@ std::shared_ptr<rest::Request> makeRequest(
 } // anonymous namespace
 
 const std::shared_ptr<rest::Response> sendRequestSync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -145,16 +146,17 @@ const std::shared_ptr<rest::Response> sendRequestSync(
     const std::multimap<std::string, std::string> &headers,
     const std::multimap<std::string, std::string> &queryParameters)
 {
+    requestOutParam = makeRequest(
+        hostIp, port, httpVerb, pathToResource,
+        contentType, dataToSend,
+        dataToSendByteSize, headers,
+        queryParameters);
 
-
-    return rest::Http::sync(makeRequest(
-                                hostIp, port, httpVerb, pathToResource,
-                                contentType, dataToSend,
-                                dataToSendByteSize, headers,
-                                queryParameters));
+    return rest::Http::sync(requestOutParam);
 }
 
 std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -168,16 +170,19 @@ std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
     const std::multimap<std::string, std::string> &headers,
     const std::multimap<std::string, std::string> &queryParameters)
 {
+    requestOutParam = makeRequest(
+        hostIp, port, httpVerb, pathToResource,
+        contentType, dataToSend,
+        dataToSendByteSize, headers,
+        queryParameters);
+
     return rest::Http::async(
-               makeRequest(
-                   hostIp, port, httpVerb, pathToResource,
-                   contentType, dataToSend,
-                   dataToSendByteSize, headers,
-                   queryParameters),
-               callback);
+        requestOutParam,
+        callback);
 }
 
 const std::shared_ptr<rest::Response> sendRequestSync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -186,12 +191,15 @@ const std::shared_ptr<rest::Response> sendRequestSync(
     const std::multimap<std::string, std::string> &headers,
     const std::multimap<std::string, std::string> &queryParameters)
 {
-    return rest::Http::sync(makeRequest(
-                                hostIp, port, httpVerb, pathToResource,
-                                json, headers, queryParameters));
+    requestOutParam = makeRequest(
+        hostIp, port, httpVerb, pathToResource,
+        json, headers, queryParameters);
+
+    return rest::Http::sync(requestOutParam);
 }
 
 std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -203,14 +211,17 @@ std::future<std::shared_ptr<rest::Response>> sendRequestAsync(
     const std::multimap<std::string, std::string> &headers,
     const std::multimap<std::string, std::string> &queryParameters)
 {
+    requestOutParam = makeRequest(
+        hostIp, port, httpVerb, pathToResource,
+        json, headers, queryParameters);
+
     return rest::Http::async(
-                makeRequest(
-                    hostIp, port, httpVerb, pathToResource,
-                    json, headers, queryParameters),
-                callback);
+        requestOutParam,
+        callback);
 }
 
 const std::shared_ptr<rest::Response> sendRequestSync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -219,12 +230,15 @@ const std::shared_ptr<rest::Response> sendRequestSync(
     const std::multimap<std::string, std::string> &headers,
     const std::multimap<std::string, std::string> &queryParameters)
 {
-    return rest::Http::sync(makeRequest(
-                                hostIp, port, httpVerb, pathToResource,
-                                stringToSend, headers, queryParameters));
+    requestOutParam = makeRequest(
+        hostIp, port, httpVerb, pathToResource,
+        stringToSend, headers, queryParameters);
+
+    return rest::Http::sync(requestOutParam);
 }
 
 std::future<std::shared_ptr<rest::Response>> sentRequestAsync(
+    std::shared_ptr<rest::Request> &requestOutParam,
     boost::string_ref hostIp,
     std::uint16_t port,
     HttpVerb httpVerb,
@@ -236,10 +250,12 @@ std::future<std::shared_ptr<rest::Response>> sentRequestAsync(
     const std::multimap<std::string, std::string> &headers,
     const std::multimap<std::string, std::string> &queryParameters)
 {
+    requestOutParam = makeRequest(
+        hostIp, port, httpVerb, pathToResource,
+        stringToSend, headers, queryParameters);
+
     return rest::Http::async(
-                makeRequest(
-                    hostIp, port, httpVerb, pathToResource,
-                    stringToSend, headers, queryParameters),
-                callback);
+        requestOutParam,
+        callback);
 }
 } // namespace cr

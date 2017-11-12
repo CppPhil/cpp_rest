@@ -7,8 +7,9 @@
 #include <rapidjson/stringbuffer.h> // rapidjson::StringBuffer
 #include <rapidjson/prettywriter.h> // rapidjson::PrettyWriter
 #include <rapidjson/document.h> // rapidjson::Document
-#include <corvusoft/restbed/response.hpp> // restbed::response
-#include <corvusoft/restbed/settings.hpp> // restbed::settings
+#include <corvusoft/restbed/response.hpp> // restbed::Response
+#include <corvusoft/restbed/settings.hpp> // restbed::Settings
+#include <corvusoft/restbed/request.hpp> // restbed::Request
 #include <boost/utility/string_ref.hpp> // boost::string_ref
 #include <gsl/gsl> // gsl::not_null
 #include <cstdint> // std::uint16_t
@@ -49,6 +50,7 @@ private:
         boost::string_ref passWord) const;
 
     std::shared_ptr<rest::Response> sendToBlackBoardSync(
+        std::shared_ptr<rest::Request> &requestOutParam,
         HttpVerb httpVerb,
         boost::string_ref pathToResource,
         const json::Document &jsonDocument);
