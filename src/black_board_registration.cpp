@@ -75,15 +75,13 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
         << static_cast<HttpStatusCode>(responsePtr->get_status_code())
         << '\n';
 
-    rest::Response &response{ *responsePtr };
-    const std::size_t contentLength{ getContentLength(response) };
-    ostream << "Content-Length: " << contentLength << '\n';
+    const rest::Bytes bytes{ rest::Http::to_bytes(responsePtr) };
 
-    //rest::Http::fetch(contentLength, responsePtr);
-
-    const rest::Bytes body{ response.get_body() };
-    const std::string bodyAsString(std::begin(body), std::end(body));
-    ostream << "body: " << bodyAsString;
+    ostream << "bytes: ";
+    ostream.write(
+        reinterpret_cast<const char *>(bytes.data()),
+        static_cast<std::streamsize>(bytes.size()));
+    ostream << '\n';
 
     return *this;
 }
