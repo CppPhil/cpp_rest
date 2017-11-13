@@ -14,6 +14,7 @@
 #include <gsl/gsl> // gsl::not_null
 #include <cstdint> // std::uint16_t
 #include <string> // std::string
+#include <map> // std::multimap
 
 namespace cr
 {
@@ -53,7 +54,9 @@ private:
         std::shared_ptr<rest::Request> &requestOutParam,
         HttpVerb httpVerb,
         boost::string_ref pathToResource,
-        const json::Document &jsonDocument);
+        const json::Document &jsonDocument,
+        const std::multimap<std::string, std::string> &headers = { },
+        const std::multimap<std::string, std::string> &queryParameters = { });
 
     gsl::not_null<ApplicationState *> m_appState;
     std::string m_blackBoardIpAddress;

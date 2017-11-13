@@ -101,13 +101,19 @@ bool BlackBoardRegistration::login()
         blackBoardRegistrationInfo.passWord)
     };
 
+    const std::multimap<std::string, std::string> queryParameters{
+        { "name", blackBoardRegistrationInfo.userName },
+        { "password", blackBoardRegistrationInfo.passWord }
+    };
 
     std::shared_ptr<rest::Request> requestPtr{ nullptr };
     std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
         requestPtr,
         verb,
         pathToResource,
-        jsonDocument)
+        jsonDocument,
+        { }, // no special headers
+        queryParameters)
     };
 
     CR_THROW_IF_NULL(responsePtr);
@@ -177,7 +183,9 @@ std::shared_ptr<rest::Response> BlackBoardRegistration::sendToBlackBoardSync(
     std::shared_ptr<rest::Request> &requestOutParam,
     HttpVerb httpVerb,
     boost::string_ref pathToResource,
-    const json::Document &jsonDocument)
+    const json::Document &jsonDocument,
+    const std::multimap<std::string, std::string> &headers,
+    const std::multimap<std::string, std::string> &queryParameters)
 {
     return sendRequestSync(
         requestOutParam,
@@ -185,6 +193,8 @@ std::shared_ptr<rest::Response> BlackBoardRegistration::sendToBlackBoardSync(
         m_port,
         httpVerb,
         pathToResource,
-        jsonDocument);
+        jsonDocument,
+        headers,
+        queryParameters);
 }
 } // namespace cr
