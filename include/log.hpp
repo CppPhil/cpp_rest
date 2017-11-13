@@ -23,10 +23,10 @@
 
 #define CR_LOG(loglevel) \
     ::cr::Log::getInstance().log(loglevel) \
-        << "\nFile:    " << __FILE__ \
-        << "\nFunction " << BOOST_CURRENT_FUNCTION \
-        << "\nLine:    " << __LINE__ \
-        << "\nMessage: \n"
+        << "\nFile:     " << __FILE__ \
+        << "\nFunction: " << BOOST_CURRENT_FUNCTION \
+        << "\nLine:     " << __LINE__ \
+        << "\nMessage:\n"
 
 namespace cr
 {
