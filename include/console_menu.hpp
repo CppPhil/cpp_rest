@@ -7,11 +7,11 @@
 #include <cstddef> // std::size_t
 #include <ostream> // std::ostream
 #include <istream> // std::istream
-#include <iterator> // std::back_inserter, std::iterator_traits, std::begin, std::end
+#include <iterator> // std::iterator_traits, std::begin, std::end
 #include <string> // std::string
 #include <vector> // std::vector
 #include <type_traits> // std::is_same
-#include <algorithm> // std::copy, std::remove_if, std::sort
+#include <algorithm> // std::remove_if, std::sort
 
 namespace cr
 {
@@ -77,8 +77,12 @@ public:
     {
         static_assert(std::is_same<
             typename std::iterator_traits<InputIterator>::value_type,
-            value_type>::value, "Invalid iterator type in ConsoleMenu::addItems.");
-        std::copy(first, last, std::back_inserter(m_cont));
+            ConsoleMenuItem>::value, "Invalid iterator type in ConsoleMenu::addItems.");
+
+        for (; first != last; ++first) {
+            addItem(*first);
+        }
+
         return *this;
     }
 

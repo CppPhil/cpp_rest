@@ -12,6 +12,25 @@
 
 namespace cr
 {
+namespace
+{
+bool contains(
+    const ConsoleMenuItem &item,
+    const ConsoleMenu::container_type &cont)
+{
+    const ConsoleMenu::container_type::const_iterator it{
+        std::find_if(
+            std::begin(cont),
+            std::end(cont),
+            [&item](const ConsoleMenu::value_type &elem) {
+                return elem.menuItem.getText() == item.getText();
+            })
+    };
+
+    return it != std::end(cont);
+}
+} // anonymous namespace
+
 ConsoleMenu::value_type::value_type(ConsoleMenuItem p_menuItem)
     : menuItem{ std::move(p_menuItem) },
       wasActionExecutedSuccessfully{ false } // default to false, since the
@@ -30,13 +49,17 @@ ConsoleMenu::ConsoleMenu(std::ostream &ostream, std::istream &istream)
 
 ConsoleMenu &ConsoleMenu::addItem(const ConsoleMenuItem &menuItem)
 {
-    m_cont.emplace_back(menuItem);
+    if (not contains(menuItem, m_cont)) {
+        m_cont.emplace_back(menuItem);
+    }
     return *this;
 }
 
 ConsoleMenu &ConsoleMenu::addItem(ConsoleMenuItem &&menuItem) noexcept
 {
-    m_cont.emplace_back(std::move(menuItem));
+    if (not contains(menuItem, m_cont)) {
+        m_cont.emplace_back(std::move(menuItem));
+    }
     return *this;
 }
 
