@@ -12,7 +12,18 @@ Quest Quest::fromJson(const json::GenericValue<json::UTF8<>> &object)
     const std::string description{ fetchString("description", object) };
     const std::int64_t id{ fetchInt64("id", object) };
     const std::string name{ fetchString("name", object) };
-    const std::string requirements{ fetchString("requirements", object) };
+    const std::string requirements{
+        [&object] {
+            std::string retVal{ };
+            try {
+                retVal = fetchString("requirements", object);
+            } catch (const InvalidJsonException &) {
+                retVal = "";
+            }
+
+            return retVal;
+        }()
+    };
     const std::int64_t reward{ fetchInt64("reward", object) };
     const json::GenericValue<json::UTF8<>>::ConstArray array{
         fetchArray("tasks", object)
