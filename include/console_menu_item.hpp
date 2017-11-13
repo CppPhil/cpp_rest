@@ -28,7 +28,8 @@ public:
         RegisterUser, /*!< The register a user with the BlackBoard task */
         Login, /*!< Login to the BlackBoard */
         WhoAmI, /*!< Check the login */
-        FetchPublicQuests /*!< Get all the public quests */
+        FetchPublicQuests, /*!< Get all the public quests */
+        Quest /*!< Used for quests */
     };
 
     /*!
@@ -66,6 +67,12 @@ public:
      * \return The identifier of this object.
     **/
     Identifier getIdentifier() const noexcept;
+
+    /*!
+     * \brief Returns a reference to the text of this object.
+     * \return A reference to the text of this object.
+    **/
+    const std::string &getText() const noexcept;
 
 private:
     Identifier m_identifier; /*!< The identifier of this object */

@@ -8,6 +8,7 @@
 #include "../include/create_authorization_field.hpp" // cr::createAuthorizationField
 #include "../include/safe_optional_access.hpp" // cr::safeOptionalAccess
 #include "../include/log.hpp" // CR_LOG
+#include "../include/create_quests.hpp" // cr::createQuests
 #include <corvusoft/restbed/http.hpp> // rest::Http::fetch
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
 #include <corvusoft/restbed/response.hpp> // restbed::Response
@@ -212,8 +213,9 @@ bool RestClient::whoami()
 
 bool RestClient::fetchPublicQuests()
 {
-    static constexpr HttpVerb verb         = HttpVerb::GET;
-    static constexpr char pathToResource[] = "/blackboard/quests";
+    static constexpr HttpVerb verb                     = HttpVerb::GET;
+    static constexpr char pathToResource[]             = "/blackboard/quests";
+    static constexpr HttpStatusCode expectedStatusCode = HttpStatusCode::OK;
 
     std::ostream &ostream{ *(m_appState->ostream) };
 
@@ -244,7 +246,45 @@ bool RestClient::fetchPublicQuests()
 
     ostream << "body:\n" << body << '\n';
 
-    return true; /* TODO: this might need to change. */
+    m_appState->quests = createQuests(body);
+
+    return httpStatusCode == expectedStatusCode;
+}
+
+bool RestClient::attendQuest(const Quest &questToAttend)
+{
+    static constexpr HttpVerb verb{ HttpVerb::GET };
+
+    std::ostream &ostream{ *(m_appState->ostream) };
+
+    const json::Document emptyJsonDocument{ parseJson("{}") };
+
+    std::shared_ptr<rest::Request> requestPtr{ nullptr };
+    std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
+        requestPtr,
+        verb,
+        questToAttend.getTasks().front(), // seems like they only have one task.
+        emptyJsonDocument)
+    };
+
+    CR_THROW_IF_NULL(responsePtr);
+
+    const HttpStatusCode httpStatusCode{
+        static_cast<HttpStatusCode>(responsePtr->get_status_code())
+    };
+
+    ostream << "statusCode: " << httpStatusCode << '\n';
+
+    const std::size_t contentLength{ getContentLength(*responsePtr) };
+
+    rest::Http::fetch(contentLength, responsePtr);
+
+    const rest::Bytes bodyAsBytes{ responsePtr->get_body() };
+    const std::string body(std::begin(bodyAsBytes), std::end(bodyAsBytes));
+
+    ostream << "body:\n" << body << '\n';
+
+    return true;
 }
 
 std::string RestClient::getUserNameFromUser()

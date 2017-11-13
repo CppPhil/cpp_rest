@@ -4,6 +4,7 @@
 #include "../include/application_state.hpp" // cr::ApplicationState
 #include "../include/except.hpp" // CR_THROW_IF_NULL
 #include "../include/http_verb.hpp" // cr::HttpVerb
+#include "../include/quest.hpp" // cr::Quest
 #include <rapidjson/stringbuffer.h> // rapidjson::StringBuffer
 #include <rapidjson/prettywriter.h> // rapidjson::PrettyWriter
 #include <rapidjson/document.h> // rapidjson::Document
@@ -44,6 +45,8 @@ public:
     bool whoami();
 
     bool fetchPublicQuests();
+
+    bool attendQuest(const Quest &questToAttend);
 
 private:
     std::string getUserNameFromUser();

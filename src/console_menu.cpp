@@ -23,7 +23,8 @@ ConsoleMenu::value_type::value_type(ConsoleMenuItem p_menuItem)
 ConsoleMenu::ConsoleMenu(std::ostream &ostream, std::istream &istream)
     : m_cont{ },
       m_ostream{ &ostream },
-      m_istream{ &istream }
+      m_istream{ &istream },
+      m_lastExecuted{ }
 {
 }
 
@@ -128,6 +129,11 @@ bool ConsoleMenu::getExecutionStatus(
             ? (false) : (it->wasActionExecutedSuccessfully));
 }
 
+const ConsoleMenu::value_type &ConsoleMenu::getLastExecuted() const
+{
+    return m_cont.at(m_lastExecuted);
+}
+
 const std::size_t ConsoleMenu::s_offset = 1U;
 
 const int ConsoleMenu::s_idxWidth = 3; /* hopefully there won't be more than 999 menu items */
@@ -190,7 +196,9 @@ bool ConsoleMenu::isInputValid(const std::string &inputLine)
 
 bool ConsoleMenu::runByIndex(std::size_t idx) /* note: zero based index here. */
 {
-    return m_cont.at(idx).menuItem.runAction();
+    const bool retVal{ m_cont.at(idx).menuItem.runAction() };
+    m_lastExecuted = idx;
+    return retVal;
 }
 
 ConsoleMenu::container_type::const_iterator ConsoleMenu::findByIdentifierHelper(

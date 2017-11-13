@@ -3,10 +3,12 @@
 #include "../include/black_board_info.hpp" // cr::BlackBoardInfo
 #include "../include/black_board_registration_info.hpp" // cr::BlackBoardRegistrationInfo
 #include "../include/login_response.hpp" // cr::LoginResponse
+#include "../include/quest.hpp" // cr::Quest
 #include <gsl/gsl> // gsl::not_null
 #include <boost/optional.hpp> // boost::optional
 #include <ostream> // std::ostream
 #include <istream> // std::istream
+#include <vector> // std::vector
 
 namespace cr
 {
@@ -40,6 +42,7 @@ struct ApplicationState
     boost::optional<LoginResponse> loginResponse; /*!< the response received from the
                                                    *   login menu item's action.
                                                   **/
+    std::vector<Quest> quests; /*!< The quests available */
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_STATE_HPP

@@ -5,6 +5,7 @@
 #include <string> // std::getline
 #include <iostream> // std::cout, std::cin
 #include <utility> // std::move
+#include <iterator> // std::begin, std::end
 
 namespace cr
 {
@@ -107,6 +108,37 @@ Application &Application::start()
                 m_consoleMenu.addItem(m_fetchPublicQuests);
             }
             break;
+        case ConsoleMenuItem::Identifier::FetchPublicQuests:
+            if (m_consoleMenu.getExecutionStatus(
+                    ConsoleMenuItem::Identifier::FetchPublicQuests)) {
+                for (const Quest &quest : m_applicationState.quests) {
+                    using namespace std::literals::string_literals;
+
+                    m_consoleMenu.addItem(makeConsoleMenuItem(
+                        ConsoleMenuItem::Identifier::Quest,
+                        "Attend quest \""s + quest.getName().data() + "\""s,
+                        [this, &quest](ApplicationState &) {
+                            return safeOptionalAccess(m_restClient)
+                                .attendQuest(quest);
+                        }));
+                }
+            }
+            break;
+        case ConsoleMenuItem::Identifier::Quest: {
+            const ConsoleMenu::value_type &lastExecuted{
+                m_consoleMenu.getLastExecuted()
+            };
+
+            if (lastExecuted.wasActionExecutedSuccessfully) {
+                m_consoleMenu.eraseIf(
+                    [&lastExecuted](const ConsoleMenu::value_type &elem) {
+                        return elem.menuItem.getText()
+                            == lastExecuted.menuItem.getText();
+                });
+            }
+
+            break;
+        }
         case ConsoleMenuItem::Identifier::None:
             // FALLTHROUGH
         case ConsoleMenuItem::Identifier::ExitApplication:

@@ -2,6 +2,17 @@ be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
                                                                                                                                                          
 get list of quests
+  -- parse the response that contains all the quests and make a vector<Quest> out of it.
+  
+something to get the last run consolemenuitem from the ConsoleMenu.
+
+only allow ASCII chars for username and password
+
+integrate pl
+
+refactoring
+
+documentation.
 
 swagger API thing
 

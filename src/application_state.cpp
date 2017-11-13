@@ -7,7 +7,8 @@ ApplicationState::ApplicationState(std::ostream &os, std::istream &is)
       istream{ &is },
       blackBoardInfo{ boost::none },
       blackBoardRegistrationInfo{ boost::none },
-      loginResponse{ boost::none }
+      loginResponse{ boost::none },
+      quests{ }
 {
 }
 } // namespace cr

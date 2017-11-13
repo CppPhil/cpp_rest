@@ -173,6 +173,15 @@ public:
     bool getExecutionStatus(
         ConsoleMenuItem::Identifier identifier) const noexcept;
 
+    /*!
+     * \brief Returns a reference to the menu item last executed.
+     * \return A reference to the menu item last executed.
+     * \warning May only be called just after having executed the menu item.
+     *          The menu item last executed may not have been removed from
+     *          this ConsoleMenu before calling this function.
+    **/
+    const value_type &getLastExecuted() const;
+
 private:
     static const std::size_t s_offset; /*!< Offset translating from 0 and 1
                                         *   based indexing and vice versa.
@@ -239,6 +248,9 @@ private:
     gsl::not_null<std::istream *> m_istream; /*!< The istream given by
                                               *   the Application class.
                                              **/
+    std::size_t m_lastExecuted; /*!< Index of the last menu item that had its
+                                 *   action run.
+                                **/
 };
 } // namespace cr
 #endif // INCG_CR_CONSOLE_MENU_HPP

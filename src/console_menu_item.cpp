@@ -1,5 +1,6 @@
 #include "../include/console_menu_item.hpp"
 #include "../include/invoke.hpp" // cr::invoke
+#include <ciso646> // and, not
 #include <utility> // std::move
 
 namespace cr
@@ -30,5 +31,10 @@ bool ConsoleMenuItem::runAction()
 ConsoleMenuItem::Identifier ConsoleMenuItem::getIdentifier() const noexcept
 {
     return m_identifier;
+}
+
+const std::string &ConsoleMenuItem::getText() const noexcept
+{
+    return m_text;
 }
 } // namespace cr
