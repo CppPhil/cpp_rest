@@ -92,6 +92,7 @@ bool BlackBoardRegistration::login()
 {
     static constexpr HttpVerb verb         = HttpVerb::GET;
     static constexpr char pathToResource[] = "/login";
+    static constexpr HttpStatusCode expectedStatuscode = HttpStatusCode::OK;
 
     const BlackBoardRegistrationInfo &blackBoardRegistrationInfo{
         safeOptionalAccess(m_appState->blackBoardRegistrationInfo)
@@ -122,10 +123,11 @@ bool BlackBoardRegistration::login()
 
     std::ostream &ostream{ *(m_appState->ostream) };
 
-    ostream
-        << "\nGot status code: "
-        << static_cast<HttpStatusCode>(responsePtr->get_status_code())
-        << '\n';
+    const HttpStatusCode statusCode{
+        static_cast<HttpStatusCode>(responsePtr->get_status_code())
+    };
+
+    ostream << "\nGot status code: " << statusCode << '\n';
 
     const std::size_t length{
         getContentLength(*responsePtr)
@@ -134,13 +136,16 @@ bool BlackBoardRegistration::login()
     // Fetch the response body.
     cr::rest::Http::fetch(length, responsePtr);
 
-    const rest::Bytes body{ responsePtr->get_body() };
-    ostream << "body:\n";
-    ostream.write(
-        reinterpret_cast<const char *>(body.data()),
-        static_cast<std::streamsize>(body.size()));
-    ostream << '\n';
-    return true;
+    const rest::Bytes bodyBytes{ responsePtr->get_body() };
+    const std::string body(std::begin(bodyBytes), std::end(bodyBytes));
+    ostream << "body:\n" << body << '\n';
+
+    if (statusCode == expectedStatuscode) {
+        m_appState->loginResponse = LoginResponse::fromJson(parseJson(body));
+        return true;
+    }
+
+    return false;
 }
 
 std::string BlackBoardRegistration::getUserNameFromUser()

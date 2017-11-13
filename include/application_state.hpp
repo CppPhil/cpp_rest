@@ -2,6 +2,7 @@
 #define INCG_CR_APPLICATION_STATE_HPP
 #include "../include/black_board_info.hpp" // cr::BlackBoardInfo
 #include "../include/black_board_registration_info.hpp" // cr::BlackBoardRegistrationInfo
+#include "../include/login_response.hpp" // cr::LoginResponse
 #include <gsl/gsl> // gsl::not_null
 #include <boost/optional.hpp> // boost::optional
 #include <ostream> // std::ostream
@@ -33,9 +34,12 @@ struct ApplicationState
                                            **/
     boost::optional<BlackBoardInfo> blackBoardInfo; /*!< The BlackBoardInfo */
 
-    boost::optional<BlackBoardRegistrationInfo> blackBoardRegistrationInfo; /*! Has the password and
-                                                                             * user name
+    boost::optional<BlackBoardRegistrationInfo> blackBoardRegistrationInfo; /*!< Has the password and
+                                                                             *   user name
                                                                             **/
+    boost::optional<LoginResponse> loginResponse; /*!< the response received from the
+                                                   *   login menu item's action.
+                                                  **/
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_STATE_HPP
