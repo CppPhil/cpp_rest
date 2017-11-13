@@ -1,7 +1,7 @@
 be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
                                                                                                                                                          
-check login via /whoami
+get list of quests
 
 swagger API thing
 

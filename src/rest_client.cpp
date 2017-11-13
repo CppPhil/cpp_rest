@@ -1,5 +1,5 @@
 #include "../include/namespace_aliases.hpp"
-#include "../include/black_board_registration.hpp"
+#include "../include/rest_client.hpp"
 #include "../include/request.hpp" // cr::sendRequestSync
 #include "../include/response.hpp" // cr::getContentLength
 #include "../include/json.hpp" // cr::asJson
@@ -20,7 +20,7 @@
 
 namespace cr
 {
-void BlackBoardRegistration::RegisterUserType::asJson(
+void RestClient::RegisterUserType::asJson(
     json::PrettyWriter<json::StringBuffer> &writer) const noexcept
 {
     static constexpr char firstField[]  = "name";
@@ -37,7 +37,7 @@ void BlackBoardRegistration::RegisterUserType::asJson(
     writer.EndObject();
 }
 
-BlackBoardRegistration::BlackBoardRegistration(
+RestClient::RestClient(
     ApplicationState &appState,
     std::string blackBoardIpAddress,
     std::uint16_t port)
@@ -47,7 +47,7 @@ BlackBoardRegistration::BlackBoardRegistration(
 {
 }
 
-bool BlackBoardRegistration::registerUser()
+bool RestClient::registerUser()
 {
     static constexpr HttpVerb verb                     = HttpVerb::POST;
     static constexpr char pathToResource[]             = "/users";
@@ -91,7 +91,7 @@ bool BlackBoardRegistration::registerUser()
     return statusCode == expectedStatusCode;
 }
 
-bool BlackBoardRegistration::login()
+bool RestClient::login()
 {
     static constexpr HttpVerb verb         = HttpVerb::GET;
     static constexpr char pathToResource[] = "/login";
@@ -160,7 +160,7 @@ bool BlackBoardRegistration::login()
     return false;
 }
 
-bool BlackBoardRegistration::whoami()
+bool RestClient::whoami()
 {
     static constexpr HttpVerb verb                     = HttpVerb::GET;
     static constexpr char pathToResource[]             = "/whoami";
@@ -210,7 +210,7 @@ bool BlackBoardRegistration::whoami()
     return httpStatusCode == expectedStatusCode;
 }
 
-std::string BlackBoardRegistration::getUserNameFromUser()
+std::string RestClient::getUserNameFromUser()
 {
     static constexpr char prompt[] = "Enter your user name:";
 
@@ -225,7 +225,7 @@ std::string BlackBoardRegistration::getUserNameFromUser()
     return userName;
 }
 
-std::string BlackBoardRegistration::getPassWordFromUser()
+std::string RestClient::getPassWordFromUser()
 {
     static constexpr char prompt[] = "Enter your password:";
 
@@ -240,7 +240,7 @@ std::string BlackBoardRegistration::getPassWordFromUser()
     return passWord;
 }
 
-json::Document BlackBoardRegistration::createJsonUserNamePw(
+json::Document RestClient::createJsonUserNamePw(
     boost::string_ref userName,
     boost::string_ref passWord) const
 {
@@ -248,7 +248,7 @@ json::Document BlackBoardRegistration::createJsonUserNamePw(
     return asJson(registerUserType);
 }
 
-std::shared_ptr<rest::Response> BlackBoardRegistration::sendToBlackBoardSync(
+std::shared_ptr<rest::Response> RestClient::sendToBlackBoardSync(
     std::shared_ptr<rest::Request> &requestOutParam,
     HttpVerb httpVerb,
     boost::string_ref pathToResource,

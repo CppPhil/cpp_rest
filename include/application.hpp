@@ -4,7 +4,7 @@
 #include "../include/application_state.hpp" // cr::ApplicationState
 #include "../include/console_menu.hpp" // cr::ConsoleMenu
 #include "../include/console_menu_item.hpp" // cr::ConsoleMenuItem
-#include "../include/black_board_registration.hpp" // cr::BlackBoardRegistration
+#include "../include/rest_client.hpp" // cr::RestClient
 #include "../include/except.hpp" // CR_THROW_WITH_SOURCE_INFO
 #include <ostream> // std::ostream
 #include <istream> // std::istream
@@ -62,7 +62,7 @@ private:
     **/
     bool createBlackBoardRegistration();
 
-    boost::optional<BlackBoardRegistration> m_blackBoardRegistration;
+    boost::optional<RestClient> m_restClient;
     ApplicationState m_applicationState; /*!< The current application state */
     ConsoleMenu m_consoleMenu; /*!< The console menu */
     const ConsoleMenuItem m_exitApplication; /*!< The exit application menu item */

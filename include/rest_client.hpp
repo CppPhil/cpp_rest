@@ -1,5 +1,5 @@
-#ifndef INCG_CR_BLACK_BOARD_REGISTRATION_HPP
-#define INCG_CR_BLACK_BOARD_REGISTRATION_HPP
+#ifndef INCG_CR_REST_CLIENT_HPP
+#define INCG_CR_REST_CLIENT_HPP
 #include "../include/namespace_aliases.hpp"
 #include "../include/application_state.hpp" // cr::ApplicationState
 #include "../include/except.hpp" // CR_THROW_IF_NULL
@@ -18,10 +18,10 @@
 
 namespace cr
 {
-class BlackBoardRegistration
+class RestClient
 {
 public:
-    using this_type = BlackBoardRegistration;
+    using this_type = RestClient;
 
     struct RegisterUserType
     {
@@ -32,7 +32,7 @@ public:
         boost::string_ref passWord;
     };
 
-    BlackBoardRegistration(
+    RestClient(
         ApplicationState &appState,
         std::string blackBoardIpAddress,
         std::uint16_t port);
@@ -65,4 +65,4 @@ private:
     std::uint16_t m_port;
 };
 } // namespace cr
-#endif // INCG_CR_BLACK_BOARD_REGISTRATION_HPP
+#endif // INCG_CR_REST_CLIENT_HPP

@@ -9,7 +9,7 @@
 namespace cr
 {
 Application::Application()
-    : m_blackBoardRegistration{ boost::none },
+    : m_restClient{ boost::none },
       m_applicationState{ s_ostream, s_istream },
       m_consoleMenu{ s_ostream, s_istream },
       m_exitApplication{ makeConsoleMenuItem(
@@ -29,8 +29,8 @@ Application::Application()
           ConsoleMenuItem::Identifier::RegisterUser,
           "Register a user with the BlackBoard service",
           [this](ApplicationState &) {
-              BlackBoardRegistration &blackBoardRegistration{
-                  safeOptionalAccess(m_blackBoardRegistration)
+              RestClient &blackBoardRegistration{
+                  safeOptionalAccess(m_restClient)
               };
 
               return blackBoardRegistration.registerUser();
@@ -40,8 +40,8 @@ Application::Application()
           ConsoleMenuItem::Identifier::Login,
           "Login to the BlackBoard",
           [this](ApplicationState &) {
-              BlackBoardRegistration &blackBoardRegistration{
-                  safeOptionalAccess(m_blackBoardRegistration)
+              RestClient &blackBoardRegistration{
+                  safeOptionalAccess(m_restClient)
               };
 
               return blackBoardRegistration.login();
@@ -51,7 +51,7 @@ Application::Application()
           ConsoleMenuItem::Identifier::WhoAmI,
           "Check the login with the BlackBoard using WhoAmI",
           [this](ApplicationState &) {
-              return safeOptionalAccess(m_blackBoardRegistration).whoami();
+              return safeOptionalAccess(m_restClient).whoami();
           })
       }
 {
@@ -136,8 +136,8 @@ bool Application::createBlackBoardRegistration()
 
     BlackBoardInfo &blackBoardInfo{ *optional };
 
-    m_blackBoardRegistration
-        = BlackBoardRegistration{
+    m_restClient
+        = RestClient{
             m_applicationState,
             blackBoardInfo.ipAddress,
             blackBoardInfo.portFromMessage
