@@ -1,6 +1,9 @@
 be able to put related links in the packet sent back.
   Perhaps add them to the JSON object in the body of the response datagram?
-                                                                                                                                                         
+                                                                               
+TODO: parse the body and create a thingie to be able to send a request      
+      to the map with the then extracted location thingie.                                                                               
+                                                                         
 only allow ASCII chars for username and password
 
 integrate pl

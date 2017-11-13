@@ -253,6 +253,7 @@ bool RestClient::fetchPublicQuests()
 
 bool RestClient::attendQuest(const Quest &questToAttend)
 {
+    static constexpr HttpStatusCode expectedStatusCode{ HttpStatusCode::OK };
     static constexpr HttpVerb verb{ HttpVerb::GET };
 
     std::ostream &ostream{ *(m_appState->ostream) };
@@ -284,7 +285,11 @@ bool RestClient::attendQuest(const Quest &questToAttend)
 
     ostream << "body:\n" << body << '\n';
 
-    return true;
+    /* TODO: parse the body and create a thingie to be able to send a request
+     *       to the map with the then extracted location thingie.
+    **/
+
+    return httpStatusCode == expectedStatusCode;
 }
 
 std::string RestClient::getUserNameFromUser()
