@@ -210,6 +210,43 @@ bool RestClient::whoami()
     return httpStatusCode == expectedStatusCode;
 }
 
+bool RestClient::fetchPublicQuests()
+{
+    static constexpr HttpVerb verb         = HttpVerb::GET;
+    static constexpr char pathToResource[] = "/blackboard/quests";
+
+    std::ostream &ostream{ *(m_appState->ostream) };
+
+    const json::Document emptyJsonDocument{ parseJson("{}") };
+
+    std::shared_ptr<rest::Request> requestPtr{ nullptr };
+    std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
+        requestPtr,
+        verb,
+        pathToResource,
+        emptyJsonDocument)
+    };
+
+    CR_THROW_IF_NULL(responsePtr);
+
+    const HttpStatusCode httpStatusCode{
+        static_cast<HttpStatusCode>(responsePtr->get_status_code())
+    };
+
+    ostream << "statusCode: " << httpStatusCode << '\n';
+
+    const std::size_t contentLength{ getContentLength(*responsePtr) };
+
+    rest::Http::fetch(contentLength, responsePtr);
+
+    const rest::Bytes bodyAsBytes{ responsePtr->get_body() };
+    const std::string body(std::begin(bodyAsBytes), std::end(bodyAsBytes));
+
+    ostream << "body:\n" << body << '\n';
+
+    return true; /* TODO: this might need to change. */
+}
+
 std::string RestClient::getUserNameFromUser()
 {
     static constexpr char prompt[] = "Enter your user name:";

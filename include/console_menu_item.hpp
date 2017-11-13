@@ -27,7 +27,8 @@ public:
         DiscoverBlackBoard, /*!< The discover BlackBoard task */
         RegisterUser, /*!< The register a user with the BlackBoard task */
         Login, /*!< Login to the BlackBoard */
-        WhoAmI /*!< Check the login */
+        WhoAmI, /*!< Check the login */
+        FetchPublicQuests /*!< Get all the public quests */
     };
 
     /*!

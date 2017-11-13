@@ -53,6 +53,13 @@ Application::Application()
           [this](ApplicationState &) {
               return safeOptionalAccess(m_restClient).whoami();
           })
+      },
+      m_fetchPublicQuests{ makeConsoleMenuItem(
+          ConsoleMenuItem::Identifier::FetchPublicQuests,
+          "Fetch the available public quests",
+          [this](ApplicationState &) {
+              return safeOptionalAccess(m_restClient).fetchPublicQuests();
+          })
       }
 {
     setConsoleMenuToDefaultItems();
@@ -91,6 +98,13 @@ Application &Application::start()
                     ConsoleMenuItem::Identifier::Login)) {
                 m_consoleMenu.erase(ConsoleMenuItem::Identifier::Login);
                 m_consoleMenu.addItem(m_whoami);
+            }
+            break;
+        case ConsoleMenuItem::Identifier::WhoAmI:
+            if (m_consoleMenu.getExecutionStatus(
+                    ConsoleMenuItem::Identifier::WhoAmI)) {
+                m_consoleMenu.erase(ConsoleMenuItem::Identifier::WhoAmI);
+                m_consoleMenu.addItem(m_fetchPublicQuests);
             }
             break;
         case ConsoleMenuItem::Identifier::None:

@@ -43,6 +43,8 @@ public:
 
     bool whoami();
 
+    bool fetchPublicQuests();
+
 private:
     std::string getUserNameFromUser();
 

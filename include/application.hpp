@@ -70,6 +70,7 @@ private:
     const ConsoleMenuItem m_registerUser; /*!< The register a user with the BlackBoard menu item */
     const ConsoleMenuItem m_login; /*!< Login to the BlackBoard */
     const ConsoleMenuItem m_whoami; /*!< check the login with the BlackBoard */
+    const ConsoleMenuItem m_fetchPublicQuests; /*!< get the public quests */
 };
 } // namespace cr
 #endif // INCG_CR_APPLICATION_HPP
