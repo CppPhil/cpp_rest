@@ -10,6 +10,8 @@
 #include <corvusoft/restbed/http.hpp> // rest::Http::fetch
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
 #include <corvusoft/restbed/response.hpp> // restbed::Response
+#include <boost/current_function.hpp> // BOOST_CURRENT_FUNCTION
+#include <ciso646> // not
 #include <cstddef> // std::size_t
 #include <iterator> // std::begin, std::end
 #include <string> // std::string
@@ -146,6 +148,55 @@ bool BlackBoardRegistration::login()
     }
 
     return false;
+}
+
+bool BlackBoardRegistration::whoami()
+{
+    static constexpr HttpVerb verb         = HttpVerb::GET;
+    static constexpr char pathToResource[] = "/whoami";
+
+    std::ostream &ostream{ *(m_appState->ostream) };
+
+    if (not m_appState->loginResponse) {
+        ostream << BOOST_CURRENT_FUNCTION << ": appState had no loginResponse!\n";
+        return false;
+    }
+
+    const LoginResponse &loginResponse{ *(m_appState->loginResponse) };
+    const std::string token{ loginResponse.getToken() };
+
+    const std::multimap<std::string, std::string> headers{
+        { "Authorization", "Token " + token }
+    };
+
+    const json::Document emptyJsonDocument{ parseJson("{}") };
+
+    std::shared_ptr<rest::Request> requestPtr{ nullptr };
+    std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
+        requestPtr,
+        verb,
+        pathToResource,
+        emptyJsonDocument,
+        headers)
+    };
+
+    CR_THROW_IF_NULL(responsePtr);
+
+    const HttpStatusCode httpStatusCode{
+        static_cast<HttpStatusCode>(responsePtr->get_status_code())
+    };
+
+    ostream << "statusCode: " << httpStatusCode << '\n';
+
+    const std::size_t contentLength{ getContentLength(*responsePtr) };
+
+    rest::Http::fetch(contentLength, responsePtr);
+
+    const rest::Bytes bodyBytes{ responsePtr->get_body() };
+    const std::string body(std::begin(bodyBytes), std::end(bodyBytes));
+    ostream << "body:\n" << body << '\n';
+
+    return true;
 }
 
 std::string BlackBoardRegistration::getUserNameFromUser()

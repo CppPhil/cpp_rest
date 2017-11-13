@@ -46,6 +46,13 @@ Application::Application()
 
               return blackBoardRegistration.login();
           })
+      },
+      m_whoami{ makeConsoleMenuItem(
+          ConsoleMenuItem::Identifier::WhoAmI,
+          "Check the login with the BlackBoard using WhoAmI",
+          [this](ApplicationState &) {
+              return safeOptionalAccess(m_blackBoardRegistration).whoami();
+          })
       }
 {
     setConsoleMenuToDefaultItems();
@@ -78,6 +85,13 @@ Application &Application::start()
             }
             // otherwise -> do nothing (repeat the menu item to register a user)
 
+            break;
+        case ConsoleMenuItem::Identifier::Login:
+            if (m_consoleMenu.getExecutionStatus(
+                    ConsoleMenuItem::Identifier::Login)) {
+                m_consoleMenu.erase(ConsoleMenuItem::Identifier::Login);
+                m_consoleMenu.addItem(m_whoami);
+            }
             break;
         case ConsoleMenuItem::Identifier::None:
             // FALLTHROUGH

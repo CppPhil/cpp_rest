@@ -41,6 +41,8 @@ public:
 
     bool login();
 
+    bool whoami();
+
 private:
     std::string getUserNameFromUser();
 
