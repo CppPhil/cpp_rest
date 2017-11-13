@@ -20,6 +20,12 @@ struct BlackBoardInfo
     **/
     static BlackBoardInfo create();
 
+    BlackBoardInfo(
+        std::string p_ipAddress,
+        std::uint16_t p_senderPort,
+        std::uint16_t p_portFromMessage,
+        std::uint16_t p_blackBoardPort);
+
     std::string ipAddress; /*!< The IP address of the BlackBoard */
     std::uint16_t senderPort; /*!< The sender UDP port of the BlackBoard */
     std::uint16_t portFromMessage; /*!< The port contained in the JSON send

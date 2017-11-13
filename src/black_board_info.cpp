@@ -2,6 +2,7 @@
 #include "../include/black_board_listener.hpp" // cr::BlackBoardListener
 #include "../include/parse_black_board_message.hpp" // cr::parseBlackBoardMessage
 #include <ostream> // std::ostream
+#include <utility> // std::move
 
 namespace cr
 {
@@ -12,7 +13,7 @@ BlackBoardInfo BlackBoardInfo::create()
     BlackBoardListener blackBoardListener{ };
     blackBoardListener.receiveData(); // this is a blocking call.
 
-    BlackBoardInfo blackBoardInfo = {
+    BlackBoardInfo blackBoardInfo{
         blackBoardListener.getBlackBoardIp().data(),
         blackBoardListener.getBlackBoardPort(),
 #if !defined(CI_APPVEYOR) && !defined(CI_TRAVIS)
@@ -22,8 +23,20 @@ BlackBoardInfo BlackBoardInfo::create()
 #endif
         defaultBlackBoardPort // black board port
     };
-    
+
     return blackBoardInfo;
+}
+
+BlackBoardInfo::BlackBoardInfo(
+    std::string p_ipAddress,
+    std::uint16_t p_senderPort,
+    std::uint16_t p_portFromMessage,
+    std::uint16_t p_blackBoardPort)
+    : ipAddress{ std::move(p_ipAddress) },
+      senderPort{ p_senderPort },
+      portFromMessage{ p_portFromMessage },
+      blackBoardPort{ p_blackBoardPort }
+{
 }
 
 std::ostream &operator<<(
