@@ -21,8 +21,28 @@ namespace cr
 class ConsoleMenu
 {
 public:
+    /*!
+     * \brief The type that is stored in the container of ConsoleMenu.
+    **/
+    struct value_type
+    {
+        /*!
+         * \brief Constructs a value_type.
+         * \param p_menuItem The menu item to use.
+         * \note the boolean data member will be false by default.
+        **/
+        explicit value_type(ConsoleMenuItem p_menuItem);
+
+        ConsoleMenuItem menuItem; /*!< The menu item. */
+        bool wasActionExecutedSuccessfully; /*!< This boolean shall be true
+                                             *   if the menuItem's action was
+                                             *   executed and that execution
+                                             *   indicated success. Otherwise
+                                             *   it shall be false.
+                                            **/
+    };
+
     using this_type = ConsoleMenu;
-    using value_type = ConsoleMenuItem;
     using container_type = std::vector<value_type>;
 
     /*!
@@ -58,7 +78,7 @@ public:
         static_assert(std::is_same<
             typename std::iterator_traits<InputIterator>::value_type,
             value_type>::value, "Invalid iterator type in ConsoleMenu::addItems.");
-        std::copy(first, last, std::back_inserter(m_menuItems));
+        std::copy(first, last, std::back_inserter(m_cont));
         return *this;
     }
 
@@ -104,14 +124,14 @@ public:
     template <typename UnaryPredicate>
     this_type &eraseIf(UnaryPredicate unaryPredicate)
     {
-        m_menuItems.erase(
+        m_cont.erase(
             std::remove_if(
-                std::begin(m_menuItems),
-                std::end(m_menuItems),
+                std::begin(m_cont),
+                std::end(m_cont),
                 [&unaryPredicate](const ConsoleMenuItem &item) {
                     return ::cr::invoke(unaryPredicate, item);
                 }),
-            std::end(m_menuItems));
+            std::end(m_cont));
         return *this;
     }
 
@@ -130,6 +150,28 @@ public:
      * \return A reference to this object.
     **/
     this_type &sort();
+
+    /*!
+     * \brief Finds a ConsoleMenuItem by identifier.
+     * \return A pointer to the ConsoleMenuItem found, or nullptr
+     *         if there is no ConsoleMenuItem with the identifier passed in.
+    **/
+    const ConsoleMenuItem *findByIdentifier(
+        ConsoleMenuItem::Identifier identifier) const noexcept;
+
+    /*!
+     * \brief Determines whether or not a ConsoleMenuItem identified by the
+     *        identifier given has had its action successfully executed.
+     * \param identifier The identifier of the ConsoleMenuItem to get the
+     *                   execution status for its action of.
+     * \return true if the action associated with the ConsoleMenuItem identified
+     *         by 'identifier' was executed successfully, false otherwise.
+     * \note Will return false if the action has not been executed and will
+     *       return false if there is no ConsoleMenuItem with the identifier
+     *       'identifier' in the ConsoleMenu.
+    **/
+    bool getExecutionStatus(
+        ConsoleMenuItem::Identifier identifier) const noexcept;
 
 private:
     static const std::size_t s_offset; /*!< Offset translating from 0 and 1
@@ -177,10 +219,20 @@ private:
      * \brief Runs the action of the MenuItem at index 'idx'.
      * \param idx The zero-based index of the MenuItem that shall have its
      *            action run.
+     * \return true if the action was run successfully, false otherwise.
     **/
-    void runByIndex(std::size_t idx);
+    bool runByIndex(std::size_t idx);
 
-    container_type m_menuItems; /*!< The menu items */
+    /*!
+     * \brief Returns the iterator to the value_type that has the
+     *        ConsoleMenuItem with the identifier 'identifier.'
+     * \param identifier The identifier to search with.
+     * \return The iterator. May be the end iterator if nothing was found.
+    **/
+    container_type::const_iterator findByIdentifierHelper(
+        ConsoleMenuItem::Identifier identifier) const noexcept;
+
+    container_type m_cont; /*!< The menu items and their associated bools. */
     gsl::not_null<std::ostream *> m_ostream; /*!< The ostream given by
                                               *   the Application class.
                                              **/

@@ -8,7 +8,8 @@ namespace cr
 /*!
  * \brief The action of the discovenr BlackBoard service ConsoleMenuItem.
  * \param appState The application state, given by the Application class.
+ * \return true.
 **/
-void discoverBlackBoardService(cr::ApplicationState &appState);
+bool discoverBlackBoardService(cr::ApplicationState &appState);
 } // namespace cr
 #endif // INCG_CR_DISCOVER_BLACK_BOARD_SERVICE_HPP

@@ -43,7 +43,7 @@ public:
         Identifier identifier,
         ApplicationState &applicationState,
         std::string text,
-        std::function<void (ApplicationState &)> action);
+        std::function<bool (ApplicationState &)> action);
 
     /*!
      * \brief Prints the text of this MenuItem.
@@ -55,9 +55,9 @@ public:
     /*!
      * \brief Runs the action of this menu item by invoking it with the
      *        application state.
-     * \return A reference to this object.
+     * \return True if running the action succeeded, otherise false.
     **/
-    this_type &runAction();
+    bool runAction();
 
     /*!
      * \brief Returns the identifier of this object.
@@ -75,7 +75,7 @@ private:
     std::string m_text; /*!< The text to display for this menu item in the
                          *   ConsoleMenu
                         **/
-    std::function<void (ApplicationState &)> m_action; /*!< The action to run
+    std::function<bool (ApplicationState &)> m_action; /*!< The action to run
                                                         *   when this item is
                                                         *   selected.
                                                        **/

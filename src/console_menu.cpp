@@ -12,8 +12,16 @@
 
 namespace cr
 {
+ConsoleMenu::value_type::value_type(ConsoleMenuItem p_menuItem)
+    : menuItem{ std::move(p_menuItem) },
+      wasActionExecutedSuccessfully{ false } // default to false, since the
+                                             // action has not been run by
+                                             // default.
+{
+}
+
 ConsoleMenu::ConsoleMenu(std::ostream &ostream, std::istream &istream)
-    : m_menuItems{ },
+    : m_cont{ },
       m_ostream{ &ostream },
       m_istream{ &istream }
 {
@@ -21,31 +29,31 @@ ConsoleMenu::ConsoleMenu(std::ostream &ostream, std::istream &istream)
 
 ConsoleMenu &ConsoleMenu::addItem(const ConsoleMenuItem &menuItem)
 {
-    m_menuItems.push_back(menuItem);
+    m_cont.emplace_back(menuItem);
     return *this;
 }
 
 ConsoleMenu &ConsoleMenu::addItem(ConsoleMenuItem &&menuItem) noexcept
 {
-    m_menuItems.push_back(std::move(menuItem));
+    m_cont.emplace_back(std::move(menuItem));
     return *this;
 }
 
 ConsoleMenu &ConsoleMenu::clear()
 {
-    m_menuItems.clear();
+    m_cont.clear();
     return *this;
 }
 
 ConsoleMenu::container_type::size_type ConsoleMenu::size() const noexcept
 {
-    return m_menuItems.size();
+    return m_cont.size();
 }
 
 ConsoleMenu &ConsoleMenu::erase(ConsoleMenuItem::Identifier identifier)
 {
-    return eraseIf([identifier](const ConsoleMenuItem &item) {
-        return item.getIdentifier() == identifier;
+    return eraseIf([identifier](const value_type &elem) {
+        return elem.menuItem.getIdentifier() == identifier;
     });
 }
 
@@ -56,7 +64,7 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
 
     ostream << "\nOptions:\n";
 
-    if (m_menuItems.empty()) {
+    if (m_cont.empty()) {
         ostream << "There is nothing to do.\n";
         return ConsoleMenuItem::Identifier::None;
     }
@@ -77,26 +85,47 @@ ConsoleMenuItem::Identifier ConsoleMenu::run()
     }
 
     const std::size_t index{ safeOptionalAccess(opt) - s_offset };
-    runByIndex(index);
+    m_cont.at(index).wasActionExecutedSuccessfully = runByIndex(index);
 
     ostream << '\n';
-    return m_menuItems.at(index).getIdentifier();
+    return m_cont.at(index).menuItem.getIdentifier();
 }
 
 ConsoleMenu &ConsoleMenu::sort()
 {
     std::sort(
-        std::begin(m_menuItems),
-        std::end(m_menuItems),
-        [](const ConsoleMenuItem &lhs, const ConsoleMenuItem &rhs) {
+        std::begin(m_cont),
+        std::end(m_cont),
+        [](const value_type &lhs, const value_type &rhs) {
             using Underlying
                 = std::underlying_type_t<ConsoleMenuItem::Identifier>;
 
-            return static_cast<Underlying>(lhs.getIdentifier())
-                > static_cast<Underlying>(rhs.getIdentifier());
+            return static_cast<Underlying>(lhs.menuItem.getIdentifier())
+                > static_cast<Underlying>(rhs.menuItem.getIdentifier());
     });
 
     return *this;
+}
+
+const ConsoleMenuItem *ConsoleMenu::findByIdentifier(
+    ConsoleMenuItem::Identifier identifier) const noexcept
+{
+    const container_type::const_iterator it{
+        findByIdentifierHelper(identifier)
+    };
+
+    return ((it == std::end(m_cont)) ? (nullptr) : (&(it->menuItem)));
+}
+
+bool ConsoleMenu::getExecutionStatus(
+    ConsoleMenuItem::Identifier identifier) const noexcept
+{
+    const container_type::const_iterator it{
+        findByIdentifierHelper(identifier)
+    };
+
+    return ((it == std::end(m_cont))
+            ? (false) : (it->wasActionExecutedSuccessfully));
 }
 
 const std::size_t ConsoleMenu::s_offset = 1U;
@@ -109,11 +138,11 @@ const char ConsoleMenu::s_promptText[] = "Enter the desired option: ";
 
 void ConsoleMenu::displayItems(std::ostream &ostream)
 {
-    for (std::size_t i{ }; i < m_menuItems.size(); ++i) {
+    for (std::size_t i{ }; i < m_cont.size(); ++i) {
         ostream << std::setw(s_idxWidth) << (i + s_offset);
         ostream.width(s_defaultWidth);
         ostream << ": ";
-        m_menuItems.at(i).display(ostream);
+        m_cont.at(i).menuItem.display(ostream);
         ostream << '\n';
     }
 }
@@ -159,8 +188,18 @@ bool ConsoleMenu::isInputValid(const std::string &inputLine)
     return (value - s_offset) < size();
 }
 
-void ConsoleMenu::runByIndex(std::size_t idx) /* note: zero based index here. */
+bool ConsoleMenu::runByIndex(std::size_t idx) /* note: zero based index here. */
 {
-    m_menuItems.at(idx).runAction();
+    return m_cont.at(idx).menuItem.runAction();
+}
+
+ConsoleMenu::container_type::const_iterator ConsoleMenu::findByIdentifierHelper(
+    ConsoleMenuItem::Identifier identifier) const noexcept
+{
+    return std::find_if(
+        std::begin(m_cont), std::end(m_cont),
+        [identifier](const value_type &elem) {
+            return elem.menuItem.getIdentifier() == identifier;
+        });
 }
 } // namespace cr

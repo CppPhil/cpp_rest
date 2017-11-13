@@ -12,7 +12,7 @@ BlackBoardInfo BlackBoardInfo::create()
     BlackBoardListener blackBoardListener{ };
     blackBoardListener.receiveData(); // this is a blocking call.
 
-    return BlackBoardInfo{
+    BlackBoardInfo blackBoardInfo = {
         blackBoardListener.getBlackBoardIp().data(),
         blackBoardListener.getBlackBoardPort(),
 #if !defined(CI_APPVEYOR) && !defined(CI_TRAVIS)
@@ -22,6 +22,8 @@ BlackBoardInfo BlackBoardInfo::create()
 #endif
         defaultBlackBoardPort // black board port
     };
+    
+    return blackBoardInfo;
 }
 
 std::ostream &operator<<(

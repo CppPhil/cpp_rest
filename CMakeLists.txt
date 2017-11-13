@@ -43,7 +43,7 @@ target_link_libraries(${LIBRARY_NAME} Threads::Threads)
 
 # APPLICATION
 file(GLOB APPLICATION_SOURCE_FILES
-     main.cpp)
+     ./*.cpp)
 
 add_executable(${PROJECT_NAME} "${LIB_HEADERS}" "${APPLICATION_SOURCE_FILES}")
 target_link_libraries(${PROJECT_NAME} Threads::Threads)

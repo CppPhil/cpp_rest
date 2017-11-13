@@ -43,10 +43,11 @@ BlackBoardRegistration::BlackBoardRegistration(
 {
 }
 
-BlackBoardRegistration &BlackBoardRegistration::registerUser()
+bool BlackBoardRegistration::registerUser()
 {
-    static constexpr HttpVerb verb         = HttpVerb::POST;
-    static constexpr char pathToResource[] = "/users";
+    static constexpr HttpVerb verb                     = HttpVerb::POST;
+    static constexpr char pathToResource[]             = "/users";
+    static constexpr HttpStatusCode expectedStatusCode = HttpStatusCode::CREATED;
 
     const std::string userName{ getUserNameFromUser() };
     const std::string passWord{ getPassWordFromUser() };
@@ -69,10 +70,10 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
 
     std::ostream &ostream{ *(m_appState->ostream) };
 
-    ostream
-        << "\nGot status code: "
-        << static_cast<HttpStatusCode>(responsePtr->get_status_code())
-        << '\n';
+    const HttpStatusCode statusCode{
+        static_cast<HttpStatusCode>(responsePtr->get_status_code()) };
+
+    ostream << "\nGot status code: " << statusCode << '\n';
 
     const std::size_t contentLength{ getContentLength(*responsePtr) };
     rest::Http::fetch(contentLength, responsePtr);
@@ -83,10 +84,10 @@ BlackBoardRegistration &BlackBoardRegistration::registerUser()
         static_cast<std::streamsize>(bodyAsBytes.size()));
     ostream << '\n';
 
-    return *this;
+    return statusCode == expectedStatusCode;
 }
 
-BlackBoardRegistration &BlackBoardRegistration::login()
+bool BlackBoardRegistration::login()
 {
     static constexpr HttpVerb verb         = HttpVerb::GET;
     static constexpr char pathToResource[] = "/login";
@@ -100,7 +101,7 @@ BlackBoardRegistration &BlackBoardRegistration::login()
         blackBoardRegistrationInfo.passWord)
     };
 
-
+    // TODO: implement this.
 
 #if 0
     std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(

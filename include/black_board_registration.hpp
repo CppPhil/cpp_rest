@@ -36,9 +36,9 @@ public:
         std::string blackBoardIpAddress,
         std::uint16_t port);
 
-    this_type &registerUser();
+    bool registerUser();
 
-    this_type &login();
+    bool login();
 
 private:
     std::string getUserNameFromUser();

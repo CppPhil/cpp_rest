@@ -17,6 +17,7 @@ Application::Application()
           "Exit the application",
           [](ApplicationState &) {
               s_ostream << "\nExiting application.\n";
+              return true; // always succeeds.
           })
       },
       m_discoverBlackBoard{ makeConsoleMenuItem(
@@ -32,7 +33,7 @@ Application::Application()
                   safeOptionalAccess(m_blackBoardRegistration)
               };
 
-              blackBoardRegistration.registerUser();
+              return blackBoardRegistration.registerUser();
           })
       },
       m_login{ makeConsoleMenuItem(
@@ -43,7 +44,7 @@ Application::Application()
                   safeOptionalAccess(m_blackBoardRegistration)
               };
 
-              blackBoardRegistration.login();
+              return blackBoardRegistration.login();
           })
       }
 {
@@ -68,8 +69,15 @@ Application &Application::start()
             }
             break;
         case ConsoleMenuItem::Identifier::RegisterUser:
-            m_consoleMenu.erase(ConsoleMenuItem::Identifier::RegisterUser);
-            m_consoleMenu.addItem(m_login);
+            // if the action was executed successfully
+            // -> replace the menu item with the next one.
+            if (m_consoleMenu.getExecutionStatus(
+                    ConsoleMenuItem::Identifier::RegisterUser)) {
+                m_consoleMenu.erase(ConsoleMenuItem::Identifier::RegisterUser);
+                m_consoleMenu.addItem(m_login);
+            }
+            // otherwise -> do nothing (repeat the menu item to register a user)
+
             break;
         case ConsoleMenuItem::Identifier::None:
             // FALLTHROUGH

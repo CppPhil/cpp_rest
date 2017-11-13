@@ -4,12 +4,14 @@
 
 namespace cr
 {
-void discoverBlackBoardService(cr::ApplicationState &appState)
+bool discoverBlackBoardService(cr::ApplicationState &appState)
 {
     appState.blackBoardInfo = cr::BlackBoardInfo::create(); // this call will block.
 
     const boost::optional<cr::BlackBoardInfo> &opt{ appState.blackBoardInfo };
 
     (*(appState.ostream)) << safeOptionalAccess(opt) << '\n';
+
+    return true;
 }
 } // namespace cr

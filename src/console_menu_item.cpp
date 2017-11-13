@@ -8,7 +8,7 @@ ConsoleMenuItem::ConsoleMenuItem(
     Identifier identifier,
     ApplicationState &applicationState,
     std::string text,
-    std::function<void (ApplicationState &)> action)
+    std::function<bool (ApplicationState &)> action)
     : m_identifier{ identifier },
       m_applicationState{ &applicationState },
       m_text{ std::move(text) },
@@ -22,10 +22,9 @@ ConsoleMenuItem &ConsoleMenuItem::display(std::ostream &ostream)
     return *this;
 }
 
-ConsoleMenuItem &ConsoleMenuItem::runAction()
+bool ConsoleMenuItem::runAction()
 {
-    ::cr::invoke(m_action, *m_applicationState);
-    return *this;
+    return ::cr::invoke(m_action, *m_applicationState);
 }
 
 ConsoleMenuItem::Identifier ConsoleMenuItem::getIdentifier() const noexcept
