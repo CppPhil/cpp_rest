@@ -103,6 +103,7 @@ bool BlackBoardRegistration::login()
 
     // TODO: implement this.
 
+    return false;
 #if 0
     std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
         verb,
@@ -126,7 +127,6 @@ bool BlackBoardRegistration::login()
     // Fetch the response body.
     cr::rest::Http::fetch(length, responsePtr);
 #endif
-    return *this;
 }
 
 std::string BlackBoardRegistration::getUserNameFromUser()

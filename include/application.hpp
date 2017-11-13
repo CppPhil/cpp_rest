@@ -49,7 +49,7 @@ private:
     ConsoleMenuItem makeConsoleMenuItem(
         ConsoleMenuItem::Identifier identifier,
         std::string text,
-        std::function<void (ApplicationState &)> action);
+        std::function<bool (ApplicationState &)> action);
 
     /*!
      * \brief Replaces the menu items in the console menu with the default ones.

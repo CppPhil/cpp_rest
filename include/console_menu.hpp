@@ -116,9 +116,9 @@ public:
     this_type &erase(ConsoleMenuItem::Identifier identifier);
 
     /*!
-     * \brief Removes all the ConsoleMenuItems that satisfy the given predicate.
+     * \brief Removes all the value_types that satisfy the given predicate.
      * \param unaryPredicate The predicate that shall return true when invoked
-     *                       if the ConsoleMenuItem passed to it shall be removed.
+     *                       if the value_type passed to it shall be removed.
      * \return A reference to this object.
     **/
     template <typename UnaryPredicate>
@@ -128,8 +128,8 @@ public:
             std::remove_if(
                 std::begin(m_cont),
                 std::end(m_cont),
-                [&unaryPredicate](const ConsoleMenuItem &item) {
-                    return ::cr::invoke(unaryPredicate, item);
+                [&unaryPredicate](const value_type &elem) {
+                    return ::cr::invoke(unaryPredicate, elem);
                 }),
             std::end(m_cont));
         return *this;

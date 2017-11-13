@@ -96,7 +96,7 @@ std::istream &Application::s_istream = std::cin;
 ConsoleMenuItem Application::makeConsoleMenuItem(
     ConsoleMenuItem::Identifier identifier,
     std::string text,
-    std::function<void (ApplicationState &)> action)
+    std::function<bool (ApplicationState &)> action)
 {
     return ConsoleMenuItem{
         identifier, m_applicationState, std::move(text), std::move(action)
