@@ -162,8 +162,9 @@ bool BlackBoardRegistration::login()
 
 bool BlackBoardRegistration::whoami()
 {
-    static constexpr HttpVerb verb         = HttpVerb::GET;
-    static constexpr char pathToResource[] = "/whoami";
+    static constexpr HttpVerb verb                     = HttpVerb::GET;
+    static constexpr char pathToResource[]             = "/whoami";
+    static constexpr HttpStatusCode expectedStatusCode = HttpStatusCode::OK;
 
     std::ostream &ostream{ *(m_appState->ostream) };
 
@@ -206,7 +207,7 @@ bool BlackBoardRegistration::whoami()
     const std::string body(std::begin(bodyBytes), std::end(bodyBytes));
     ostream << "body:\n" << body << '\n';
 
-    return true;
+    return httpStatusCode == expectedStatusCode;
 }
 
 std::string BlackBoardRegistration::getUserNameFromUser()
