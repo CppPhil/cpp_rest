@@ -78,7 +78,7 @@ bool BlackBoardRegistration::registerUser()
     const std::size_t contentLength{ getContentLength(*responsePtr) };
     rest::Http::fetch(contentLength, responsePtr);
     const rest::Bytes bodyAsBytes{ responsePtr->get_body() };
-    ostream << "body: ";
+    ostream << "body:\n";
     ostream.write(
         reinterpret_cast<const char *>(bodyAsBytes.data()),
         static_cast<std::streamsize>(bodyAsBytes.size()));
@@ -101,11 +101,10 @@ bool BlackBoardRegistration::login()
         blackBoardRegistrationInfo.passWord)
     };
 
-    // TODO: implement this.
 
-    return false;
-#if 0
+    std::shared_ptr<rest::Request> requestPtr{ nullptr };
     std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
+        requestPtr,
         verb,
         pathToResource,
         jsonDocument)
@@ -126,7 +125,14 @@ bool BlackBoardRegistration::login()
 
     // Fetch the response body.
     cr::rest::Http::fetch(length, responsePtr);
-#endif
+
+    const rest::Bytes body{ responsePtr->get_body() };
+    ostream << "body:\n";
+    ostream.write(
+        reinterpret_cast<const char *>(body.data()),
+        static_cast<std::streamsize>(body.size()));
+    ostream << '\n';
+    return true;
 }
 
 std::string BlackBoardRegistration::getUserNameFromUser()
