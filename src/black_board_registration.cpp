@@ -5,6 +5,7 @@
 #include "../include/json.hpp" // cr::asJson
 #include "../include/get_none_empty_line.hpp" // cr::getNoneEmptyLine
 #include "../include/http_status_code.hpp" // cr::HttpStatusCode
+#include "../include/create_authorization_field.hpp" // cr::createAuthorizationField
 #include "../include/safe_optional_access.hpp" // cr::safeOptionalAccess
 #include <corvusoft/restbed/http.hpp> // rest::Http::fetch
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
@@ -101,9 +102,11 @@ bool BlackBoardRegistration::login()
         blackBoardRegistrationInfo.passWord)
     };
 
-    const std::multimap<std::string, std::string> queryParameters{
-        { "name", blackBoardRegistrationInfo.userName },
-        { "password", blackBoardRegistrationInfo.passWord }
+    const std::multimap<std::string, std::string> headers{
+        { "Authorization",
+          cr::createAuthorizationField(
+              blackBoardRegistrationInfo.userName,
+              blackBoardRegistrationInfo.passWord) }
     };
 
     std::shared_ptr<rest::Request> requestPtr{ nullptr };
@@ -112,8 +115,7 @@ bool BlackBoardRegistration::login()
         verb,
         pathToResource,
         jsonDocument,
-        { }, // no special headers
-        queryParameters)
+        headers)
     };
 
     CR_THROW_IF_NULL(responsePtr);
