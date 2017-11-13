@@ -7,6 +7,7 @@
 #include "../include/http_status_code.hpp" // cr::HttpStatusCode
 #include "../include/create_authorization_field.hpp" // cr::createAuthorizationField
 #include "../include/safe_optional_access.hpp" // cr::safeOptionalAccess
+#include "../include/log.hpp" // CR_LOG
 #include <corvusoft/restbed/http.hpp> // rest::Http::fetch
 #include <corvusoft/restbed/settings.hpp> // restbed::Settings
 #include <corvusoft/restbed/response.hpp> // restbed::Response
@@ -105,12 +106,21 @@ bool BlackBoardRegistration::login()
         blackBoardRegistrationInfo.passWord)
     };
 
-    const std::multimap<std::string, std::string> headers{
-        { "Authorization",
-          cr::createAuthorizationField(
-              blackBoardRegistrationInfo.userName,
-              blackBoardRegistrationInfo.passWord) }
+    CR_LOG(LogLevel::debug)
+        << "UserName: " << blackBoardRegistrationInfo.userName << '\n'
+        << "PassWord: " << blackBoardRegistrationInfo.passWord;
+
+    const std::string authorizationField{ cr::createAuthorizationField(
+        blackBoardRegistrationInfo.userName,
+        blackBoardRegistrationInfo.passWord)
     };
+
+    const std::multimap<std::string, std::string> headers{
+        { "Authorization", authorizationField }
+    };
+
+    CR_LOG(LogLevel::debug)
+        << "Authorization field: " << authorizationField;
 
     std::shared_ptr<rest::Request> requestPtr{ nullptr };
     std::shared_ptr<rest::Response> responsePtr{ sendToBlackBoardSync(
